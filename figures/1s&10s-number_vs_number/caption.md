@@ -1,0 +1,1 @@
+\label{Example2} Example unrelated image

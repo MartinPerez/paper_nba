@@ -1,0 +1,6 @@
+Parameter,LIF,AdEx
+baseline connections,115,1646
+excitatory connections,8,20
+inhibitory connections,70,250
+Baseline rate (Hz),10,20
+WM/Ctl rate (Hz),10,20
