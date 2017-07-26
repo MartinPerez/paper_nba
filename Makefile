@@ -4,8 +4,8 @@ NONSTOP=--interaction=nonstopmode
 
 LATEXMK=latexmk
 LATEXMKOPT=-pdf
-#CONTINUOUS=-pvc
-CONTINUOUS=
+CONTINUOUS=-pvc
+# CONTINUOUS=
 
 MAIN=modeling-nba
 SOURCES=$(MAIN).tex Makefile 
