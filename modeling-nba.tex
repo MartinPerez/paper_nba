@@ -231,7 +231,7 @@ the~\emph{Subjective Unity of Perception}\cite{Feldman_2012}. The
 current work is specifically motivated by the~\emph{Variable Binding}
 sub-problem, which is still unsolved and is crucial to understand all
 cognitive faculties of symbolic thought, like language and mathematics
-\cite{Marcus2001-the-algebraic-mind,smolensky2006harmonic}. We provide
+\cite{marcus01,smolensky2006harmonic}. We provide
 a biologically plausible neural implementation of variable binding and
 validate it against experimental evidence, which so far has been
 difficult to attain due to the uniqueness of high-level symbolic
@@ -297,7 +297,10 @@ challenge in modern Linguistics is to incorporate it into the general
 enterprise of Cognitive Science. This means that grammars given by
 linguistic theory have to incorporate a temporal component to give
 birth to computational mechanisms, like automaton models, capable of
-explaining behavior. Nonetheless to bring linguistics
+explaining behavior.\noteCP{Again, unecessary criticism of
+  linguistics. You can turn into a positive way: For those who want to
+  understand how language works in the brain, we need to take into
+  account the dynamics.} Nonetheless to bring linguistics
 into~neuroscience we have to go much further and also provide
 reasonable implementation models conforming to the biological
 components of the brain. This implementation is necessary to be able
@@ -305,30 +308,31 @@ to go beyond behavioral measurements and ultimately test computational
 hypotheses directly against the currently available spatio-temporal
 neural measurements.
 
-A good example of success in this direction would be the
+A good example of success in this direction is the
 computational~theory of visual receptive
 fields\cite{lindeberg2017normative} that makes impressively accurate
-predictions on the shape of the biological visual fields found in the
+predictions about the shape of the biological visual fields in the
 retina. Knowledge of these basic units of visual perception have
 recently even allowed to correlate the mechanisms behind deep
 convolutional neural networks to visual
 pathways\cite{Guclu_2015,Eickenberg_2017} and has influenced our
 understanding of higher-level visual phenomena such as visual
 illusions\cite{Eagleman_2001}. Although expecting at the moment
-something similar in the case of language might sound overambitious,
+something similar in the case of language might sounds overambitious,
 we must note that basic phonetic features have already been decoded in
 the Superior Temporal Gyrus from electrocorticography
 (ECoG)\cite{Mesgarani_2014}, effects of constituency separating
 syntactic and semantic components across brain areas have been
-identified with bold-Fmri\cite{Pallier_2011}\noteCP{Hum, maybe a bit
-  exaggerated. Will see if I make a weaker claim.} and recently
-patterns of the neural temporal dynamics of sentence construction also
-coming from (ECoG) have been
-revealed\cite{Fedorenko_2016,Nelson_2017}. The recent work from Nelson
-et al.\cite{Nelson_2017} is particularly relevant to us, since it
-depicts for the first time a possible neural signature of variable
-binding, referred by the authors as a'merge' operation, that we will
-compare qualitatively with our modelling results.
+identified with bold-Fmri\cite{Pallier_2011} and recently patterns of
+the neural temporal dynamics of sentence construction also coming from
+(ECoG) have been revealed\cite{Fedorenko_2016,Nelson_2017}. The recent
+work from Nelson et al.\cite{Nelson_2017} is particularly relevant to
+us, since it depicts for the first time a possible neural signature of
+variable binding --- referred by the authors as a 'merge'
+operation\noteCP{You need to explain here the relationship with merge
+  and variable binding. On the surface, it could seem that they have
+  little in common.} --- that we will compare qualitatively with our
+modelling results.
 
 Numerous Artificial Neural Network models for specific and general
 language tasks have been implemented. For an extensive review of
@@ -349,61 +353,63 @@ Dominey et al.\cite{Dominey_2009}, the discrete combinatorial neural
 assemblies of Pulvermuller\cite{Pulverm_ller_2009,Pulverm_ller_2010},
 the words model of Garagnani et al.\cite{Garagnani_2017}, the DORA
 mechanism proposed by Martin et al. for hierarchical linguistic
-structures\cite{Martin_2017}.
+structures\cite{Martin_2017}.\noteCP{Feels a lot of name dropping: it
+  would be nice to details a tiny bit 2 or 3 ideas from these papers.}
 
-All these efforts have different merits in what they can say about the
-implementation of language function and have been successful at
-demonstrating the feasibility of approximating language tasks with
-biologically constrained neural networks. Nonetheless, even though
-they attempt to offer biological plausible implementations, many
-biological details necessary to match in-vivo neural patterns of the
-modeled processes have been kept out of scope. This has been a
-reasonable strategy so far considering the computational cost of
-building circuits with point neural models, but as we will show,
-recent developments like population density
-techniques~\cite{de2013generica}~permit to implement state-of-the-art
-biologically detailed circuits of neural populations. This work has a
-similar spirit to the Blue Brain Project\cite{Markram_2006}~to tackle
-the ``predictive neuroscience'' and ``simulating the brain''
-challenges posed forward by Markram\cite{markram2013seven}. So instead
-of trying to implement a complete language parsing neural network
-trained from stimuli, we will focus on pushing the boundary of
-biological detail for the specific abstract mechanism of variable
-binding as proposed in the Neural Blackboard
-Architecture\cite{van_der_Velde_2006}, assuming other necessary
-mechanisms for parsing are in place. Basically we will implement a
-simulation that can provide temporally detailed predictions about the
-neural signature of variable binding, assuming binding by process, and
-then compare such predictions to actual recordings obtained from ECog
-and fMRI.
+All these efforts have been successful at demonstrating the
+feasibility of approximating language tasks with biologically
+constrained neural networks. Nonetheless, even though they attempt to
+offer biological plausible implementations, many biological details
+necessary to match in-vivo neural patterns of the modeled processes
+have been kept out of scope. This has been a reasonable strategy
+considering the computational cost of building circuits with
+point\noteCP{point?} neural models. Yet, as we will show, recent
+developments like population density
+techniques~\cite{de2013generica}~now permit to implement
+state-of-the-art biologically detailed circuits of neural populations.
+The current work is similar in spirit to the Blue Brain
+Project\cite{Markram_2006}~to tackle the ``predictive neuroscience''
+and ``simulating the brain'' challenges put forward by
+Markram\cite{markram2013seven}. So instead of trying to implement a
+complete language parsing neural network trained from stimuli, we will
+focus on pushing the boundary of biological detail for the specific
+abstract mechanism of variable binding as proposed in the Neural
+Blackboard Architecture\cite{van_der_Velde_2006}, assuming other
+necessary mechanisms for parsing are in place.\noteCP{Not clear that
+  this sentence sarting by 'So', follows from the previous one.} We
+will implement a simulation that can provide temporally detailed
+predictions about the neural signature of variable binding, assuming
+binding by process, and then compare such predictions to actual
+recordings obtained from ECoG and fMRI.
 
 \subsection{The Neural Blackboard Architecture (NBA)}
 
 {\label{935508}}
 
-The NBA responds to much more than the problem of binding. It
-addresses all Jackendoff problems\cite{Jackendoff_2002b} and propose a
-general mechanism applicable to the different stages of language
-processing that could fulfill the tripartite model of
-Jackendoff\cite{Jackendoff_2002a}. Its level of abstraction allows its
-application to any linguistic theory for which a grammar and parsing
+Beyond the binding problem, the Neural Blackboard Architecture address
+addresses all of Jackendoff problems\cite{Jackendoff_2002b} and
+proposes a general mechanism applicable to the different stages of
+language processing, fulfilling the tripartite model of
+Jackendoff\cite{Jackendoff_2002a}. Its level of abstraction allows to
+apply it to any linguistic theory for which a grammar and parsing
 mechanism is specified and could even be applied to other cognitive
-functions. At the same time it is sensible to interpret the
+functions. At the same time, it is sensible to interpret the
 architecture as a circuit of neural populations, where some of these
 populations can conceptually be linked to cell assemblies. This is an
 important assumption of the NBA and there is substantial biological
 evidence for the existence and functional relevance of cell assemblies
-as computational units\cite{Huyck_2013}. For example based on the
+as computational units\cite{Huyck_2013}. For example, based on the
 synaptic connectivity patterns of pyramidal neurons in the neocortex,
-Perin et al.\cite{Perin_2011} even posed forward the theory of
-neuronal group selection of Edelman\cite{edelman1987neural} over
-Hebb's organizational principles\cite{hebb2005organization} that
-emphasize the role of single neurons in a computational circuit with
-less connectivity constraints.
+Perin et al.\cite{Perin_2011} poses forward\noteCP{argue in favor of?}
+the theory of neuronal group selection of
+Edelman\cite{edelman1987neural} over Hebb's organizational
+principles\cite{hebb2005organization} that emphasize the role of
+single neurons in a computational circuit with less connectivity
+constraints.
 
 There are already several implementations of sub-circuits of the NBA
 with varying degrees of biological plausibility. Where the latest rely
-mostly on Wilson Cowan population dynamics\cite{Destexhe_2009}. Some
+mostly on Wilson Cowan population dynamics\cite{Destexhe_2009}.\noteCP{Not a sentence.} Some
 of the simulations attempt to address diverse aspects of language
 processing like ambiguity\cite{Frank_2014} and learning control from
 syntactic stimuli~\cite{van_der_Velde_2010}, while others address
