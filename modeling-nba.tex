@@ -1,3 +1,4 @@
+\let\nofiles\relax
 \documentclass[10pt]{article}
 
 \usepackage[top=0.85in,left=2.75in,footskip=0.75in]{geometry}
@@ -78,8 +79,10 @@
 % Leave date blank
 \date{}
 
-% Header and Footer with logo
-\usepackage{lastpage,fancyhdr,graphicx}
+% Header and Footer with log
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\usepackage[pdftex]{graphicx}
 \usepackage{epstopdf}
 \pagestyle{myheadings}
 \pagestyle{fancy}
@@ -126,25 +129,26 @@
   \bigskip
   % \institute{\textbf{1. }\\ \textbf{2. }\\}
 
+Remark: I suggests that both you and Marc be corresponding authors, if Marc agrees.
+  
 \end{flushleft}
 
 % Please keep the abstract between 250 and 300 words
 
 \section*{Abstract}
 
-An important challenge in neurolinguistics is to understand how
+An important challenge for neurolinguistics is to understand how
 variable binding is implemented in the brain. Variable binding is
 needed to assign words to their syntactic and semantic roles during
 sentence comprehension. Few attempts have been made to model complete
 circuits of variable binding with biological spiking neural networks.
-The Neural Blackboard Architecture (NBA), proposed by Van der Velde
-and De Kamps \cite{van_der_Velde_2006} is one of them. It was designed
+One of them is the Neural Blackboard Architecture (NBA) proposed by
+van~der~Velde and de~Kamps \cite{van_der_Velde_2006}. It was designed
 from the ground to solve variable binding and to address several
-challenges in the neural modeling of sentence processing, including
-the ones detailed by Jackendoff \cite{Jackendoff_2002b}. Here we
-expand on previous simulations of the NBA with population density
+challenges in the neural modeling of sentence processing, in
+particular those put forward by Jackendoff \cite{Jackendoff_2002b}.
+Here, we expand on previous simulations of the NBA with population density
 techniques to obtain temporally detailed neural dynamics.
-
 We show how different neural models constrain the circuit
 implementation, behavior and predictions.\noteCP{This sentence is
   vague and unclear to me. Can you make it more precise?}. While
@@ -161,7 +165,7 @@ Second, we approximate the results of an fMRI experiment which
 reported a sublinear increase of the amplitude of hemodynamic
 responses in language regions as a function of constituent size in
 lists of phrases \cite{Pallier_2011}. In all cases we approximate the
-neuroimaging patterns assuming a phrase grammar theory and bottom-up
+neuroimaging patterns assuming a phrase grammar theory\noteCP{What is this?} and bottom-up
 parsing, but our simulations could be trivially adapted to arbitrary
 grammar theories and parsing schemes, which turns it into a promising
 hypothesis exploration device for future research in language
@@ -310,10 +314,10 @@ neural measurements.
 
 A good example of success in this direction is the
 computational~theory of visual receptive
-fields\cite{lindeberg2017normative} that makes impressively accurate
+fields\cite{lindeberg2017normative} which has made impressively accurate
 predictions about the shape of the biological visual fields in the
-retina. Knowledge of these basic units of visual perception have
-recently even allowed to correlate the mechanisms behind deep
+retina. Knowledge of these basic units of visual perception has
+even recently allowed to correlate the mechanisms behind deep
 convolutional neural networks to visual
 pathways\cite{Guclu_2015,Eickenberg_2017} and has influenced our
 understanding of higher-level visual phenomena such as visual
@@ -347,13 +351,13 @@ production\cite{Smolensky_2013} are notable mentions. Nonetheless more
 relevant to our work are efforts to model language function solving
 the variable binding problem with biological plausible mechanisms.
 Examples of this are CABot~\cite{Huyck_2009},
-BioPLa\cite{Garcia_Rosa},
-TRANNS\noteCP{crash on ref {bocancia2014psycholinguistically}}, ~the language models of
-Markert et al.\cite{Markert_2007}, the corticostriatal model of
-Dominey et al.\cite{Dominey_2009}, the discrete combinatorial neural
-assemblies of Pulvermuller\cite{Pulverm_ller_2009,Pulverm_ller_2010},
-the words model of Garagnani et al.\cite{Garagnani_2017}, the DORA
-mechanism proposed by Martin et al. for hierarchical linguistic
+BioPLa\cite{Garcia_Rosa}, TRANNS\noteCP{crash on ref
+  {bocancia2014psycholinguistically}}, ~the language models of Markert
+et al.\cite{Markert_2007}, the corticostriatal model of Dominey et
+al.\cite{Dominey_2009}, the discrete combinatorial neural assemblies
+of Pulvermuller\cite{Pulverm_ller_2009,Pulverm_ller_2010}, the words
+model of Garagnani et al.\cite{Garagnani_2017}, the DORA mechanism
+proposed by Martin et al. for hierarchical linguistic
 structures\cite{Martin_2017}.\noteCP{Feels a lot of name dropping: it
   would be nice to details a tiny bit 2 or 3 ideas from these papers.}
 
@@ -387,14 +391,13 @@ recordings obtained from ECoG and fMRI.
 
 {\label{935508}}
 
-Beyond the binding problem, the Neural Blackboard Architecture address
-addresses all of Jackendoff problems\cite{Jackendoff_2002b} and
-proposes a general mechanism applicable to the different stages of
-language processing, fulfilling the tripartite model of
-Jackendoff\cite{Jackendoff_2002a}. Its level of abstraction allows to
-apply it to any linguistic theory for which a grammar and parsing
-mechanism is specified and could even be applied to other cognitive
-functions. At the same time, it is sensible to interpret the
+Beyond the binding problem, the Neural Blackboard Architecture the
+four challenges of Jackendoff and proposes a general mechanism
+applicable to the different stages of language processing, fulfilling
+his tripartite model\cite{Jackendoff_2002a}. Its level of abstraction
+allows to apply it to any linguistic theory for which a grammar and
+parsing mechanism is specified and could even be applied to other
+cognitive functions. At the same time, it is sensible to interpret the
 architecture as a circuit of neural populations, where some of these
 populations can conceptually be linked to cell assemblies. This is an
 important assumption of the NBA and there is substantial biological
@@ -408,38 +411,42 @@ principles\cite{hebb2005organization} that emphasize the role of
 single neurons in a computational circuit with less connectivity
 constraints.
 
-There are already several implementations of sub-circuits of the NBA
-with varying degrees of biological plausibility. Where the latest rely
-mostly on Wilson Cowan population dynamics\cite{Destexhe_2009}.\noteCP{Not a sentence.} Some
-of the simulations attempt to address diverse aspects of language
-processing like ambiguity\cite{Frank_2014} and learning control from
-syntactic stimuli~\cite{van_der_Velde_2010}, while others address
-circuit related issues like instantiating a connectivity matrix with
-randomly connected networks\cite{van_der_Velde_2011} and implementing
-a central pattern generator for sequential
-activation\cite{van_Dijk_2015}. ~In the following paragraphs we will
-only summarize the main abstract mechanisms and assumptions behind the
-NBA. For a deep review we recommend to read recently published circuit
-design and examples that focus on sentence
-processing~\cite{de2015combinatorial}~alongside the original framework
-proposal for combinatorial structures in
-cognition~\cite{van_der_Velde_2006}.
+There exists several implementations of sub-circuits of the NBA with
+varying degrees of biological plausibility, the latest relying mostly
+on Wilson Cowan population dynamics\cite{Destexhe_2009}. Some of the
+simulations attempt to address diverse aspects of language processing
+like ambiguity\cite{Frank_2014} and learning control from syntactic
+stimuli~\cite{van_der_Velde_2010}, while others address circuit
+related issues like instantiating a connectivity matrix with randomly
+connected networks\cite{van_der_Velde_2011} and implementing a central
+pattern generator for sequential
+activation~\cite{van_Dijk_2015}\noteCP{Are these two point issues to be
+  addressed or implementation of mechanisms?}. In the following
+paragraphs we summarize the main abstract mechanisms and
+assumptions behind the NBA. For a deeper review we recommend the recent paper on circuit design and examples that focus on sentence
+processing~\cite{de2015combinatorial} as well as the original framework
+proposal for combinatorial structures~\cite{van_der_Velde_2006}.
 
-The NBA assumes grounded representations of concepts in distributed or
-local neural population referred to as Main Assemblies (MA). Variable
-binding of concepts is implemented through the conditional activity of
-a neural population referred to as Sub Assemblies (SA), driven by MAs.
-Then SAs lead to the activation of neural populations that portray
-Delay Activity\cite{de_Kamps_2005}, which can be interpreted as
-Working Memory (WM). So in the case of sentence processing we can
-equate the grammatical categories to the grounded concepts of MAs, the
-parsing process to the conditional activity igniting SAs and the
-derived syntax tree to the implicit representation given by a
-collection of~WM reverberating populations with delay activity.
+The NBA assumes grounded representations\noteCP{In such models, it
+  seems to me that no representation is *actually* grounded as there
+  are not interfacing with the real world. No?} of concepts in
+distributed or local neural population referred to as Main Assemblies
+(MA). Variable binding of concepts is implemented through the
+conditional activity of a neural population referred to as Sub
+Assemblies (SA), driven by MAs. Then SAs lead to the activation of
+neural populations that portray Delay Activity\cite{de_Kamps_2005},
+which can be interpreted as a kind of Working Memory (WM). So in the case of
+sentence processing we can equate the grammatical categories to the
+grounded concepts of MAs, the parsing process to the conditional
+activity igniting SAs and the derived syntax tree to the implicit
+representation given by a collection of~WM reverberating populations
+with delay activity.
 
-To understand how a sentence is processed in a blackboard
-architecture, we should start by considering the simplest case of
-binding two grammatical categories. This takes place in
+To understand how a sentence is processed in the blackboard
+architecture, let us consider the simplest case of binding two
+grammatical categories.\noteCP{You rather mean two words --- belonging
+  to grammatical categories that can be merged (reduced), no? Please
+  use a very precise vocabulary s this is a complicated topic.} This takes place in
 one~\emph{compartment circuit} of a~\emph{connection matrix}.
 The~\emph{compartment circuit} contains the SAs that encode the
 relationship type of the binding and the WM that keeps the binding for
@@ -454,102 +461,115 @@ grammatical categories mediated by a neural control mechanism. Which
 would permit query operations to take place after the binding has been
 implicitly encoded with active WM populations, by reactivating the
 query driven MA and allowing conditional activity to flow towards the
-answer MA.
+answer MA.\noteCP{Transform into a sentence}
 
 Now we are ready to describe the processing of a complete sentence.
-Basically this takes place in a~\emph{blackboard}, which is a set
+This takes place in a~\emph{blackboard}, which is a set
 of~\emph{connection matrices}. Where each~\emph{connection matrix}
 fixes the memory capacity by determining the possible amount of
-bindings for a pair of grammatical categories. A~\emph{connection
-  matrix} manages memory slots dynamically through competing mutually
-inhibitory compartment circuits~and in this way handles the dynamic
-binding of a particular pair of grammatical categories. Then all the
-necessary bindings are determined by the relevant connection matrices
-available and the number of sentences that can be kept in short term
-memory are limited by their capacity. Complete illustration of the
-blackboard architecture is given in Figure~{\ref{Blackboard}}.
+bindings for a pair of grammatical categories.\noteCP{Transform into a sentence.} A~\emph{connection matrix} manages memory
+slots dynamically through competing mutually inhibitory compartment
+circuits~and handles in this way the dynamic binding of a particular
+pair of grammatical categories. Then all the necessary bindings are
+determined by the relevant connection matrices available and the
+number of sentences that can be kept in short term memory are limited
+by their capacity. Complete illustration of the blackboard
+architecture is given in Figure~{\ref{Blackboard}}.
 
 \begin{figure}[h!]
   \begin{center}
     \includegraphics[width=1.00\columnwidth]{figures/gating_circuit3/gating_circuit3}
-    \caption{{\label{Blackboard} Blackboard architecture. A. Gating
-        circuit that allows the implementation of conditional neural
-        activity transfer between Neural assemblies X and Y through a
-        gate assembly. The gate keeper assembly initially is also
-        activated by the X assembly and then inhibits the gate
-        assembly, so a control assembly has to inhibit the gate keeper
-        assembly to let information flow through the gate assembly. B.
-        Architecture of one compartment circuit of a connection matrix
-        is shown. Six gating circuits are arranged such that
-        conditional bidirectional neural activity flow is possible
-        between two main assemblies. Control assemblies regulate the
-        direction of information flow and allow the activation of sub
-        assemblies. The two sub assemblies excite the working memory
-        assembly which once activated encode the binding of the main
-        assemblies and allow activation to flow between them if the
-        controls allow it too. C. Each connection matrix contain n by
-        m compartment circuits that encode the same relationship type
-        between the same pair of assembly categories. There are m
-        available assemblies for one category and n available
-        assemblies for the complementary category and only one cell
-        circuit can activate its working memory assembly to link two
-        particular assemblies due to mutual row and column inhibition
-        of cells in the connection matrix. The size of the connection
-        matrix effectively represents memory limitations. A blackboard
-        is composed of an arbitrary number of connection matrices that
-        encode different relationship types for a pair of assembly
-        categories. D. A blackboard is composed of multiple connection
-        matrices, where each of them is defined by two node categories
-        and a relationship type between them. E. Example of one
-        possible tree structures out of the infinite that can be
-        represented based on the specified connection matrices.%
-      }}
+    \caption{The Neural Blackboard architecture. \textbf{A.} Gating
+      circuit that allows the implementation of conditional neural
+      activity transfer between Neural assemblies X and Y through a
+      gate assembly. The gate keeper assembly (GK) is activated by the
+      X assembly and then inhibits the gate assembly (G). To let
+      information flow through the gate assembly, a control assembly
+      (Ctl) must therefore inhibit the gate keeper assembly.
+      \textbf{B.} Architecture of a single compartment circuit of a
+      connection matrix. Six gating circuits are arranged in a way
+      that makes conditional bidirectional neural activity flow
+      between two main assemblies possible. Control assemblies
+      regulate the direction of information flow and allow the
+      activation of sub assemblies. The two sub assemblies excite the
+      working memory assembly which, once activated, encode the binding
+      of the main assemblies and allow activation to flow between them
+      if the controls allow it too. \textbf{C.} Each connection matrix contain
+      n by m compartment circuits that encode the same relationship
+      type between the same pair of assembly categories. There are m
+      available assemblies for one category and n available assemblies
+      for the complementary category and only one cell circuit can
+      activate its working memory assembly to link two particular
+      assemblies due to mutual row and column inhibition of cells in
+      the connection matrix. The size of the connection matrix
+      effectively represents memory limitations. A blackboard is
+      composed of an arbitrary number of connection matrices that
+      encode different relationship types for a pair of assembly
+      categories. \textbf{D.} A blackboard is composed of multiple connection
+      matrices, where each of them is defined by two node categories
+      and a relationship type between them. \textbf{E.} Example of a possible
+      tree structure that can be represented
+      based on the specified connection matrices.
+    }
+      \label{Blackboard}
   \end{center}
 \end{figure}
 
 An important feature of the blackboard architecture is its flexibility
 to process and implicitly represent arbitrary tree structures. Most of
-the previous blackboard simulations considered flat tree structures
-corresponding to dependency grammars\cite{nivre2005dependency}, where
-as expected the word grammatical categories elicit activity in MAs
-while their dependencies are represented by activity in WM and SAs.
-This overlooks other grammar theories that depend on constituency like
-a phrase structure grammar\cite{gazdar1982phrase}, where it is also
-necessary to instantiate MAs for phrasal categories. Nonetheless this
-can be easily resolved by allowing a WM, activated by the binding of
-two word categories, to instantiate activity in another MA, which can
-participate in further bindings reflecting hierarchical structure.
+the previous blackboard simulations considered flat tree
+structures\noteCP{Hum. What is a flat tree structure. You mean a list?
+  Dependency graphs are trees too. The difference with constituent
+  structures is that nodes are words not phrases.} corresponding to
+dependency grammars\cite{nivre2005dependency}, where as expected the
+word grammatical categories elicit activity in MAs while their
+dependencies are represented by activity in WM and SAs. This overlooks
+other grammar theories that depend on constituency like a phrase
+structure grammar\cite{gazdar1982phrase}, where it is also necessary
+to instantiate MAs for phrasal categories. Nonetheless this can be
+easily resolved by allowing a WM, activated by the binding of two word
+categories, to instantiate activity in another MA, which can
+participate in further bindings reflecting hierarchical structure.\noteCP{The paragraph is hard to understand. Can you explain in a bit more details?}
 
 Here we implement only the necessary parts of the NBA to model the
 neural activity related to variable binding, which itself is enough to
 instantiate the representation of an arbitrary sentence syntactic
-structure if we take the grammar theory and parsing scheme as given.
-This means that we simplify two important aspects of the circuit. The
-first is that we will provide the signals of control directly to the
+structure\noteCP{What you mean here, is it is enough to have a
+  CONS-like operation --- in LISP parlance --- to build any tree,
+  right?} if we take the grammar theory and parsing scheme as
+given.\noteCP{Think about the reader who does not know the distinction
+  between grammar theory and parsing The previous paragraph, with more
+  details, could explain it. Or get reif of it. This may actually not
+  be an important distinction for the purpose of this paper}. This
+means that we simplify two important aspects of the circuit. The first
+is that we will provide the signals of control directly to the
 compartment circuits. Previous attempts to train the control
 mechanism\cite{van_der_Velde_2010} were tailored only to specific
 grammatical cases and creating a general control mechanism to test the
 neural activity patterns would require a more varied dataset in
-grammatical categories and would comprise computational linguistic
-efforts out of the scope of this work. The second is that we do not
-model the dynamic inhibition of competing blackboard compartment
-circuits, since this would require hypothesis about the size of the
-blackboard, which would be related to memory limitations and the total
-number of possible grammatical categories to link in binary trees,
-which again would require out of scope computational linguistic
-efforts. Moreover the simplest selection mechanism behind competing
-blackboard compartment circuits can be hypothesized to be uniformly
-random on available compartments. This means that we are only testing
-the temporal patterns of neural activity linked to a variable binding
-event in the case of two words association. While in the case of
-complete sentences we are testing predictions based on the average
-neural activity time series of a collection of compartment circuits
-instantiated as demanded by the given grammar theory and parsing
-scheme. These time series should allow us to differentiate neural
-activity from different syntactic tree morphologies and sizes. In this
-work we will compare the predicted signature of variable binding with
-ECoG recordings and the predicted average neural time series of
-complete sentences with Bold-fMRI activation patterns.
+grammatical categories\noteCP{???} and would comprise computational
+linguistic efforts out of the scope of this work. The second is that
+we do not model the dynamic inhibition of competing blackboard
+compartment circuits, since this would require an hypothesis about the
+size of the blackboard, which would be related to memory limitations
+and the total number of possible grammatical categories to link in
+binary trees, which again would require out of scope computational
+linguistic efforts\noteCP{More of a psycholinguitics issue than a
+  computational linguistics one, no?}. Moreover the simplest selection
+mechanism behind competing blackboard compartment circuits can be
+hypothesized to be uniformly random on available compartments. This
+means that we are only testing the temporal patterns of neural
+activity linked to a variable binding event in the case of two words
+association.\noteCP{But but but, you are also modeling the binding of
+  a word and a phrase, no?} While in the case of complete sentences we
+are testing predictions based on the average neural activity time
+series of a collection of compartment circuits instantiated as
+demanded by the given grammar theory and parsing scheme. These time
+series should allow us to differentiate neural activity from different
+syntactic tree morphologies and sizes. In this work we will compare
+the predicted signature of variable binding with ECoG recordings and
+the predicted average neural time series of complete sentences with
+Bold-fMRI activation patterns.
 
 \section{Methods}
 
@@ -562,8 +582,8 @@ complete sentences with Bold-fMRI activation patterns.
   architecture}\label{simplified-approach-to-the-blackboard-architecture}
 
 The present implementation of the blackboard architecture respects its
-abstract mechanisms but do not implement them completely. Here we do
-not simulate complete connection matrices, the compartment circuits
+abstract mechanisms but does not implement them completely. Here we do
+not simulate complete connection matrices, as the compartment circuits
 mutual inhibition mechanism is an operation for which there is no
 obvious unique implementation. There is already a proof of concept to
 understand the implementation of the mechanism in randomly connected
@@ -572,44 +592,46 @@ specification integrated with a complete blackboard architecture
 \cite{van_der_Velde_2011}. Instead we just instantiate compartment
 circuits as necessary, since in essence they would be selected
 randomly in a connection matrix from available compartments in the
-hypothesized blackboard.
+hypothesized blackboard.\noteCP{I do not understand.}
 
 The compartment circuit abstraction is enough to achieve our current
-simulation goals, since the same mechanism is used in different
-connection matrices and they might only differ in their memory
-capacity. So we can consider the same compartment circuit simulation
-for all different pairs of grammatical categories, where the circuits
-would have similar dynamics and only vary in activation time of their
-neural populations. Nonetheless we are only able to ignore the
-activity of complete connection matrices because we are not planning
-to explore the effect of memory limits under time compressed sentence
-processing scenarios or memory tasks. Otherwise important deviations
-in background neural activity due to depletion of available
-compartments in the connection matrices and intense inhibitory
-activity would become a crucial factor in the simulation. This could
-be an interesting exploration in future work to try to reproduce the
-temporal bottleneck effects on neural activity shown by Vagharchakian
-et al. under conditions of compressed speech and
-reading\cite{Vagharchakian_2012}.
+simulation goals\noteCP{Would be nice to list them early in the paper.},
+since the same mechanism is used in different connection matrices and
+they might only differ in their memory capacity. So we can consider
+the same compartment circuit simulation for all different pairs of
+grammatical categories, where the circuits would have similar dynamics
+and only vary in activation time of their neural populations.
+Nonetheless we are only able to ignore the activity of complete
+connection matrices because we are not planning to explore the effect
+of memory limits under time compressed sentence processing scenarios
+or memory tasks. Otherwise important deviations in background neural
+activity due to depletion of available compartments in the connection
+matrices and intense inhibitory activity would become a crucial factor
+in the simulation. This could be an interesting exploration in future
+work to try to reproduce the temporal bottleneck effects on neural
+activity shown by Vagharchakian et al. under conditions of compressed
+speech and reading\cite{Vagharchakian_2012}.\noteCP{Maybe this should
+  be part of the final discussion rather than here where it may divert
+  attention.}
 
 In the case of the control mechanism, Feed-forward artificial neural
-networks have already been employed with the NBA
-\cite{van_der_Velde_2010} and recently state of the art feedforward
-network architectures have shown top performance for diverse language
-parsing tasks \cite{Andor_2016}. Moreover a more recent extension of
-the NBA relying on the motor circuit of the marine mollusk Tritonia
-diomedea to generate patterns for sequential activation control has
-been proposed\cite{van_Dijk_2015}. Nonetheless implementing these
-neural architectures would be out of the scope of this work, since we
-will not investigate the whole neural activity related to parsing but
-only the portion specifically related with variable binding, which
-itself is enough to look into the formation and storage of a phrase
-structure with temporal events derived from some some given parsing
-mechanism. Where also the expected phrase structure is given by some
-specified grammar theory. So we will simply provide the control
-signals that will allow the necessary neural activity flow from MAs to
-WM to process the hypothesized syntactic structure as required by a
-given parsing scheme and grammar theory.
+networks have already been employed with the
+NBA~\cite{van_der_Velde_2010} and recently state of the art
+feedforward network architectures have shown top performance for
+diverse language parsing tasks~\cite{Andor_2016}. Moreover a more
+recent extension of the NBA relying on the motor circuit of the marine
+mollusk Tritonia diomedea to generate patterns for sequential
+activation control has been proposed~\cite{van_Dijk_2015}. Nonetheless
+implementing these neural architectures would be out of the scope of
+this work, since we will not investigate the whole neural activity
+related to parsing but only the portion specifically related with
+variable binding, which itself is enough to look into the formation
+and storage of a phrase structure with temporal events derived from
+some some given parsing mechanism. Where also the expected phrase
+structure is given by some specified grammar theory. So we will simply
+provide the control signals that will allow the necessary neural
+activity flow from MAs to WM to process the hypothesized syntactic
+structure as required by a given parsing scheme and grammar theory.
 
 \subsubsection{Simulation framework and architectural
   decisions}\label{simulation-framework-and-architectural-decisions}
@@ -619,15 +641,15 @@ of neural assemblies with Wilson Cowan dynamics \cite{Frank_2014}.
 Nonetheless direct simulations of leaky-integrate-and-fire (LIF)
 neurons \cite{omurtag2000simulation} have faster transient behavior
 than the pseudo dynamics described by the Wilson Cowan equations. Such
-equations, as explained by De Kamps \cite{de_Kamps_2008}, only allow
-to approximate correctly the steady state of neural populations by
-suggesting what mean firing rates should be. On the other hand,
+equations, as explained by de~Kamps \cite{de_Kamps_2008}, only allow
+to correctly approximate  the steady state of neural populations by
+suggesting what the mean firing rates should be. On the other hand,
 population density techniques \cite{de2013generic} implemented in the
 MIIND software \cite{de_Kamps_2008} \cite{harrison2011new} can
 accurately describe the transient dynamics of large populations of the
 mentioned LIF neurons.
 
-In Figure \ref{pdt_case} one can see an important difference between
+In Fig.e~\ref{pdt_case} one can see an important difference between
 the transient dynamics of the rate-based Wilson Cowan dynamics and the
 population density techniques. Moreover one can appreciate how well
 population density techniques approximate the precise simulation of
@@ -666,7 +688,7 @@ In the case of Delay Activity (DA) populations like WM, we decided as
 a first approach to model such mechanism artificially. We plan to
 address the different alternatives to model persistent cortical
 activity with interacting neural populations in future work. As
-suggested by De Kamps\cite{de_Kamps_2005} not only models of recurrent
+suggested by de~Kamps\cite{de_Kamps_2005} not only models of recurrent
 excitation but also recurrent inhibition can account for this
 phenomena. In the current simulation a constant firing rate is kicked
 off by a specified level of input that is sustained for a desired
@@ -689,20 +711,20 @@ become clear in following sections.
     \includegraphics[width=0.70\columnwidth]{figures/case_for_pdt1/case_for_pdt1}
     \caption{{\label{pdt_case} Case for population density techniques
         over Wilson Cowan dynamics. Plots taken from the MIIND manual.
-        A. Shows the mean firing rate of a neural population simulated
+        \textbf{A.} Shows the mean firing rate of a neural population simulated
         with Wilson Cowan dynamics, labeled as a rate based model, and
         a population density technique with similar mean and standard
         deviation of neural activity. One can see that the steady
         state of the population activity converge in time but that the
-        transient dynamics are importantly different. B. Histogram of
+        transient dynamics are importantly different. \textbf{B.} Histogram of
         the membrane potential for each neuron in the population
         density technique simulation shown in A at time 0.3. The solid
         line corresponds to the prediction of the population density
         technique, while the red markers correspond to error bars due
         to finite sample sizes in a point model simulation performed
-        with NEST. C. The jump response of the neural population
+        with NEST. \textbf{C.} The jump response of the neural population
         according to the NEST simulation and the population density
-        technique. There is complete agreement within the boundaries
+        technique. There is in complete agreement within the boundaries
         of statistical error.%
       }}
   \end{center}
@@ -1227,7 +1249,7 @@ different combination of events.
   \label{917316}
 \end{table}
 
-First we observed the dynamics of the circuit when no events take
+First we observed the dynamics of the circuit when no event take
 place, leading to baseline activity. In this state all biological
 populations are just receiving an input baseline rate of 1 Hz from the
 artificial baseline neural population. Nonetheless instead of having
@@ -1288,9 +1310,24 @@ the input rate of the events.
 \begin{figure}[h!]
   \begin{center}
     \includegraphics[width=0.70\columnwidth]{figures/compartment_circuit_dynamics/compartment_circuit_dynamics}
-    \caption{{\label{activity_profiles} Profiles of neural activity 
-        A. Neural activation driven only by baseline input. B. Neural activation of the circuit when only one MA is activated by a word event or WM at 500ms. Portrays the neural activity related to an erroneous control signal at 800ms. Its possible to see that the steady state of neural activity is resilient to a slip of control, going to the appropriate levels of neural activity once the control activity is over.&nbsp; C. Neural activity of the Compartment Circuit for a successful binding. The second MA gets activated at 800ms alongside the controls. Since both MAs are active, the SAs manage to activate WM to instantiate the binding of the MAs. Two interesting dynamics arise from the binding. The first is that a spike of activity in SAs, GKs and Gs takes place due to the sudden inhibitory activity of WM on the GKs. The second is that the memory circuit internally raises its baseline activity.%
-      }}
+    \caption{Profiles of neural activity \textbf{A.} Neural activation driven
+      only by baseline input. \textbf{B.} Neural activation of the circuit when
+      only one MA is activated by a word event or WM at 500ms.
+      Portrays the neural activity related to an erroneous control
+      signal at 800ms. Its possible to see that the steady state of
+      neural activity is resilient to a slip of control, going to the
+      appropriate levels of neural activity once the control activity
+      is over. \textbf{C.} Neural activity of the Compartment Circuit for a
+      successful binding. The second MA gets activated at 800ms
+      alongside the controls. Since both MAs are active, the SAs
+      manage to activate WM to instantiate the binding of the MAs. Two
+      interesting dynamics arise from the binding. The first is that a
+      spike of activity in SAs, GKs and Gs takes place due to the
+      sudden inhibitory activity of WM on the GKs. The second is that
+      the memory circuit internally raises its baseline activity.%
+    }
+
+      \label{activity_profiles}
   \end{center}
 \end{figure}
 
