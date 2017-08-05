@@ -103,6 +103,7 @@
 %% END MACROS SECTION
 \usepackage{color}
 \newcommand{\noteCP}[1]{(CP: \textcolor{red}{#1})}
+\newcommand{\noteMP}[2]{(MP: \textcolor{blue}{#1})}
 
 \begin{document}
 \vspace*{0.2in}
@@ -114,12 +115,11 @@
   \newline
   \\
 
-  Martin Perez-Guevara\textsuperscript{1}, Marc De
-  Kamps\textsuperscript{2}, Christophe Pallier\textsuperscript{1},
+  Martin Perez-Guevara\textsuperscript{1}, Christophe Pallier\textsuperscript{1}, Marc De Kamps\textsuperscript{2}
   \\
   \bigskip \textbf{1} Cognitive Neuroimaging Unit, CEA DSV/I2BM,
-  INSERM, Université Paris-Sud, Université Paris-Saclay, NeuroSpin
-  center, 91191 Gif/Yvette, France
+  INSERM, Université Paris-Sud, Université Paris-Saclay,
+  Université Paris-Descartes, NeuroSpin center, 91191 Gif/Yvette, France
   \\
   \textbf{2} Institute for Artificial Intelligence and Biological
   Systems. School of Computing. University of Leeds. LS2 9JT Leeds.
@@ -147,11 +147,20 @@ van~der~Velde and de~Kamps \cite{van_der_Velde_2006}. It was designed
 from the ground to solve variable binding and to address several
 challenges in the neural modeling of sentence processing, in
 particular those put forward by Jackendoff \cite{Jackendoff_2002b}.
-Here, we expand on previous simulations of the NBA with population density
-techniques to obtain temporally detailed neural dynamics.
+
+There is important recent neuroimaging evidence of the neural behavior of variable binding.
+
+We implement NBA compartment circuit and show that the architecture reproduces qualitatively several aspects of the recent neuroimaging evidence.
+
+To achieve this we extended the NBA with state of the art population density techniques and explored the behavior of the architecture under several neural models.
+
+Not only our model reproduces neuroimaging effects but is a promising tool for hypothesis generation due to its flexibility to test diverse linguistic hypothesis on parsing and grammar.
+
+Here, we expand on previous simulations of the NBA with population density techniques to obtain temporally detailed neural dynamics.
 We show how different neural models constrain the circuit
 implementation, behavior and predictions.\noteCP{This sentence is
-  vague and unclear to me. Can you make it more precise?}. While
+vague and unclear to me. Can you make it more precise?}
+\noteMP{testing comments}. While
 Leaky-Integrate-and-Fire models have been employed before, this paper
 is the first attempt to extend variable binding related circuit
 simulations to Adaptive-Exponential models. We demonstrate that it is
@@ -178,29 +187,25 @@ neuroimaging.
 Although there is theoretical disagreement in modern linguistics about
 the optimal formalism to describe the internal representations of
 sentences in the human brain, there is a clear need for some sort of
-``composition'' operation to process units of
-language~\cite{Dehaene_2015}. This operation does not need to be
-exclusive to syntactic structures of language, as suggested by the
-`merge' operation in the syntactocentric view of Chomsky's minimalist
-program \cite{Chomsky_2013}\noteCP{This is an unnecessarily critical
+``composition'' operation to process units of language~\cite{Dehaene_2015}. This need applies to all levels of linguistic representation. For example Chomsky's minimalist program \cite{Chomsky_2013} proposes a `merge' operation for syntactic structures. While the parallel tripartite architecture of Jackendoff
+\cite{Jackendoff_2002a} emphasizes application of such operation to phonological structures, conceptual
+structures and even interfacing structures between levels.
+\noteCP{This is an unnecessarily critical
   intro (disagreement, syntctoc centric...). This is not needed: You
   can invert the presentaiton and first state that binding is need for
   all linguistics levels, whatever the adopted formalism; then only
   mention Chomsky's merge as the central operation in the minimalist
-  program, if you like.}, but can also expand to other stages of
-language processing like phonological structures, conceptual
-structures or even interfacing structures, as suggested by the
-parallel tripartite architecture of Jackendoff
-\cite{Jackendoff_2002a}. It is not only assumed by the notions of
+  program, if you like.}\noteMP{I changed the writing as suggested}.
+It is not only assumed by the notions of
 constituency present in the formalism of phrase structure grammars,
 that allow groups of words to act as one unit, but also by the
 alternative consideration of words relative grammatical function in
-dependency grammars and the more limited treelet structures proposed
-by Marcus \cite{marcus01}.\noteCP{Treelets are actually as powerful as
+dependency grammars.\noteCP{Treelets are actually as powerful as
   minimalist grammar and reach mildly context sensitive level. See
   Joshi TAGs. And do not attribute treelets to a chapter by Marcus.
   The idea is present e.g. in Joshi, Bod, .... Actually, better to not
-  emntio treelets at all here.}
+  emntio treelets at all here.}\noteMP{I was just trying to enumerate main theoretical alternatives. Like it was emphasized in your Perspectives Neuron paper of sequences with Stan. I deleted it as suggested}
+
 
 Proposing a satisfactory neural model for the ``composition''
 operation required by language is linked to solving the binding
@@ -215,82 +220,143 @@ motivated by the empirical discovery of the distributed and
 segmented~encoding of features along the cortex. An example of this
 would be color and shape in the case of vision, which are robustly
 integrated during perception but can be independently impaired by
-brain damage. Due to the combinatoric nature of sensory stimuli and in
-particular of language structures, simple mechanisms to link features
-momentarily like combination-encoding cells become
-unfeasible\cite{von_der_Malsburg_1999}. ~To get an idea of the
-massiveness of this problem~we can take a simple example from Van der
-Velde\cite{van_der_Velde_2006}. That is, an average 17-year-old
-English speaker has a lexicon of more than 60.000 words, which easily
-allows a set of 10\textsuperscript{20} or more possible phrases, of 20
-or less words, that can be produced and understood. Such magnitude
-effectively exceeds the estimated lifetime of the universe expressed
-in seconds, making it clear that a simple holistic encoding of
-sentences is not attainable in a human lifetime.
+brain damage.
+
 
 The binding problem in all its generality actually comprises four
 different sub problems, namely~\emph{General
   Coordination},~\emph{Feature-Binding},~\emph{Variable Binding} and
 the~\emph{Subjective Unity of Perception}\cite{Feldman_2012}. The
 current work is specifically motivated by the~\emph{Variable Binding}
-sub-problem, which is still unsolved and is crucial to understand all
-cognitive faculties of symbolic thought, like language and mathematics
-\cite{marcus01,smolensky2006harmonic}. We provide
-a biologically plausible neural implementation of variable binding and
+sub-problem that is presented by Feldman as an abstract high level cognitive faculty, mainly motivated by symbolic thought, that allows to bind values to variables that form part of a structured representation. In this respect, it is a function that arises mostly in human languages and goes beyond the extensively studied sensory, attention and short-term memory phenomena of linking features, to avoid for example confusion between a red circle and a blue square represented parallely, referred to as feature binding.
+
+
+~\emph{Variable binding}
+is also illustrated by the capacity to run logical inference on data
+structures that encode relationships between
+their items. For example the sentence ``\emph{Mary owns a book}" allows
+to establish a relation of the type \emph{own(Mary, book)} that implies
+\emph{owner(book, Mary)}, such that we can later ask the question
+``\emph{Who owns this book?}''. Moreover it is naturally related to the \emph{Unification} phenomenon, that comprises the binding of variables in a data structure independently of their particular values, like the abstract notions of combining a "determiner variable type" and "noun variable type" in a phrase.
+
+
+\subsection{Reproduction of neuroimaging measurements}
+
+{\label{729344}}
+
+/////////////////////////////
+
+Comment on the neuroimaging evidence and design
+
+Comment on the fact that we will show that the NBA architecture can reproduce qualitatively the properties of the mentioned experiments after being set up just for correct operation, without being tuned to the patterns.
+
+
+We provide a biologically plausible neural implementation of variable binding and
 validate it against experimental evidence, which so far has been
 difficult to attain due to the uniqueness of high-level symbolic
 thought in humans\noteCP{I find this passage a bit odd, as it seems to
   me that the binding problem can and has been studied in animals. Can
-  you clarify?}. This problem is illustrated by the capacity to run
-logical inference on data structures that encode relationships between
-their items. For example the sentence "\emph{Mary owns a book}" allows
-to establish a relation of the type own(Mary, book) that implies
-owner(book, Mary), such that we can ask the question ``Who owns this
-book?''. A simple neural association\noteCP{Claify what is 'simple
-  neural assocation'} of the concepts \emph{Mary}, \emph{own} and
-\emph{book} would not allow to query relations and, as pointed out
-before, encoding permutations is not allowed by the massiveness of the
-combinatoric problem.
+  you clarify?}.\noteMP{This is based on the sub problems enumeration of Feldman 2012. He basically considers that variable binding is only applicable to high level language. I have clarified his view more in the sub problems enumeration}
 
-There are two main approaches discussed in the literature to solve the
-binding problem. The first relies on the framework of tensor product
-representations and the second to connectivity based models that allow
-binding by process\noteCP{What does 'by process' mean. Is it English,
-  or a theoretical concept?}. \cite{smolensky2006harmonic} provides an
-in-depth analysis of the typology of vector symbol architectures (VSA)
-that work with tensor operations. He shows that variouos proposal,
-including Synchronous Firing\cite{Shastri_1993}, Holographic Reduced
-Representations\cite{Plate_1995} and Recursive Auto-Associative
-Memories\cite{Chalmers_1992}, are just particular cases with varying
-implementation details of his general tensor product framework. On the
-other hand, Van der Velde et al.\cite{van_der_Velde_2015}~explains how
-connectivity based models are necessary to produce behavior in a
-sensory-motor loop and provide an internal frame of reference for the
-brain to implement queries.\noteCP{This explanation is way to quick..
-  You need to explain. it looks that this is something that is not
-  handled in the VSA framework. Is it? Is it not? What is it?} He
-shows that models like Shruti\cite{Shastri_1993}, contrary to the
-analysis of Feldman\cite{Feldman_2012}, gain their capacity to
-implement behavior from being ultimately connectivity
-based\noteCP{Now, you should explain what ``connectivity based''
-  means.} too. Nonetheless what importantly differentiates his
-proposal from the tensor framework models is the idea of implementing
-binding by process, which consists on binding the activity of two
-concept encoding neural populations by controlling conditional
-connections between them.\noteCP{Question: is this a dynamic aspect
-  which is absent (?) from VSA, allowing to bind and unbind in time?}
-Furthermore this idea is at the base of the Neural Blackboard
-Architecture proposed by Van der Velde and De
-Kamps\cite{van_der_Velde_2006}, that claims to also solve the other
-challenges posed by Jackendoff to model language in the human
-brain.\noteCP{Maybe you should list these challenges. It is the second
-  time you mention them}  We will show that~the proposed circuits of
+We will show that~the proposed circuits of
 the architecture reveal non trivial signatures of temporally detailed
 neural dynamics that actually resemble results from the neuroimaging
 literature. Moreover, with some refinements, the produced neural
 signatures could be further validated directly against neural
 measurements from intracranial recordings, which could be the goal of
 future work.
+
+//////////////////////////////
+
+
+Behavioral evidence for the existence of constituent parts in phrases that can be moved, replaced and binded goes back to studies demonstrating the reuse of recently experienced syntactic structures in an experimental paradigm referred to as syntactic priming\cite{branigan2000syntactic, bock2007persistent}.
+
+Although the experimental evidence of constituent structures in syntax is old.
+
+Most theories of syntax described sentences as tree-like hierarchical structures of nested phrases. These phrases, or constituents, constitute syntactic units that can be moved or replaced as a whole (for example, a noun phrase can be replaced by a pronoun). Support for the psychological reality of syntactic structures comes from studies showing that speakers tend to reuse the syntactic structure of recently heard sentences, a phenomenon known as syntactic priming (1, 2). 
+
+Most linguistic theories hold that the proper theoretical de-
+scription of sentences is not a linear sequence of words, in
+the way we encounter it during reading or listening, but rather a
+hierarchical structure of nested phrases (1–4). Whether and how
+the brain encodes such nested structures during language compre-
+hension, however, remains largely unknown.
+
+////////////
+
+Only recently we have been able to start to characterize binding of such constituents. General syntax studies.
+
+Yet, although a variety of approaches using brain imaging methods have sought to characterize the regions implicated in syntactic processes (see, e.g., refs. 3–7), how the human brain computes and encodes syntactic structures remain largely open questions (8–11).
+
+ Brain-imaging studies
+of syntax have homed in on a narrow set of left-hemisphere areas (5–
+16), particularly the left superior temporal sulcus (STS) and inferior
+frontal gyrus (IFG), whose activation correlates with predictors of
+syntactic complexity (6, 7, 10, 13, 14). In particular, core syntax areas
+in left IFG and posterior STS (pSTS) show an increasing activation
+with the number of words that can be integrated into a well-formed
+phrase (10, 14). Similarly, magneto-encephalography signals show
+increasing power in beta and theta bands during sentence-structure
+build-up (17) and a systematic phase locking to phrase structure in
+the low-frequency domain (18).
+These studies leave open the central question of whether and
+how neural populations in these brain areas create hierarchical
+phrase structures within each sentence
+
+. To address this question,
+intracranial recordings with more precise joint spatial and tem-
+poral resolution may be necessary. The intracranial approach to
+language processing has led to important advances in phonetics
+(19) and single-word processing (20). At the sentence level, a
+monotonic increase in activity, broadly distributed in the left
+hemisphere, was found during sentence processing (21), but its
+relation to sentence-internal structure-building operations remained
+unexplored
+
+//////////////////////
+
+More specific questions about the binding operation and constituency.
+For this work we select two important studies. One for its demonstration of dissociation between syntactic and semantic binding and the other for the characterization of the temporal dynamics of binding. Moreover this studies allow us to show the capacity of the simulation to reproduce neuroimaging evidence for wide experimental aspects at different neuroimaging scales.
+
+/////////////////////////
+
+Present the recent evidence of intracortical recordings.
+Important in literature due to the first depiction of word to
+word binding with temporal detail and spatial specificity
+of intracortical recordings. Explain experimental paradigm
+and briefly introduce the findings reported on the paper.
+
+Here, we used direct time-domain
+analyses of intracranial neurophysiological data to shed light on the
+neural activity underlying linguistic phrase-structure formation.
+Our research tests the hypothesis that during comprehension
+people “parse” the incoming sequence of words in a sentence
+into a tree-like structure that captures the part–whole relation-
+ships between syntactic constituents. This basic idea has been at
+the heart of psycholinguistics since the Chomskyan revolution of
+the 1960s (see, e.g., ref. 22). To understand this sense of “pars-
+ing,” consider the example “Ten sad students of Bill Gates”
+shown in Fig. 1A. These six words are grouped both semantically
+and syntactically into a single noun phrase, which later serves as
+a subject for the subsequent verb phrase. We sought to identify
+the neural correlates of this operation, which we call here “merge”
+in the sense of Chomsky’s Minimalist Program (23). Note, how-
+ever, that our research does not assume this research program in
+full but addresses the more general question of whether and how
+the human brain builds nested phrase structures.
+
+/////////////////////////
+
+Present the older evidence of constituency. Important for
+separating semantic binding from syntactic binding.
+Also shows that the effects of constituency en specific
+language regions and that structures
+with more constituents require more time of processing with onset delay.
+
+
+In this article, we propose an experimental paradigm to address this issue. We start with the intuitive hypothesis that a more complex cell assembly should be needed to encode a constituent of three elements, such as “Mary's father's car,” than a constituent of two elements such as “Mary's father.” Thus, neural activity might increase by a fixed amount each time a new node must be added to the constituent structure constructed on the basis of the preceding words. Arguments in favor of such an “accumulation” model comes from neurophysiological recordings in awake macaque monkeys during sequence-learning tasks, where specific neurons enter into a sustained mode of activity at different points of the sequence, thus creating a cumulative code for the sequences content (12–14). In the human brain, such a pattern of neural discharges has not yet been observed during language processing, but a detailed neural network proposal for structure encoding that could produce such cumulative activity is the tensor product theory put forward by Paul Smolensky (15). This theory proposes that a tree structure can be represented neurally by the superposition of several neural assemblies, each consisting in the tensor product of two neural vectors, a “role” and a “filler.” The role vector codes for the syntactic role of a word (i.e., its position in the constituent structure), whereas the filler vector codes for the content being encoded at this position (i.e., the specific lexical item). Assuming that at least one of these vectors is encoded by a sparse neural code (a small proportion of active neurons, the majority being inactive), the superposition principle implies that mean activation increase by an approximately constant amount each time a new tensor product is added to the overall structure. Thus, this model leads to the expectation of a linear increase in activation with the number of nodes of the constituent structure.
+
+
 
 \subsection{Neural models of language}
 
@@ -390,6 +456,63 @@ recordings obtained from ECoG and fMRI.
 \subsection{The Neural Blackboard Architecture (NBA)}
 
 {\label{935508}}
+
+///////////// eliminate from general introduction (incorporate in modelling section)
+
+Due to the combinatoric nature of language structures, modelling binding with simple linking mechanisms like combination-encoding cells become
+unfeasible\cite{von_der_Malsburg_1999}. ~To get an idea of the
+massiveness of this problem~we can take a simple example from Van der
+Velde\cite{van_der_Velde_2006}. That is, an average 17-year-old
+English speaker has a lexicon of more than 60.000 words, which easily
+allows a set of 10\textsuperscript{20} or more possible phrases, of 20
+or less words, that can be produced and understood. Such magnitude
+effectively exceeds the estimated lifetime of the universe expressed
+in seconds, making it clear that a simple holistic encoding of
+sentences is not attainable in a human lifetime. Moreover the need to perform later unbinding operations for reasoning in data structures like language where order and variable types are important adds complexity to the possible mechanisms we can hypothesize.
+
+
+To surmount these modelling issues, two main approaches are discussed in the literature. The first relies on the framework of tensor product
+representations\cite{smolensky2006harmonic} and the second on connectivity based models that allow
+binding by process\cite{van_der_Velde_2015}
+\noteCP{What does 'by process' mean. Is it English, or a theoretical concept?}
+\noteMP{It is a theoretical concept posed forward by Van der Velde, I added the reference here to the paper where he introduces the term}.
+
+
+Smolensky provides an in-depth analysis of the typology of vector symbol architectures (VSA)
+that work with tensor operations. He shows that various proposals,
+including Synchronous Firing\cite{Shastri_1993}, Holographic Reduced
+Representations\cite{Plate_1995} and Recursive Auto-Associative
+Memories\cite{Chalmers_1992}, are just particular cases with varying
+implementation details of his general tensor product framework.
+
+
+On the
+other hand, Van der Velde et al.\cite{van_der_Velde_2015}~explains how
+connectivity based models are necessary to produce behavior in a
+sensory-motor loop and to provide an internal frame of reference for the
+brain to implement queries.\noteCP{This explanation is way to quick..
+  You need to explain. it looks that this is something that is not
+  handled in the VSA framework. Is it? Is it not? What is it?} He
+shows that models like Shruti\cite{Shastri_1993}, contrary to the
+analysis of Feldman\cite{Feldman_2012}, gain their capacity to
+implement behavior from being ultimately connectivity
+based\noteCP{Now, you should explain what ``connectivity based''
+  means.} too. Nonetheless what importantly differentiates his
+proposal from the tensor framework models is the idea of implementing
+binding by process, which consists on binding the activity of two
+concept encoding neural populations by controlling conditional
+connections between them.\noteCP{Question: is this a dynamic aspect
+  which is absent (?) from VSA, allowing to bind and unbind in time?}
+
+
+Furthermore this idea is at the base of the Neural Blackboard
+Architecture proposed by Van der Velde and De
+Kamps\cite{van_der_Velde_2006}, that claims to also solve the other
+challenges posed by Jackendoff to model language in the human
+brain.\noteCP{Maybe you should list these challenges. It is the second
+  time you mention them}  
+
+/////////////////////////////
 
 Beyond the binding problem, the Neural Blackboard Architecture the
 four challenges of Jackendoff and proposes a general mechanism
