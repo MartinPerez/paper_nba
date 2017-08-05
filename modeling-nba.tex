@@ -220,86 +220,33 @@ Instead a sub-linear pattern surprised the authors, while being naturally explai
 
 {\label{619233}}
 
-As pointed out by John Hale\cite{hale2014automaton}, a current
-challenge in modern Linguistics is to incorporate it into the general
-enterprise of Cognitive Science. This means that grammars given by
-linguistic theory have to incorporate a temporal component to give
-birth to computational mechanisms, like automaton models, capable of
-explaining behavior.\noteCP{Again, unecessary criticism of
-  linguistics. You can turn into a positive way: For those who want to
-  understand how language works in the brain, we need to take into
-  account the dynamics.} Nonetheless to bring linguistics
-into~neuroscience we have to go much further and also provide
-reasonable implementation models conforming to the biological
-components of the brain. This implementation is necessary to be able
-to go beyond behavioral measurements and ultimately test computational
-hypotheses directly against the currently available spatio-temporal
-neural measurements.
+As pointed out by John Hale\cite{hale2014automaton}, to understand how the cognitive faculty of language operates, we need to take into account, not only the underlying supporting structures but also their dynamics. This means that we have to consider simultaneously the grammars given by linguistic theory and a temporal component to give birth to computational mechanisms, like automaton models, capable of explaining behavior.
+\noteCP{Again, unecessary criticism of linguistics. You can turn into a positive way: For those who want to understand how language works in the brain, we need to take into account the dynamics.}.
+\noteMP{Is this wording better?}.
+Nonetheless to extend this into neuroscience we have to go much further and also provide reasonable implementation models conforming to the biological components of the brain.
+This implementation is necessary to be able to go beyond behavioral measurements and ultimately test computational hypotheses directly against the currently available spatio-temporal neural measurements.
 
-A good example of success in this direction is the
-computational~theory of visual receptive
-fields\cite{lindeberg2017normative} which has made impressively accurate
-predictions about the shape of the biological visual fields in the
-retina. Knowledge of these basic units of visual perception has
-even recently allowed to correlate the mechanisms behind deep
-convolutional neural networks to visual
-pathways\cite{Guclu_2015,Eickenberg_2017} and has influenced our
-understanding of higher-level visual phenomena such as visual
-illusions\cite{Eagleman_2001}. Although expecting at the moment
-something similar in the case of language might sounds overambitious,
-we must note that basic phonetic features have already been decoded in
-the Superior Temporal Gyrus from electrocorticography
-(ECoG)\cite{Mesgarani_2014} and as presented in the previous section several detailed neural effects of constituency and binding have been recently revealed in the literature.
+A good example of success in this direction is the computational~theory of visual receptive fields\cite{lindeberg2017normative} which has made impressively accurate predictions about the shape of the biological visual fields in the retina.
+Knowledge of these basic units of visual perception has even recently allowed to correlate the mechanisms behind deep convolutional neural networks to visual pathways\cite{Guclu_2015,Eickenberg_2017} and has influenced our understanding of higher-level visual phenomena such as visual illusions\cite{Eagleman_2001}.
+Although expecting at the moment something similar in the case of language might sounds overambitious, we must note that basic phonetic features have already been decoded in the Superior Temporal Gyrus from electrocorticography (ECoG)\cite{Mesgarani_2014}.
+Moreover, as presented in the previous section, recently several spatial and temporal detailed neural correlates of constituency and binding have been revealed.
 
+Numerous Artificial Neural Network models for specific and general language tasks have been implemented.
+For an extensive review of these, categorized by language function, we recommend reading Bocancia\cite{bocancia2014psycholinguistically}, Christiansen et al.\cite{Christiansen_1999} and Miikkulainen\cite{miikkulainen1997natural}.
+Among these the Shruti architecture for logical inference\cite{Wendelken_2004} and the latest optimization and quantization framework of Smolensky for phonological production\cite{Smolensky_2013} are notable mentions.
+Nonetheless more relevant to our work are efforts to model language function with more biologically plausible spiking neural network models, that would eventually allow to establish a mechanistic link between neural measurements and computational linguistic hypothesis.
+Examples of these are CABot\cite{Huyck_2009}, BioPLa\cite{rosa2004thematic}, TRANNS\cite{bocancia2014psycholinguistically}, the language models of Markert et al.\cite{Markert_2007}, the corticostriatal model of Dominey et al.\cite{Dominey_2009}, the discrete combinatorial neural assemblies of Pulvermuller\cite{Pulverm_ller_2009, Pulverm_ller_2010}, the words model of Garagnani et al.\cite{Garagnani_2017} and the DORA mechanism proposed by Martin et al. for hierarchical linguistic structures\cite{Martin_2017}.
+\noteCP{Feels a lot of name dropping: it would be nice to details a tiny bit 2 or 3 ideas from these papers.}
+\noteMP{They are supposed to be here just for detailed reference of spiking neural network models, but they do not really compete with the NBA in the way the tensor framework does and as in the case of the previously mentioned ANNs they are related to specific or general language tasks that very indirectly implementing variable binding. I changed the wording of their presentation and think detailing them would just deviate from the point}.
 
-Numerous Artificial Neural Network models for specific and general
-language tasks have been implemented. For an extensive review of
-these, categorized by language function, we recommend reading
-Bocancia\noteCP{Crash with bibtex on this ref:
-  bocancia2014psycholinguistically}, Christiansen et
-al.\cite{Christiansen_1999} and
-Miikkulainen\cite{miikkulainen1997natural}. Among these the Shruti
-architecture for logical inference\cite{Wendelken_2004} and the latest
-optimization and quantization framework of Smolensky for phonological
-production\cite{Smolensky_2013} are notable mentions. Nonetheless more
-relevant to our work are efforts to model language function solving
-the variable binding problem with biological plausible mechanisms.
-Examples of this are CABot~\cite{Huyck_2009},
-BioPLa\cite{Garcia_Rosa}, TRANNS\noteCP{crash on ref
-  {bocancia2014psycholinguistically}}, ~the language models of Markert
-et al.\cite{Markert_2007}, the corticostriatal model of Dominey et
-al.\cite{Dominey_2009}, the discrete combinatorial neural assemblies
-of Pulvermuller\cite{Pulverm_ller_2009,Pulverm_ller_2010}, the words
-model of Garagnani et al.\cite{Garagnani_2017}, the DORA mechanism
-proposed by Martin et al. for hierarchical linguistic
-structures\cite{Martin_2017}.\noteCP{Feels a lot of name dropping: it
-  would be nice to details a tiny bit 2 or 3 ideas from these papers.}
-
-All these efforts have been successful at demonstrating the
-feasibility of approximating language tasks with biologically
-constrained neural networks. Nonetheless, even though they attempt to
-offer biological plausible implementations, many biological details
-necessary to match in-vivo neural patterns of the modeled processes
-have been kept out of scope. This has been a reasonable strategy
-considering the computational cost of building circuits with
-point\noteCP{point?} neural models. Yet, as we will show, recent
-developments like population density
-techniques~\cite{de2013generica}~now permit to implement
-state-of-the-art biologically detailed circuits of neural populations.
-The current work is similar in spirit to the Blue Brain
-Project\cite{Markram_2006}~to tackle the ``predictive neuroscience''
-and ``simulating the brain'' challenges put forward by
-Markram\cite{markram2013seven}. So instead of trying to implement a
-complete language parsing neural network trained from stimuli, we will
-focus on pushing the boundary of biological detail for the specific
-abstract mechanism of variable binding as proposed in the Neural
-Blackboard Architecture\cite{van_der_Velde_2006}, assuming other
-necessary mechanisms for parsing are in place.\noteCP{Not clear that
-  this sentence sarting by 'So', follows from the previous one.} We
-will implement a simulation that can provide temporally detailed
-predictions about the neural signature of variable binding, assuming
-binding by process, and then compare such predictions to actual
-recordings obtained from ECoG and fMRI.
+All these efforts have been successful at demonstrating the feasibility of approximating language tasks with biologically constrained neural networks.
+Nonetheless, even though they attempt to offer biological plausible implementations, many biological details necessary to match in-vivo neural patterns of the modelled processes have been kept out of scope.
+This has been a reasonable strategy considering the computational cost of building circuits with detailed neural models based on point processes.
+Yet, as we will show, recent developments like population density
+techniques\cite{de2013generica} now permit to simulate state-of-the-art temporally detailed dynamics of circuits of neural populations.
+The current work is similar in spirit to the Blue Brain Project\cite{Markram_2006} in trying to tackle the ``predictive neuroscience'' and ``simulating the brain'' challenges put forward by Markram\cite{markram2013seven}.
+Instead of trying to implement a complete language parsing neural network trained from stimuli, we will focus on pushing the boundary of biological detail for the specific abstract mechanism of variable binding as proposed in the Neural Blackboard Architecture\cite{van_der_Velde_2006}, assuming other necessary mechanisms for parsing are in place.
+This simple mechanism will already provide temporally detailed predictions about the neural signatures of variable binding, to be contrasted with the brain imaging results obtained from ECoG and fMRI experiments.
 
 \subsection{The Neural Blackboard Architecture (NBA)}
 
@@ -395,7 +342,7 @@ activation~\cite{van_Dijk_2015}\noteCP{Are these two point issues to be
   addressed or implementation of mechanisms?}. In the following
 paragraphs we summarize the main abstract mechanisms and
 assumptions behind the NBA. For a deeper review we recommend the recent paper on circuit design and examples that focus on sentence
-processing~\cite{de2015combinatorial} as well as the original framework
+processing~\cite{de2016combinatorial} as well as the original framework
 proposal for combinatorial structures~\cite{van_der_Velde_2006}.
 
 The NBA assumes grounded representations\noteCP{In such models, it
@@ -589,7 +536,7 @@ In the case of the control mechanism, Feed-forward artificial neural
 networks have already been employed with the
 NBA~\cite{van_der_Velde_2010} and recently state of the art
 feedforward network architectures have shown top performance for
-diverse language parsing tasks~\cite{Andor_2016}. Moreover a more
+diverse language parsing tasks~\cite{andor2016globally}. Moreover a more
 recent extension of the NBA relying on the motor circuit of the marine
 mollusk Tritonia diomedea to generate patterns for sequential
 activation control has been proposed~\cite{van_Dijk_2015}. Nonetheless
@@ -616,7 +563,7 @@ equations, as explained by de~Kamps \cite{de_Kamps_2008}, only allow
 to correctly approximate  the steady state of neural populations by
 suggesting what the mean firing rates should be. On the other hand,
 population density techniques \cite{de2013generic} implemented in the
-MIIND software \cite{de_Kamps_2008} \cite{harrison2011new} can
+MIIND software \cite{de_Kamps_2008} can
 accurately describe the transient dynamics of large populations of the
 mentioned LIF neurons.
 
@@ -896,7 +843,7 @@ comparing the circuit neural dynamics with the neuroimaging
 literature, we only focused on the qualitative neural temporal
 patterns observed. All the C++ scripts behind the circuit and
 sub-circuit simulations, taking advantage of the MIIND
-software\cite{de_Kamps_2008}\cite{harrison2011new}, are accessible in
+software\cite{de_Kamps_2008}, are accessible in
 the Blackboard application folder of the MIIND github repository
 https://github.com/dekamps/miind.
 
@@ -1631,7 +1578,7 @@ dynamics of the circuit affect our interpretation of the neuroimaging
 evidence for language processing. In contrast to previous
 simulations\cite{van_der_Velde_2011,van_der_Velde_2010,Frank_2014,van_Dijk_2015},
 employing population density techniques implemented in the MIIND
-software\cite{de_Kamps_2008,harrison2011new} allowed us to approximate
+software\cite{de_Kamps_2008} allowed us to approximate
 well transient temporal dynamics. Thanks to this, we could show an
 important difference in the shape of the AdEx and LIF responses, how
 before arriving to a steady state AdEx responds differently to
