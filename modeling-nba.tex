@@ -137,48 +137,25 @@ Remark: I suggests that both you and Marc be corresponding authors, if Marc agre
 
 \section*{Abstract}
 
-An important challenge for neurolinguistics is to understand how
-variable binding is implemented in the brain. Variable binding is
-needed to assign words to their syntactic and semantic roles during
-sentence comprehension. Few attempts have been made to model complete
-circuits of variable binding with biological spiking neural networks.
-One of them is the Neural Blackboard Architecture (NBA) proposed by
-van~der~Velde and de~Kamps \cite{van_der_Velde_2006}. It was designed
-from the ground to solve variable binding and to address several
-challenges in the neural modeling of sentence processing, in
-particular those put forward by Jackendoff \cite{Jackendoff_2002b}.
+An important challenge for neurolinguistics is to understand how binding is implemented in the brain.
+In particular variable binding is needed to assign words to their syntactic and semantic roles during sentence comprehension. 
+Few attempts have been made to model complete circuits capable of variable binding with spiking neural population networks.
+One of them is the Neural Blackboard Architecture (NBA) proposed by van~der~Velde and de~Kamps \cite{van_der_Velde_2006}.
+It adresses several challenges in the neural modelling of sentence processing, including those put forward by Jackendoff \cite{Jackendoff_2002b}.
 
-There is important recent neuroimaging evidence of the neural behavior of variable binding.
 
-We implement NBA compartment circuit and show that the architecture reproduces qualitatively several aspects of the recent neuroimaging evidence.
+Here we demonstrate that a NBA implementation, only tuned to satisfy operational constraints, naturally produces qualitative patterns of two landmark language neuroimaging experiments related to binding at different spatio-temporal scales.
+We show that the model approximates recent work from Nelson et al. \cite{Nelson_2017} based on intracortical recordings (EcOG), in which temporally detailed neural effects on phrase size and word binding operations are depicted. 
+Moreover, we reproduce a sublinear increase of the amplitude of peak hemodynamic responses and explain peak onset differences reported in brain language regions as a function of constituent size in lists of phrases, corresponding to a fMRI experiment from Pallier et al. \cite{Pallier_2011}
 
-To achieve this we extended the NBA with state of the art population density techniques and explored the behavior of the architecture under several neural models.
 
-Not only our model reproduces neuroimaging effects but is a promising tool for hypothesis generation due to its flexibility to test diverse linguistic hypothesis on parsing and grammar.
+Our implementation pushes the boundary of temporally detailed neural dynamics with population density techniques.
+Also we raise awareness on the sensitivity of population circuits to the underlying neural models assumed.
+We test an Adaptive-Exponential (AdEx) neural model and show that it importantly constrains coordination of events and operations on the NBA in contrast to the simpler and normally assumed Leaky-Integrate-and-Fire (LIF) model.
+\noteCP{This sentence is vague and unclear to me. Can you make it more precise?}.
+\noteMP{is the neural model result clear now?}.
+These results alongside the flexibility of the NBA to represent arbitrary hierarchical tree structures and parsing schemes, makes it a promising tool for linguistic hypothesis exploration and future refined quantitative accounts of multi-scale neuroimaging measurements.
 
-Here, we expand on previous simulations of the NBA with population density techniques to obtain temporally detailed neural dynamics.
-We show how different neural models constrain the circuit
-implementation, behavior and predictions.\noteCP{This sentence is
-vague and unclear to me. Can you make it more precise?}
-\noteMP{testing comments}. While
-Leaky-Integrate-and-Fire models have been employed before, this paper
-is the first attempt to extend variable binding related circuit
-simulations to Adaptive-Exponential models. We demonstrate that it is
-possible to approximate the neural dynamics of the binding of two or
-more words to create phrases. Moreover, we compare the simulation
-results with two neuroimaging experiments. First, we show that the
-model can qualitatively replicate recent work from Nelson et al.
-\cite{Nelson_2017} based on intracortical recordings (EcOG), in which
-neural effects on phrase size and binding operations are depicted.
-Second, we approximate the results of an fMRI experiment which
-reported a sublinear increase of the amplitude of hemodynamic
-responses in language regions as a function of constituent size in
-lists of phrases \cite{Pallier_2011}. In all cases we approximate the
-neuroimaging patterns assuming a phrase grammar theory\noteCP{What is this?} and bottom-up
-parsing, but our simulations could be trivially adapted to arbitrary
-grammar theories and parsing schemes, which turns it into a promising
-hypothesis exploration device for future research in language
-neuroimaging.
 
 \section{Introduction}
 
@@ -187,57 +164,32 @@ neuroimaging.
 Although there is theoretical disagreement in modern linguistics about
 the optimal formalism to describe the internal representations of
 sentences in the human brain, there is a clear need for some sort of
-``composition'' operation to process units of language~\cite{Dehaene_2015}. This need applies to all levels of linguistic representation. For example Chomsky's minimalist program \cite{Chomsky_2013} proposes a `merge' operation for syntactic structures. While the parallel tripartite architecture of Jackendoff
-\cite{Jackendoff_2002a} emphasizes application of such operation to phonological structures, conceptual
-structures and even interfacing structures between levels.
-\noteCP{This is an unnecessarily critical
-  intro (disagreement, syntctoc centric...). This is not needed: You
-  can invert the presentaiton and first state that binding is need for
-  all linguistics levels, whatever the adopted formalism; then only
-  mention Chomsky's merge as the central operation in the minimalist
-  program, if you like.}\noteMP{I changed the writing as suggested}.
-It is not only assumed by the notions of
-constituency present in the formalism of phrase structure grammars,
-that allow groups of words to act as one unit, but also by the
-alternative consideration of words relative grammatical function in
-dependency grammars.\noteCP{Treelets are actually as powerful as
-  minimalist grammar and reach mildly context sensitive level. See
-  Joshi TAGs. And do not attribute treelets to a chapter by Marcus.
-  The idea is present e.g. in Joshi, Bod, .... Actually, better to not
-  emntio treelets at all here.}\noteMP{I was just trying to enumerate main theoretical alternatives. Like it was emphasized in your Perspectives Neuron paper of sequences with Stan. I deleted it as suggested}
+``composition'' operation to process units of language~\cite{Dehaene_2015}.
+This need applies to all levels of linguistic representation. For example Chomsky's minimalist program \cite{Chomsky_2013} proposes a `merge' operation for syntactic structures.
+While the parallel tripartite architecture of Jackendoff \cite{Jackendoff_2002a} emphasizes application of such operation to phonological structures, conceptual structures and even interfacing structures between levels.
+\noteCP{This is an unnecessarily critical intro (disagreement, syntctoc centric...). This is not needed: You can invert the presentaiton and first state that binding is need for all linguistics levels, whatever the adopted formalism; then only mention Chomsky's merge as the central operation in the minimalist program, if you like.}
+\noteMP{I changed the writing as suggested}.
+It is not only assumed by the notions of constituency present in the formalism of phrase structure grammars, that allow groups of words to act as one unit, but also by the alternative consideration of words relative grammatical function in dependency grammars.
+\noteCP{Treelets are actually as powerful as minimalist grammar and reach mildly context sensitive level. See Joshi TAGs. And do not attribute treelets to a chapter by Marcus. The idea is present e.g. in Joshi, Bod, .... Actually, better to not emntio treelets at all here.}
+\noteMP{I was just trying to enumerate main theoretical alternatives. Like it was emphasized in your Perspectives Neuron paper of sequences with Stan. I deleted it as suggested}
 
 
-Proposing a satisfactory neural model for the ``composition''
-operation required by language is linked to solving the binding
-problem initially posed within the domain of vision in neuroscience.
-The term binding was introduced to the neuro-scientific community by
-von der Malsburg\cite{von_der_Malsburg_1994} during the first
-explorations of neural phase synchronization for ``variable binding'',
-which is a term taken literally from computer science, meaning to link
-a data structure to a name so it can be later accessed by that name.
-As Jackendoff\cite{Jackendoff_2002b}~explains, binding is also
-motivated by the empirical discovery of the distributed and
-segmented~encoding of features along the cortex. An example of this
-would be color and shape in the case of vision, which are robustly
-integrated during perception but can be independently impaired by
-brain damage.
+Proposing a satisfactory neural model for the ``composition'' operation required by language is linked to solving the binding problem initially posed within the domain of vision in neuroscience.
+The term binding was introduced to the neuro-scientific community by von der Malsburg\cite{von_der_Malsburg_1994} during the first explorations of neural phase synchronization for ``variable binding'', which is a term taken literally from computer science, meaning to link a data structure to a name so it can be later accessed by that name.
+As Jackendoff\cite{Jackendoff_2002b}~explains, binding is also motivated by the empirical discovery of the distributed and segmented~encoding of features along the cortex.
+An example of this would be color and shape in the case of vision, which are robustly integrated during perception but can be independently impaired by brain damage.
 
 
-The binding problem in all its generality actually comprises four
-different sub problems, namely~\emph{General
-  Coordination},~\emph{Feature-Binding},~\emph{Variable Binding} and
-the~\emph{Subjective Unity of Perception}\cite{Feldman_2012}. The
-current work is specifically motivated by the~\emph{Variable Binding}
-sub-problem that is presented by Feldman as an abstract high level cognitive faculty, mainly motivated by symbolic thought, that allows to bind values to variables that form part of a structured representation. In this respect, it is a function that arises mostly in human languages and goes beyond the extensively studied sensory, attention and short-term memory phenomena of linking features, to avoid for example confusion between a red circle and a blue square represented parallely, referred to as feature binding.
+The binding problem in all its generality actually comprises four different sub problems, namely~\emph{General Coordination},~\emph{Feature-Binding},~\emph{Variable Binding} and the~\emph{Subjective Unity of Perception}\cite{Feldman_2012}.
+The current work is specifically motivated by the~\emph{Variable Binding} sub-problem that is presented by Feldman as an abstract high level cognitive faculty, mainly required by symbolic thought to bind values to variables that form part of a structured representation.
+In this respect, it is a function that arises mostly in human languages and goes beyond the extensively studied sensory, attention and short-term memory phenomena of feature binding.
+In which, for example, we want to avoid confusion between a red circle and a blue square represented simultaneously.
 
 
-~\emph{Variable binding}
-is also illustrated by the capacity to run logical inference on data
-structures that encode relationships between
-their items. For example the sentence ``\emph{Mary owns a book}" allows
-to establish a relation of the type \emph{own(Mary, book)} that implies
-\emph{owner(book, Mary)}, such that we can later ask the question
-``\emph{Who owns this book?}''. Moreover it is naturally related to the \emph{Unification} phenomenon, that comprises the binding of variables in a data structure independently of their particular values, like the abstract notions of combining a "determiner variable type" and "noun variable type" in a phrase.
+~\emph{Variable binding} is better illustrated by the capacity to run logical inference on data structures that encode relationships between their items.
+For example the sentence ``\emph{Mary owns a book}" allows to establish a relation of the type \emph{own(Mary, book)} that implies \emph{owner(book, Mary)}, such that we can later ask the question ``\emph{Who owns this book?}''.
+Moreover it is naturally related to the \emph{Unification} phenomenon, that comprises the binding of variables in a data structure independently of their particular values.
+Like the abstract notions of combining a "determiner variable type" and "noun variable type" in a phrase.
 
 
 \subsection{Reproduction of neuroimaging measurements}
