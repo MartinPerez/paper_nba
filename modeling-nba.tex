@@ -248,7 +248,7 @@ The current work is similar in spirit to the Blue Brain Project\cite{Markram_200
 Instead of trying to implement a complete language parsing neural network trained from stimuli, we will focus on pushing the boundary of biological detail for the specific abstract mechanism of variable binding as proposed in the Neural Blackboard Architecture\cite{van_der_Velde_2006}, assuming other necessary mechanisms for parsing are in place.
 This simple mechanism will already provide temporally detailed predictions about the neural signatures of variable binding, to be contrasted with the brain imaging results obtained from ECoG and fMRI experiments.
 
-\subsection{Main proposals of variable binding implementation}
+\subsection{Main proposals for variable binding implementation}
 
 {\label{946708}}
 
@@ -296,7 +296,7 @@ This would be reasonable considering there is substantial biological evidence fo
 For example, based on the synaptic connectivity patterns of pyramidal neurons in the neocortex, Perin et al.\cite{Perin_2011} argue in favor of the theory of neuronal group selection of Edelman\cite{edelman1987neural} over Hebb's organizational principles\cite{hebb2005organization} that emphasize the role of single neurons in a computational circuit with less connectivity constraints.
 
 
-\subsection{The Neural Blackboard Architecture (NBA)}
+\subsection{The Neural Blackboard Architecture (NBA) applied to language}
 
 {\label{935508}}
 
@@ -349,6 +349,32 @@ For a deeper review we recommend reading a recent paper with a circuit design an
 \end{figure}
 
 
+The first important concept is the gating circuit.
+
+The NBA can link grounded concepts in MA to a variable and variable to variables.
+
+Then putting together two gating circuits give us the possiblity to establish bidirectional communication that allows eventual queries to take place later.
+
+Then comes the concept of a memory circuit that is the manifestation of binding, reflected on the coactivation of SA.
+
+Then comes the compartment circuit that puts together a memory circuit with bidirectional conditional activation.
+
+Then comes the concept of blackboard. We can clarify how in the original framework SAs compete to avoid binding, here is where the small world connectivity comes into place, although here is explained with a regular grid.
+
+Depict the process of binding two variables (grammatical category types corresponding to single words or phrases)
+
+Depict the process of loading a complete phrase representation in the blackboard
+
+Show what we need a grammar for and a parsing scheme for, without entering into much details. 
+
+Explain that we can implement in practice any grammar employing binary tree data structures with the modelling. We will focus on a phrase grammar but then previous work also considered word bindings where the variable to which a word is linked can participate in multiple bindings under a dependency grammar formalism that have words as nodes.
+
+and any arbitrary parsing scheme.
+
+Maybe clarify that top-down considerations of parsing could be reflected in MAs activated by a prediction mechanism, in Ctl anticipating activation of certain MAs in the blackboard or by parallel instantiation where WMs are later inhibited by error signals. That we have the flexibility to test arbitrary computational linguistic mechanisms with the NBA but that interpretation requires further considerations that we leave out of the scope of this work. where bottom up is employed.
+
+
+
 The NBA assumes grounded representations
 \noteCP{In such models, it seems to me that no representation is *actually* grounded as there are not interfacing with the real world. No?}
 \noteMP{In the simulation we are not really showing grounded main assemblies, but the NBA indeed assumes that there is some basic units that are directly encoded in memory and linked to perception that drive all blackboards. Lets say this would be some kind of very basic lexical item at the early stages of language processing.}
@@ -366,7 +392,6 @@ Thanks to this, the \emph{compartment circuit} allows bidirectional communicatio
 Which would permit query operations to take place after the binding has been implicitly encoded with active WM populations, by reactivating the query driven MA and allowing conditional activity to flow towards the answer MA.
 \noteCP{Transform into a sentence}
 
-////////////////////////////// Reconsider explanation of blackboard. Many parts unclear to Christophe.
 
 Now we are ready to describe the processing of a complete sentence.
 This takes place in a \emph{blackboard}, which is a set of \emph{connection matrices}. Where each \emph{connection matrix} fixes the memory capacity by determining the possible amount of bindings for a pair of grammatical categories.
@@ -403,15 +428,8 @@ While in the case of complete sentences we are testing predictions based on the 
 These time series should allow us to differentiate neural activity from different syntactic tree morphologies and sizes.
 
 
-\section{Methods}
+//////////////////
 
-{\label{488128}}
-
-\subsection{Implementation of the
-  NBA}\label{implementation-of-the-nba}
-
-\subsubsection{Simplified approach to the blackboard
-  architecture}\label{simplified-approach-to-the-blackboard-architecture}
 
 The present implementation of the blackboard architecture respects its
 abstract mechanisms but does not implement them completely. Here we do
@@ -429,22 +447,7 @@ hypothesized blackboard.\noteCP{I do not understand.}
 The compartment circuit abstraction is enough to achieve our current
 simulation goals\noteCP{Would be nice to list them early in the paper.},
 since the same mechanism is used in different connection matrices and
-they might only differ in their memory capacity. So we can consider
-the same compartment circuit simulation for all different pairs of
-grammatical categories, where the circuits would have similar dynamics
-and only vary in activation time of their neural populations.
-Nonetheless we are only able to ignore the activity of complete
-connection matrices because we are not planning to explore the effect
-of memory limits under time compressed sentence processing scenarios
-or memory tasks. Otherwise important deviations in background neural
-activity due to depletion of available compartments in the connection
-matrices and intense inhibitory activity would become a crucial factor
-in the simulation. This could be an interesting exploration in future
-work to try to reproduce the temporal bottleneck effects on neural
-activity shown by Vagharchakian et al. under conditions of compressed
-speech and reading\cite{Vagharchakian_2012}.\noteCP{Maybe this should
-  be part of the final discussion rather than here where it may divert
-  attention.}
+they might only differ in their memory capacity. 
 
 In the case of the control mechanism, Feed-forward artificial neural
 networks have already been employed with the
@@ -465,8 +468,16 @@ provide the control signals that will allow the necessary neural
 activity flow from MAs to WM to process the hypothesized syntactic
 structure as required by a given parsing scheme and grammar theory.
 
-\subsubsection{Simulation framework and architectural
-  decisions}\label{simulation-framework-and-architectural-decisions}
+
+
+
+
+
+\section{Methods}
+
+{\label{488128}}
+
+\subsection{Simulation framework and NBA implementation}\label{simulation-framework-and-architectural-decisions}
 
 Previous simulations of the blackboard approximate the mean activity
 of neural assemblies with Wilson Cowan dynamics \cite{Frank_2014}.
@@ -562,8 +573,7 @@ become clear in following sections.
   \end{center}
 \end{figure}
 
-\subsubsection{Compartment circuit
-  parameters}\label{compartment-circuit-parameters}
+\subsection{Compartment circuit parameters}\label{compartment-circuit-parameters}
 
 The compartment circuit contains two different types of neural
 populations. Artificial neural populations following a boxcar event
@@ -692,8 +702,7 @@ approach.
   \end{center}
 \end{figure}
 
-\subsubsection{Simulation experiments
-  performed}\label{simulation-experiments-performed}
+\subsection{Simulation experiments performed}\label{simulation-experiments-performed}
 
 Since it is possible to tune the circuit to reproduce arbitrary firing
 rate values under which circuit dynamics are similar and stable, we
@@ -1222,6 +1231,11 @@ MA comes into play.
   \end{center}
 \end{figure}
 
+
+\subsection{Qualitative reproduction of neuroimaging patterns}
+
+{\label{444332747980}}
+
 We can apply the complete phrase neural time series approximation to a
 variety of stimuli from experimental designs behind neuroimaging
 results in the literature. First we considered the simple case of
@@ -1572,10 +1586,31 @@ hypothesis on varied neuroimaging techniques, to further~inspire more
 work in this direction.
 
 
-/////////////////////
+///////////////////// POSSIBLE ADDITIONS TO DISCUSSION (IGNORE)
 
 
 Comment on the possible extension of the model to other linguistic hypothesis like dependency grammars that consider the words directly as nodes? instead of having phrasal nodes?
+
+
+The compartment circuit abstraction is enough to achieve our current
+simulation goals\noteCP{Would be nice to list them early in the paper.},
+since the same mechanism is used in different connection matrices and
+they might only differ in their memory capacity. So we can consider
+the same compartment circuit simulation for all different pairs of
+grammatical categories, where the circuits would have similar dynamics
+and only vary in activation time of their neural populations.
+Nonetheless we are only able to ignore the activity of complete
+connection matrices because we are not planning to explore the effect
+of memory limits under time compressed sentence processing scenarios
+or memory tasks. Otherwise important deviations in background neural
+activity due to depletion of available compartments in the connection
+matrices and intense inhibitory activity would become a crucial factor
+in the simulation. This could be an interesting exploration in future
+work to try to reproduce the temporal bottleneck effects on neural
+activity shown by Vagharchakian et al. under conditions of compressed
+speech and reading\cite{Vagharchakian_2012}.\noteCP{Maybe this should
+  be part of the final discussion rather than here where it may divert
+  attention.}
 
 
 \selectlanguage{english}
