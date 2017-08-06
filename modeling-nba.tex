@@ -349,128 +349,46 @@ For a deeper review we recommend reading a recent paper with a circuit design an
 \end{figure}
 
 
-The first important concept is the gating circuit.
+Nodes in Figures {\ref{Blackboard}}.A and {\ref{Blackboard}}.B represent neural assemblies that can be interpreted as linked spiking neural populations.
+The most basic component of the NBA is a ``Gating Circuit'' illustrated in Figure {\ref{Blackboard}}.A.
+The main idea is that neural activity would flow from the assembly of variable X to the assembly of variable Y if the Gate (G) assembly was not inhibited by the Gake Keeper (GK) assembly, that is itself excited by assembly X.
+So to allow directional activity flow from X to Y, a Control (Ctl) assembly has to inhibit the GK assembly.
+Notice that it is trivial to extend the gating circuit for bidirectional control of activity flow as illustrated in Figure {\ref{Blackboard}}.B.
+Introducing bidirectional conditional control signals is what gives the NBA the possibility of implementing separately queries like 'what follows X' or 'what follows Y'.
 
-The NBA can link grounded concepts in MA to a variable and variable to variables.
+The second basic component of the NBA is a working memory (WM) mechanism based on Delay Activity\cite{de_Kamps_2005}.
+It consists in a neural population that portrays Delay Activity after being excited beyond a certain threshold achieved by the coactivation of input populations.
+Then WM can act as a short lived bidirectional link between two assemblies. This conforms a ``Memory Circuit'' as depicted in Figure {\ref{Blackboard}}.B.
 
-Then putting together two gating circuits give us the possiblity to establish bidirectional communication that allows eventual queries to take place later.
-
-Then comes the concept of a memory circuit that is the manifestation of binding, reflected on the coactivation of SA.
-
-Then comes the compartment circuit that puts together a memory circuit with bidirectional conditional activation.
-
-Then comes the concept of blackboard. We can clarify how in the original framework SAs compete to avoid binding, here is where the small world connectivity comes into place, although here is explained with a regular grid.
-
-Depict the process of binding two variables (grammatical category types corresponding to single words or phrases)
-
-Depict the process of loading a complete phrase representation in the blackboard
-
-Show what we need a grammar for and a parsing scheme for, without entering into much details. 
-
-Explain that we can implement in practice any grammar employing binary tree data structures with the modelling. We will focus on a phrase grammar but then previous work also considered word bindings where the variable to which a word is linked can participate in multiple bindings under a dependency grammar formalism that have words as nodes.
-
-and any arbitrary parsing scheme.
-
-Maybe clarify that top-down considerations of parsing could be reflected in MAs activated by a prediction mechanism, in Ctl anticipating activation of certain MAs in the blackboard or by parallel instantiation where WMs are later inhibited by error signals. That we have the flexibility to test arbitrary computational linguistic mechanisms with the NBA but that interpretation requires further considerations that we leave out of the scope of this work. where bottom up is employed.
-
-
-
-The NBA assumes grounded representations
+Two bidirectional ``Gating Circuits'' connected by a ``Memory Circuit'' form a ``Compartment Circuit'' capable of implementing variable binding and query operations.
+The key point of this circuit is that Main assemblies (MA) representing features of grounded concepts or variables activate Sub assemblies (SA) if a control signal driven by another mechanism allows it.
 \noteCP{In such models, it seems to me that no representation is *actually* grounded as there are not interfacing with the real world. No?}
-\noteMP{In the simulation we are not really showing grounded main assemblies, but the NBA indeed assumes that there is some basic units that are directly encoded in memory and linked to perception that drive all blackboards. Lets say this would be some kind of very basic lexical item at the early stages of language processing.}
-of concepts in distributed or local neural populations referred to as Main Assemblies (MA).
-Variable binding of concepts is implemented through the conditional activity of a neural population referred to as Sub Assemblies (SA), driven by MAs.
-Then SAs lead to the activation of neural populations that portray Delay Activity\cite{de_Kamps_2005}, which can be interpreted as a kind of Working Memory (WM). So in the case of sentence processing we can equate the grammatical categories to the grounded concepts of MAs, the parsing process to the conditional activity igniting SAs and the derived syntax tree to the implicit representation given by a collection of WM reverberating populations with delay activity.
+\noteMP{MAs could be both, the feature of grounded concepts like a grammatical category or variables like syntactic object types, is it clearer now?}
+Then coactivation of SAs is what realizes a temporary binding of MAs by activating WM.
+So one ``Compartment Circuit'' models specifically the neural activity of the variable binding operation applied to two concepts or variables.
+It is operated by a mechanism that drives control signals simultaneously in multiple ``Compartment Circuits'' to instantiate binary tree like data structures on which query/unbinding operations can be performed later. 
 
-To understand how a sentence is processed in the blackboard architecture, let us consider the simplest case of binding two grammatical categories.
-\noteCP{You rather mean two words --- belonging to grammatical categories that can be merged (reduced), no? Please use a very precise vocabulary s this is a complicated topic.}
-This takes place in one~\emph{compartment circuit} of a~\emph{connection matrix}.
-The~\emph{compartment circuit} contains the SAs that encode the relationship type of the binding and the WM that keeps the binding for an arbitrary period of time.
-It is engineered with six simple \emph{gating circuits}.
-The \emph{gating circuit} can be seen as the smallest meaningful circuit in the NBA, composed of interconnected neural populations such that neural activation is transferred conditionally between a source and target population.
-Thanks to this, the \emph{compartment circuit} allows bidirectional communication between the MAs encoding the grounded representation of the grammatical categories mediated by a neural control mechanism.
-Which would permit query operations to take place after the binding has been implicitly encoded with active WM populations, by reactivating the query driven MA and allowing conditional activity to flow towards the answer MA.
-\noteCP{Transform into a sentence}
+As might be evident by now, applying the NBA to syntactic processing in language consists on two simple assumptions.
+Firstly, equating the parsing mechanism to the control mechanism that coordinate binding events of words and syntactic objects.
+Secondly, determining the number of compartment circuits necessary to instantiate a complete syntactic structure and the content of MA nodes from a grammar theory.
+Although in this work we will employ a phrase grammar and bottom-up parsing scheme following theoretical assumptions of selected neuroimaging experiments.
+A promising feature of the NBA is that it has the flexibility to test any arbitrary parsing mechanism incorporating top-down considerations and an important variety of alternative theories of grammar.
+For example dependency grammars that assume multiple direct word bindings instead of the hierarchical phrase bindings modelled in this work have been employed in previous simulations\cite{van_der_Velde_2010}.
 
+To understand how a sentence is processed in the NBA, lets consider first the simplest case of binding two words belonging to grammatical categories instantiated in the MAs of one ``Compartment Circuit''.
+The MAs activate with timings corresponding to word presentation.
+Then the assumed parsing mechanism determine that combinations of the particular grammatical categories of the words presented are necessary in the blackboard, driving several ``Compartment Circuits'' from which the one modelled completes coactivation of SAs to drive WM and realize word binding.
+In the case of a complete phrase, the parsing mechanism also takes into account the time at which binding of word grammatical categories take place.
+Then these bindings can also drive MA nodes that represent phrasal syntactic categories, to be further combined with the grammatical categories of other words according to the tree structure predicted by the grammar.
 
-Now we are ready to describe the processing of a complete sentence.
-This takes place in a \emph{blackboard}, which is a set of \emph{connection matrices}. Where each \emph{connection matrix} fixes the memory capacity by determining the possible amount of bindings for a pair of grammatical categories.
-\noteCP{Transform into a sentence.}
-A~\emph{connection matrix} manages memory slots dynamically through competing mutually inhibitory compartment circuits and handles in this way the dynamic binding of a particular pair of grammatical categories.
-Then all the necessary bindings are determined by the relevant connection matrices available and the number of sentences that can be kept in short term memory are limited by their capacity.
+Finally, higher level mechanisms of the NBA like the ``Connection Matrix'' portrayed in Figure {\ref{Blackboard}}.C, allow the implementation of a complete ``Blackboard''.
+It basically contains sets of mutually inhibitory ``Compartment Circuits'' representing the possible set of abstract variable relations learned by the ``Blackboard''.
+Like the possible combination of syntactic categories allowed by a phrase grammar. Here is where the previously mentioned considerations of small world connectivity come together into place with a general overarching control mechanism.
 
-
-
-
-An important feature of the blackboard architecture is its flexibility to process and implicitly represent arbitrary tree structures.
-Most of the previous blackboard simulations considered flat tree structures
-\noteCP{Hum. What is a flat tree structure. You mean a list? Dependency graphs are trees too. The difference with constituent structures is that nodes are words not phrases.}
-corresponding to dependency grammars\cite{nivre2005dependency}, where as expected the word grammatical categories elicit activity in MAs while their dependencies are represented by activity in WM and SAs.
-This overlooks other grammar theories that depend on constituency like a phrase structure grammar\cite{gazdar1982phrase}, where it is also necessary to instantiate MAs for phrasal categories.
-Nonetheless this can be easily resolved by allowing a WM, activated by the binding of two word categories, to instantiate activity in another MA, which can participate in further bindings reflecting hierarchical structure.
-\noteCP{The paragraph is hard to understand. Can you explain in a bit more details?}
-
-Here we implement only the necessary parts of the NBA to model the neural activity related to variable binding, which itself is enough to instantiate the representation of an arbitrary sentence syntactic structure
-\noteCP{What you mean here, is it is enough to have a CONS-like operation --- in LISP parlance --- to build any tree, right?}
-if we take the grammar theory and parsing scheme as given.
-\noteCP{Think about the reader who does not know the distinction between grammar theory and parsing The previous paragraph, with more details, could explain it. Or get reif of it. This may actually not be an important distinction for the purpose of this paper}.
-This means that we simplify two important aspects of the circuit.
-The first is that we will provide the signals of control directly to the compartment circuits.
-Previous attempts to train the control mechanism\cite{van_der_Velde_2010} were tailored only to specific grammatical cases and creating a general control mechanism to test the neural activity patterns would require a more varied dataset in grammatical categories
-\noteCP{???}
-and would comprise computational linguistic efforts out of the scope of this work.
-The second is that we do not model the dynamic inhibition of competing blackboard compartment circuits, since this would require an hypothesis about the size of the blackboard, which would be related to memory limitations and the total number of possible grammatical categories to link in binary trees, which again would require out of scope computational linguistic efforts.
-\noteCP{More of a psycholinguitics issue than a computational linguistics one, no?}.
-Moreover the simplest selection mechanism behind competing blackboard compartment circuits can be hypothesized to be uniformly random on available compartments.
-This means that we are only testing the temporal patterns of neural activity linked to a variable binding event in the case of two words association.
-\noteCP{But but but, you are also modeling the binding of a word and a phrase, no?}
-While in the case of complete sentences we are testing predictions based on the average neural activity time series of a collection of compartment circuits instantiated as demanded by the given grammar theory and parsing scheme.
-These time series should allow us to differentiate neural activity from different syntactic tree morphologies and sizes.
-
-
-//////////////////
-
-
-The present implementation of the blackboard architecture respects its
-abstract mechanisms but does not implement them completely. Here we do
-not simulate complete connection matrices, as the compartment circuits
-mutual inhibition mechanism is an operation for which there is no
-obvious unique implementation. There is already a proof of concept to
-understand the implementation of the mechanism in randomly connected
-networks, nonetheless it does not yet achieve a complete circuit level
-specification integrated with a complete blackboard architecture
-\cite{van_der_Velde_2011}. Instead we just instantiate compartment
-circuits as necessary, since in essence they would be selected
-randomly in a connection matrix from available compartments in the
-hypothesized blackboard.\noteCP{I do not understand.}
-
-The compartment circuit abstraction is enough to achieve our current
-simulation goals\noteCP{Would be nice to list them early in the paper.},
-since the same mechanism is used in different connection matrices and
-they might only differ in their memory capacity. 
-
-In the case of the control mechanism, Feed-forward artificial neural
-networks have already been employed with the
-NBA~\cite{van_der_Velde_2010} and recently state of the art
-feedforward network architectures have shown top performance for
-diverse language parsing tasks~\cite{andor2016globally}. Moreover a more
-recent extension of the NBA relying on the motor circuit of the marine
-mollusk Tritonia diomedea to generate patterns for sequential
-activation control has been proposed~\cite{van_Dijk_2015}. Nonetheless
-implementing these neural architectures would be out of the scope of
-this work, since we will not investigate the whole neural activity
-related to parsing but only the portion specifically related with
-variable binding, which itself is enough to look into the formation
-and storage of a phrase structure with temporal events derived from
-some some given parsing mechanism. Where also the expected phrase
-structure is given by some specified grammar theory. So we will simply
-provide the control signals that will allow the necessary neural
-activity flow from MAs to WM to process the hypothesized syntactic
-structure as required by a given parsing scheme and grammar theory.
-
-
-
-
+We portray the ``Blackboard'' as a regular grid for illustrative purposes, although there is already a proof of concept implementation with randomly connected networks\cite{van_der_Velde_2011}.
+Also implementing a general syntactic control mechanism should be feasible. As suggested by the Feed-forward artificial neural networks employed in previous NBA simulations~\cite{van_der_Velde_2010} and recent state of the art feedforward network architectures that have shown top performance for diverse language parsing tasks~\cite{andor2016globally}.
+Moreover a more recent proposed extension of the NBA, that imitates the motor circuit of the marine mollusk Tritonia diomedea, shows how to generate patterns for sequential activation control\cite{van_Dijk_2015}.
+Nonetheless simulating these higher level mechanisms is a task out of the scope of this work, since we focus specifically on reproducing the neural signatures of variable binding operations.
 
 
 \section{Methods}
@@ -1611,6 +1529,28 @@ activity shown by Vagharchakian et al. under conditions of compressed
 speech and reading\cite{Vagharchakian_2012}.\noteCP{Maybe this should
   be part of the final discussion rather than here where it may divert
   attention.}
+
+
+Maybe clarify that top-down considerations of parsing could be reflected in MAs activated by a prediction mechanism, in Ctl anticipating activation of certain MAs in the blackboard or by parallel instantiation where WMs are later inhibited by error signals. That we have the flexibility to test arbitrary computational linguistic mechanisms with the NBA but that interpretation requires further considerations that we leave out of the scope of this work. where bottom up is employed.
+
+
+Here we implement only the necessary parts of the NBA to model the neural activity related to variable binding, which itself is enough to instantiate the representation of an arbitrary sentence syntactic structure
+\noteCP{What you mean here, is it is enough to have a CONS-like operation --- in LISP parlance --- to build any tree, right?}
+if we take the grammar theory and parsing scheme as given.
+\noteCP{Think about the reader who does not know the distinction between grammar theory and parsing The previous paragraph, with more details, could explain it. Or get reif of it. This may actually not be an important distinction for the purpose of this paper}.
+This means that we simplify two important aspects of the circuit.
+The first is that we will provide the signals of control directly to the compartment circuits.
+Previous attempts to train the control mechanism\cite{van_der_Velde_2010} were tailored only to specific grammatical cases and creating a general control mechanism to test the neural activity patterns would require a more varied dataset in grammatical categories
+\noteCP{???}
+and would comprise computational linguistic efforts out of the scope of this work.
+The second is that we do not model the dynamic inhibition of competing blackboard compartment circuits, since this would require an hypothesis about the size of the blackboard, which would be related to memory limitations and the total number of possible grammatical categories to link in binary trees, which again would require out of scope computational linguistic efforts.
+\noteCP{More of a psycholinguitics issue than a computational linguistics one, no?}.
+Moreover the simplest selection mechanism behind competing blackboard compartment circuits can be hypothesized to be uniformly random on available compartments.
+This means that we are only testing the temporal patterns of neural activity linked to a variable binding event in the case of two words association.
+\noteCP{But but but, you are also modeling the binding of a word and a phrase, no?}
+While in the case of complete sentences we are testing predictions based on the average neural activity time series of a collection of compartment circuits instantiated as demanded by the given grammar theory and parsing scheme.
+These time series should allow us to differentiate neural activity from different syntactic tree morphologies and sizes.
+
 
 
 \selectlanguage{english}
