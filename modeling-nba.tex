@@ -142,13 +142,30 @@ Remark: I suggests that both you and Marc be corresponding authors, if Marc agre
 
 An important challenge for neurolinguistics is to understand how binding is implemented in the brain.
 In particular variable binding is needed to assign words to their syntactic and semantic roles during sentence comprehension. 
+\noteMdK{Suggest: 'Only a few attemtpts ...'}
 Few attempts have been made to model complete circuits capable of variable binding with spiking neural population networks.
 One of them is the Neural Blackboard Architecture (NBA) proposed by van~der~Velde and de~Kamps \cite{van_der_Velde_2006}.
 It adresses several challenges in the neural modelling of sentence processing, including those put forward by Jackendoff \cite{Jackendoff_2002b}.
 
+\noteMdK{It's risky to call a study a landmark study when it's done by one of the authors... I agree, of course, but it's better to appear a bit more disinvested in this paper. Below I will suggest a rewording for the paragraph}
 Here we demonstrate that a NBA implementation, only tuned to satisfy operational constraints, naturally produces qualitative patterns of two landmark language neuroimaging experiments related to binding at different spatio-temporal scales.
-We show that the model approximates recent work from Nelson et al. \cite{Nelson_2017} based on intracortical recordings (ECoG), in which temporally detailed neural effects on phrase size and word binding operations are depicted. 
+We show that the model approximates \noteMdK{How? What does the model show that Nelson also shows? Vague word.} recent work from Nelson et al. \cite{Nelson_2017} based on intracortical recordings (ECoG), in which temporally detailed neural effects on phrase size and word binding operations are depicted. 
 Moreover, we reproduce a sublinear increase of the amplitude of peak hemodynamic responses and explain peak onset differences reported in brain language regions as a function of constituent size in lists of phrases, corresponding to a fMRI experiment from Pallier et al. \cite{Pallier_2011}
+
+
+\noteMdK{
+Here we demonstrate that a NBA implementation, only tuned to operational constraints, naturally reproduces the essence of two prominent language neuroimaging 
+experiments related to binding at  different spatio-temporal scales. We show that the model replicates aspects of  recent work from Nelson et al. \cite{Nelson_2017} based on 
+intracortical recordings (ECoG),  which reveal temporally detailed neural effects of phrase size and word binding operations. 
+Moreover, we reproduce a sublinear increase of the amplitude of peak hemodynamic responses and explain peak onset differences, 
+reported in brain language regions as a function of constituent size in lists of phrases, in an fMRI experiment by Pallier et al. \cite{Pallier_2011}
+}
+
+
+\noteMdK{Our simulations are based on the dynamics of spiking point model neurons: leaky-integrate-and-fire (LIF) and adpative-exponential-integrate-and-fire (AdEx) neurons.
+Rather than simulating thousands of spiking neurons, we use population density techniques to model dynamics at the population level, similar to rate based models. Unlike rate based
+models, the correspondence to population-averaged quantities of spiking neurons can be shown rigorously; 
+in particular transient dynamics is captured more accurately than by rate based models.}
 
 Our implementation pushes the boundary of temporally detailed neural dynamics with population density techniques.
 Also we raise awareness on the sensitivity of population circuits to the underlying neural models assumed.
@@ -156,6 +173,7 @@ We test an Adaptive-Exponential (AdEx) neural model and show that it importantly
 \noteCP{This sentence is vague and unclear to me. Can you make it more precise?}.
 \noteMP{is the neural model result clear now?}.
 These results alongside the flexibility of the NBA to represent arbitrary hierarchical tree structures and parsing schemes, makes it a promising tool for linguistic hypothesis exploration and future refined quantitative accounts of multi-scale neuroimaging measurements.
+
 
 
 \section{Introduction}
@@ -189,7 +207,7 @@ For example the sentence ``\emph{Mary owns a book}" allows to establish a relati
 Moreover it is naturally related to the \emph{Unification} phenomenon, that comprises the binding of variables in a data structure independently of their particular values.
 Like the abstract notions of combining a "determiner variable type" and "noun variable type" in a phrase.
 
-
+\noteMdK{Suggest leave out landmark}
 \subsection{Landmark language neuroimaging studies of binding}
 
 {\label{729344}}
@@ -399,6 +417,138 @@ Nonetheless simulating these higher level mechanisms is a task out of the scope 
 {\label{488128}}
 
 \subsection{Simulation framework and NBA implementation}\label{simulation-framework-and-architectural-decisions}
+We assume that the NBA lives in cortex, and  seek a good compromise between realistic modeling of the cortical dynamics and the tractability of the simulation. State-of-the-art
+simulations of larger cortical structures are based on point model neurons that allow the inclusion of biological details such as synaptic dynamics and adaptation, but are
+restricted to about the size of a cortical column \cite{potjans2014}. For larger scale networks, such as ours, a population-based approach is currently the only 
+feasible approach. The two choices are: reate based models or population density technqiues (PDTs). In rate based models, the population is described by a single variable,
+usually related to the population firing rate or average membrane potential of neurons in the population. 
+A prominent example is the  Wilson-Cowan equation \cite{wilson1972}, which describes the
+dynamics of the population activity as a first order linear differential equation driven by inputs. Another example is the Jansen-Rit model \cite{jansen1995},
+which is primarily motivated by phenomenological considerations. In both examples, the relationship with the underlying neural state is unclear. We have opted for PDTs, 
+also a population based approach,  but one where the relationship with the dynamics of  a group of spiking point model neurons can be made rigorous.
+Although they are computationally more expensive than rate based models, they are easier to manage than a full-blown model using spiking neurons, which would need hundreds of 
+thousands
+of neurons at the scale of the cortical network considered here. We will briefly set out the assumptions that we use in modeling populations and describe the
+numerical methods involved.
+
+Consider a leaky-integrate-and-fire (LIF) neuron, which is a neurons characterized by a single state variable: the membrane potential. If the neuron has a potential different
+from its equilibrium potential, or when it experiences an external drive, for example generated by a synaptic current, the potential evolves according to:
+\begin{equation}
+\tau \frac{dV}{dt} = -(V - V_{rev}) + I(t).
+\label{eq-lif}
+\end{equation}
+Here $V$ is the membrane potential in V, $\tau$ the membrane time constant in s, $V_{rev}$ the reversal potential and $I(t)$ and external current, which may comprise
+contributions from other neurons in the form of spikes, and therefore may be stochastic. 
+If the membrane is driven far above the equilibrium potential, at a potential $V_{th}$, the threshold, the neuron spikes.
+We assume it will be inactive for an absolute refractive period $\tau_{ref}$ and then finds itself reset to the equilbrium potential after that.  
+This scenario is easy to simulate: using
+a simulator like NEST \cite{nest}, or BRIAN \cite{brian}, one can create populations of LIF neurons. In the simplest case a population is driven by synthetically generated
+input spike trains, where the spike train events are created by a random generators. The default assumption is that interspike intervals are Poisson distributed, although
+this can be extended to non-Markov processes.  It is clear that $I(t)$ in Eq. \ref{eq-lif} now should be considered as a stochastic variable and that the threshold crossings
+of LIF neurons themselves are stochastic events as a consequence. Fig. \ref{fig-spike}  demonstrates a simple scenario: a population of 10000 LIF neurons, driven by a
+stochastic input - Poisson generated spike trains, where each LIF neurons experiences about 800 input spikes per second. The simulation shows a spike raster of the population
+response: at first nothing: although each LIF neuron receives input spikes and as a consequence has its membrane potential driven up, none of the neurons have reached threshold;
+then a spike volley: most neurons hit threshold at approximety the same time; then a period of relative silence, only interrupted by a few stragglers, and then gradually a 
+final state of asynchronously random firing of the neurons. More complex networks can be formed by feeding the output spikes of one population into other populations. 
+
+This is a fascinating but unwieldy process and statistical methods have been used to describe this process at the population level 
+\cite{stein1996,knight1972,omurtag2000simulation}.
+A population is described by a density function, which expresses how the population is distributed over state space. For LIF neurons this is a function $\rho(V)$,
+where $\rho(V)dV$ is the fraction of neurons with their membrane potential in interval $[V, V + dV)$ (when we integrate the density function over a certain state interval, 
+we will refer to the  result as  the amount of \emph{mass} in that interval). The initial distribution of the neurons in the population must be chosen,
+but the evolution of the density is tractable. It is clear that neurons move through state space due to the deterministic neural dynamics, Eq \ref{eq-lif} for LIF neurons,
+and also go transitions due to the input spikes. The collective contribution of the stochastic process to the evolution of the density profile can be  modeled using a Poisson
+master equation \cite{gardiner}; the contribution of the deterministic dynamics  can be modeled using an advection equation (see \cite{omurtag2000} for a lucid explanation). 
+
+
+As a consequence, the process of simulation thousands of neurons is now replaced by modeling the evolution of a density which is given by a single equation:
+\begin{equation}
+\frac{\partial \rho}{\partial t} -\frac{1}{\tau}\frac{\partial}{\partial v}(\rho v) = \int dh p(h) \nu (\rho(v - h) -\rho(v)),
+\label{eq-synapse}
+\end{equation} 
+Here $p(h)$ is the distribution of synaptic efficacies, $\nu$ the frequency of the incoming spike trains, $\rho$ the density function $t$ the time since start of simulation
+and $v$ the mebrane potential. Mass that is being pushed across threshold corresponds to neurons spiking; consequently  the firing rate of the population can be calulated
+directly by calculating the mass flux across threshold.
+
+
+Efficient and stable simulation methods are available \cite{nykamp2000,dekamps2003,dekamps2013,iyer2013}, and remarkably, the process
+of solving Eq. \ref{eq-synapse} is computationally less expensive for LIF neurons than the direct simulation using NEST \cite{nykamp2000}. The process
+of keeping track of a single density function, and the communication between populations using firing rates rather than individual spikes,
+frees the modeler from keeping track of thousands of spikes per second
+and leads to simpler simulations.  Fig \ref{pdtcase} shows the very close correspondence between direct simulations of LIF spiking neurons and population density results.
+It shows, first, that the simulation results indeed are very close to that the spiking simulation, and second, that Wilson-Cowan dynamics must be tuned in a way that
+PDTs do not: the correct steady state activation must be provided to the Wilson-Cowan dynamics in the form of a sigmoid. The correct steady state is calculated from
+first principles - input firing rate, synaptic efficacies and neural parameters determine the steady state firing rate - without any need for tuning.
+
+\begin{figure}[h!]
+  \begin{center}
+    \includegraphics[width=0.90\columnwidth]{fig2.pdf}
+  \end{center}
+    \caption{\textbf{A.} A spike raster showing an LIF population undergoing a jump response.
+        Neurons are at equilbrium at $t = 0$. From $t=0$ each neuron receives a Poisson distributed input spike train ($\lambda$ = 800 Hz, $h= 0.03$, i.e. an input spike
+        raises the PSP by 3\% of the difference between threshold and equilibrium potential, $\tau = 50$ ms, following \cite{omurtag2000simulation}).
+        \textbf{B.} Firing rate calculated from the PDT method (solid curve), compared to firing rate from spiking neuron simulation (red markers).
+        \textbf{C.} The density calculated by the PDT method (solid curve) at $t=0.3$ s, compared to a histogram of the membrane potential over the population at the
+        same time.
+        \textbf{D.} Wilson-Cowan prediction for the firing rate, compared to PDT result. Importantly, Wilson-Cowan output must be tuned: the steady state value to which it 
+converges is not predicted by the Wilson-Cowan equations, but must be provided as a sigmoid. 
+       In contrast, the PDT method calculates the firing rate from first priciples, and agrees well with the spiking neuron simulation, within statistics.
+      }
+\label{pdt_case}
+\end{figure}
+
+
+The population density formalism can be extended to higher dimensional models. For example, the adaptive-exponential-integrate-and-fire neuron (AdEx) \cite{brette2005} is a two 
+dimensional model that as the membrane potential and an adaptivity parameter as a variable. Consequently, the state space is two dimensional. The motivation behind this model
+is that first, it includes adaptation, and second that it is the effective approximation of the complex coductance-based processes that take place in a real neuron. The equations
+of the model are:
+
+We consider the AdExp model as presented by Brette and Gerstner \cite{brette2005}, which describes individual neurons by the following equations:
+\begin{align}
+  C_m \frac{dV}{dt}    & =  -g_l(V - E_l)  + g_l e^{ \frac{(V - V_T)}{\Delta Th}} \\
+  \tau_w \frac{dw}{dt} & =  -w \nonumber
+\end{align}
+
+Where $C_m$ is the membrane capacitance, $g_l$ the leak conductance, $E_l$ the leak potential (equivalent to the reversal potential for the LIF),
+$V_T$ a threshold potential, $\Delta_T$ a shape parameter for the spike, $\tau_w$ the adaptation time constant, $V$ the membrane potential and $w$ the adaptation parameter.
+we use the parameters given by Brette and Gerstner (2005):
+
+\noteMdK{I need to look them up and edit them in.}
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=0.9\columnwidth]{aexp_overview.pdf}
+\caption{Left: Overview of AdExp dynamics. Right: a heat plot of the density profile during simulation.}
+\end{center}
+\label{fig-adexp}
+\end{figure}
+
+We illustrate the dynamics of  the neuron in Fig. \ref{fig-adexp}. The direction of the dynamics is shown by arrows, the speed of the dynamics by the size of the cells:
+big cells implies fast dynamics as the cells represent equidistant time steps. This shows that at $w =0$ dynamics is leaky,  i.e. towards the equilibrium, except
+at high values of $V$, on the right, which corresponds to spike generation. At high values of $w$, there are two effects: stronger leak (larger cells) and a lower
+(more negative) equilibrium potential, which makes it harder for a cell at high $w$ to be driven across threshold, precisely the effect one expects of adaptation. At low
+$w$, the opposite happens: cells become more excitable. For very low $w$ values, which can not be reached under cortical conditions, at least not for the parameters
+we used, there is the theoretical probability of a rebound (neuron always spikes).
+
+A density function now lives in this two dimenionsal space: $\rho(V,w)$. The evolution equation is a direct generalization of Eq. \ref{synapse}.
+For a model with $n$ sytate variables $\vec{V}$, a point model takes the form:
+\begin{equation}
+\tau \frac{d \vec{V}}{dt} = \vec{F}(\vec{V})
+\end{equation}
+and the density equation:
+\begin{equation}
+\frac{\partial \rho}{\partial t} + \frac{\partial}{\partial \vec{V}} \cdot ( \vec{F} \rho) = \int dh p(h) \nu (\rho(\vec{V} - \vec{h}) -\rho(\vec{V}))
+\end{equation},
+where $\vec{h}$ represents the effcet of an input spike.
+
+We represent the density function by a heat plot on state space: the highest values or white, low values are
+red. We are able to simulate the density function by a method analogous to that of \cite{dekamps2013,iyer2013}, generalized to two dimensions. In Fig. \ref{fig-adexp} we
+show the result of a simulation: the density function as a fixed point in time. As before, we can calculate the firing rate of the population by calculating the the flux 
+across threshold (which is still given by $V= V_{threshold}$, i.e. the right hand side of the grid).
+
+The simulation software, MIIND, is publicly available \url{http://miind.sf.net}. The LIF version of the algorithm has been available for some time \cite{dekamps2008},
+the two dimensional version has become available recently \cite{dekamps2017b}.
+
 
 Previous simulations of the blackboard approximate the mean activity
 of neural assemblies with Wilson Cowan dynamics \cite{Frank_2014}.
@@ -470,29 +620,6 @@ the source of activity that drives the MA of the next compartment
 circuit in the hierarchy. The details of this implementation will
 become clear in following sections.
 
-\begin{figure}[h!]
-  \begin{center}
-    \includegraphics[width=0.70\columnwidth]{figures/case_for_pdt1/case_for_pdt1}
-    \caption{{\label{pdt_case} Case for population density techniques
-        over Wilson Cowan dynamics. Plots taken from the MIIND manual.
-        \textbf{A.} Shows the mean firing rate of a neural population simulated
-        with Wilson Cowan dynamics, labeled as a rate based model, and
-        a population density technique with similar mean and standard
-        deviation of neural activity. One can see that the steady
-        state of the population activity converge in time but that the
-        transient dynamics are importantly different. \textbf{B.} Histogram of
-        the membrane potential for each neuron in the population
-        density technique simulation shown in A at time 0.3. The solid
-        line corresponds to the prediction of the population density
-        technique, while the red markers correspond to error bars due
-        to finite sample sizes in a point model simulation performed
-        with NEST. \textbf{C.} The jump response of the neural population
-        according to the NEST simulation and the population density
-        technique. There is in complete agreement within the boundaries
-        of statistical error.%
-      }}
-  \end{center}
-\end{figure}
 
 \subsection{Compartment circuit parameters}\label{compartment-circuit-parameters}
 
