@@ -103,8 +103,8 @@
 %% END MACROS SECTION
 \usepackage{color}
 \newcommand{\noteCP}[1]{(CP: \textcolor{red}{#1})}
-\newcommand{\noteMP}[2]{(MP: \textcolor{blue}{#1})}
-\newcommand{\noteMdK}[2]{(MdK: \textcolor{green}{#1})}
+\newcommand{\noteMdK}[2]{(MdK: \textcolor{purple}{#1})}
+\newcommand{\noteMP}[3]{(MP: \textcolor{blue}{#1})}
 
 \begin{document}
 \vspace*{0.2in}
@@ -141,39 +141,24 @@ Remark: I suggests that both you and Marc be corresponding authors, if Marc agre
 \section*{Abstract}
 
 An important challenge for neurolinguistics is to understand how binding is implemented in the brain.
-In particular variable binding is needed to assign words to their syntactic and semantic roles during sentence comprehension. 
-\noteMdK{Suggest: 'Only a few attemtpts ...'}
-Few attempts have been made to model complete circuits capable of variable binding with spiking neural population networks.
+In particular variable binding is needed to assign words to their syntactic and semantic roles during sentence comprehension.
+Only a few attempts have been made to model complete circuits capable of variable binding with spiking neural population networks.
 One of them is the Neural Blackboard Architecture (NBA) proposed by van~der~Velde and de~Kamps \cite{van_der_Velde_2006}.
 It adresses several challenges in the neural modelling of sentence processing, including those put forward by Jackendoff \cite{Jackendoff_2002b}.
 
-\noteMdK{It's risky to call a study a landmark study when it's done by one of the authors... I agree, of course, but it's better to appear a bit more disinvested in this paper. Below I will suggest a rewording for the paragraph}
-Here we demonstrate that a NBA implementation, only tuned to satisfy operational constraints, naturally produces qualitative patterns of two landmark language neuroimaging experiments related to binding at different spatio-temporal scales.
-We show that the model approximates \noteMdK{How? What does the model show that Nelson also shows? Vague word.} recent work from Nelson et al. \cite{Nelson_2017} based on intracortical recordings (ECoG), in which temporally detailed neural effects on phrase size and word binding operations are depicted. 
-Moreover, we reproduce a sublinear increase of the amplitude of peak hemodynamic responses and explain peak onset differences reported in brain language regions as a function of constituent size in lists of phrases, corresponding to a fMRI experiment from Pallier et al. \cite{Pallier_2011}
+\noteMdK{It's risky to call a study a landmark study when it's done by one of the authors... I agree, of course, but it's better to appear a bit more disinvested in this paper. Below I will suggest a rewording for the paragraph}.
 
+\noteMP{I find your modification better, what about we keep the final version as following then? I kept your changes and modified a couple words.}.
 
-\noteMdK{
-Here we demonstrate that a NBA implementation, only tuned to operational constraints, naturally reproduces the essence of two prominent language neuroimaging 
-experiments related to binding at  different spatio-temporal scales. We show that the model replicates aspects of  recent work from Nelson et al. \cite{Nelson_2017} based on 
-intracortical recordings (ECoG),  which reveal temporally detailed neural effects of phrase size and word binding operations. 
-Moreover, we reproduce a sublinear increase of the amplitude of peak hemodynamic responses and explain peak onset differences, 
-reported in brain language regions as a function of constituent size in lists of phrases, in an fMRI experiment by Pallier et al. \cite{Pallier_2011}
-}
+Here we demonstrate that a NBA implementation, only tuned to operational constraints, naturally reproduces the essence of two prominent language neuroimaging experiments related to binding at  different spatio-temporal scales.
+We show that the model replicates aspects of  recent work from Nelson et al. \cite{Nelson_2017} based on intracortical recordings (ECoG),  which reveal temporally detailed neural patterns of word binding operations.
+Moreover, we reproduce a sublinear increase of the amplitude of peak hemodynamic responses and explain peak onset differences. As reported for brain language regions, as a function of constituent size in lists of phrases, in an fMRI experiment by Pallier et al. \cite{Pallier_2011}
 
-
-\noteMdK{Our simulations are based on the dynamics of spiking point model neurons: leaky-integrate-and-fire (LIF) and adpative-exponential-integrate-and-fire (AdEx) neurons.
-Rather than simulating thousands of spiking neurons, we use population density techniques to model dynamics at the population level, similar to rate based models. Unlike rate based
-models, the correspondence to population-averaged quantities of spiking neurons can be shown rigorously; 
-in particular transient dynamics is captured more accurately than by rate based models.}
-
-Our implementation pushes the boundary of temporally detailed neural dynamics with population density techniques.
-Also we raise awareness on the sensitivity of population circuits to the underlying neural models assumed.
-We test an Adaptive-Exponential (AdEx) neural model and show that it importantly constrains coordination of events and operations on the NBA in contrast to the simpler and normally assumed Leaky-Integrate-and-Fire (LIF) model.
-\noteCP{This sentence is vague and unclear to me. Can you make it more precise?}.
-\noteMP{is the neural model result clear now?}.
+Our simulations are based on the dynamics of spiking point model neurons: leaky-integrate-and-fire (LIF) and adpative-exponential-integrate-and-fire (AdEx) neurons.
+Rather than simulating thousands of spiking neurons, we use population density techniques to model dynamics at the population level, similar to rate based models.
+Unlike rate based models, the correspondence to population-averaged quantities of spiking neurons can be shown rigorously; 
+In particular transient dynamics are captured more accurately than by rate based models.
 These results alongside the flexibility of the NBA to represent arbitrary hierarchical tree structures and parsing schemes, makes it a promising tool for linguistic hypothesis exploration and future refined quantitative accounts of multi-scale neuroimaging measurements.
-
 
 
 \section{Introduction}
