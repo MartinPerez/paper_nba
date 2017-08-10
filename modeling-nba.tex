@@ -462,8 +462,8 @@ It shows, first, that the simulation results indeed are very close to that of th
 
 \begin{figure}[h!]
   \begin{center}
-    \includegraphics[width=0.90\columnwidth]{fig2.pdf}
-  \end{center}
+    \includegraphics[width=1.0\columnwidth]{fig2.pdf}
+
     \caption{\textbf{A.} A spike raster showing an LIF population undergoing a jump response.
         Neurons are at equilbrium at $t = 0$. From $t=0$ each neuron receives a Poisson distributed input spike train ($\lambda$ = 800 Hz, $h= 0.03$, i.e. an input spike
         raises the PSP by 3\% of the difference between threshold and equilibrium potential, $\tau = 50$ ms, following \cite{omurtag2000simulation}).
@@ -475,6 +475,7 @@ converges is not predicted by the Wilson-Cowan equations, but must be provided a
        In contrast, the PDT method calculates the firing rate from first priciples, and agrees well with the spiking neuron simulation, within statistics.
       }
 \label{pdt_case}
+  \end{center}
 \end{figure}
 
 
@@ -494,14 +495,16 @@ Where $C_m$ is the membrane capacitance, $g_l$ the leak conductance, $E_l$ the l
 we use the parameters given by Brette and Gerstner (2005):
 
 \noteMdK{I need to look them up and edit them in.}
-\NoteMP{Maybe is too much to give the parameters for LIF and AdEx? no? particularly since we are not changing them and already giving detailed reference of the paper and model. I do not see how this detail would help understanding what comes next.}
 
-\begin{figure}
-\begin{center}
-\includegraphics[width=0.9\columnwidth]{aexp_overview.pdf}
-\caption{Left: Overview of AdExp dynamics. Right: a heat plot of the density profile during simulation.}
-\end{center}
-\label{fig-adexp}
+\noteMP{Maybe is too much to give the parameters for LIF and AdEx? no? particularly since we are not changing them and already giving detailed reference of the paper and model. I do not see how this detail would help understanding what comes next.}.
+
+\begin{figure}[h!]
+  \begin{center}
+    \includegraphics[width=1.0\columnwidth]{aexp_overview.pdf}
+    \caption{{AdExp dynamics {\label{fig-adexp}} Left: Overview of AdExp dynamics.
+        Right: a heat plot of the density profile during simulation%
+      }}
+  \end{center}
 \end{figure}
 
 We illustrate the dynamics of the neuron in Fig. \ref{fig-adexp}.
@@ -531,7 +534,8 @@ As before, we can calculate the firing rate of the population by calculating the
 
 The simulation software, MIIND, is publicly available \url{http://miind.sf.net}. The LIF version of the algorithm has been available for some time \cite{dekamps2008}, while the two dimensional version has become available recently \cite{dekamps2017b}.
 
-\NoteMP{I would create a new section just here. I think it automatically creates de right transition from the details of the neural simulation to the details of the NBA motivation and architectural decisions}
+\noteMP{I would create a new section just here. I think it automatically creates de right transition from the details of the neural simulation to the details of the NBA motivation and architectural decisions}.
+
 
 \subsection{NBA simulation}\label{architectural-decisions}
 
