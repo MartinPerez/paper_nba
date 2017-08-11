@@ -426,7 +426,7 @@ If the membrane is driven far above the equilibrium potential, at a potential $V
 We assume it will be inactive for an absolute refractive period $\tau_{ref}$ and then find itself reset to the equilibrium potential after that.  
 This scenario is easy to simulate: using a simulator like NEST \cite{nest}, or BRIAN \cite{brian}, one can create populations of LIF neurons.
 In the simplest case a population is driven by synthetically generated input spike trains, where the spike train events are created by a random generators.
-The default assumption is that inter-spike intervals are Poisson distributed, although this can be extended to non-Markov processes.
+The default assumption is that inter-spike intervals are Poisson distributed, although this can be extended to non-Markov processes \cite{lai2017}.
 It is clear that $I(t)$ in Eq. \ref{eq-lif} now should be considered as a stochastic variable and that the threshold crossings of LIF neurons themselves are stochastic events as a consequence.
 Fig. \ref{fig-spike}  demonstrates a simple scenario: a population of 10000 LIF neurons, driven by a stochastic input - Poisson generated spike trains, where each LIF neuron experiences about 800 input spikes per second.
 The simulation shows a spike raster of the population response:
