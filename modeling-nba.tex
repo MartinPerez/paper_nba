@@ -139,13 +139,11 @@
 
 \section*{Abstract}
 
-An important challenge for neurolinguistics is to understand how binding is implemented in the brain.
-In particular variable binding is needed to assign words to their syntactic and semantic roles during sentence comprehension \cite{Jackendoff_2002b}.
-Only a few attempts have been made to model complete circuits capable of variable binding with spiking neural population networks.
-One of them is the Neural Blackboard Architecture (NBA) proposed by van~der~Velde and de~Kamps \cite{van_der_Velde_2006}.
+In the course of sentence comprehension, the brain must assign words to their syntactic and semantic roles \cite{smolensky2006harmonic,Jackendoff_2002b}. These operations must rely on some form of variable binding \cite{marcus14}.
+One of the few attempts have been made to model complete circuits capable of variable binding with spiking neural population networks is the Neural Blackboard Architecture (NBA) proposed by van~der~Velde and de~Kamps \cite{van_der_Velde_2006}.
 
-Here we demonstrate that a NBA implementation, only tuned to operational constraints, naturally reproduces the temporal dynamics of two neuroimaging experiments involving linguistic binding at  different spatio-temporal scales.
-The model replicates aspects of intracortical recordings (ECoG) obtained during sentence comprehension \cite{Nelson_2017} and also reproduces the pattern of responses observed in a fMRI experiment that manipulated the size of syntactic constituents \cite{Pallier_2011}.
+Here we demonstrate that a NBA implementation, only tuned to operational constraints, naturally reproduces the temporal dynamics of two neuroimaging experiments involving linguistic binding at different spatio-temporal scales. 
+The model mimicks certain aspects of intracortical recordings (ECoG) obtained during sentence comprehension \cite{Nelson_2017} and also reproduces the pattern of responses observed in a fMRI experiment that manipulated the size of syntactic constituents \cite{Pallier_2011}.
 
 Our simulations are based on the dynamics of spiking point model neurons: leaky-integrate-and-fire (LIF) and adpative-exponential-integrate-and-fire (AdEx) neurons.
 Rather than simulating thousands of spiking neurons, we use population density techniques to model dynamics at the population level, similar to rate based models.
@@ -161,9 +159,9 @@ These results alongside the flexibility of the NBA to represent arbitrary hierar
 Human languages rely on composition operations at several levels of representations: phonemes combine into morphemes which combine into words which themselves combine into phrases and sentences.
 In Chomsky's Minimalist Program for Syntax \cite{Chomsky_2013}, the center stage is given to `Merge', the operation which combines words and phrases to create larger phrases, 
 
-Proposing a satisfactory neural model for the ``composition'' operations required by language is linked to solving the binding problem initially posed within the domain of vision in neuroscience.\noteCP{Why?}
-The term binding was introduced to the neuro-scientific community by von der Malsburg\cite{von_der_Malsburg_1994} during the first explorations of neural phase synchronization for ``variable binding'', which is a term taken literally from computer science, meaning to link a data structure to a name so it can be later accessed by that name.
-As Jackendoff\cite{Jackendoff_2002b}~explains, binding is also motivated by the empirical discovery of the distributed and segmented~encoding of features along the cortex.\noteCP{Ah? I would ot cite Jackendoff for brain level stuff. The problem of ones (or twos?) where the same lexical items appear in a sentence would be more relevant. You have to link the words to their positions, or roles.}
+Proposing a satisfactory neural model for the ``composition'' operations required by language is linked to solving the binding problem \cite{marcus14}.
+The term binding was introduced into the neuro-scientific community by von der Malsburg\cite{von_der_Malsburg_1994} during the first explorations of neural phase synchronization for ``variable binding'', which is a term taken literally from computer science, meaning to link a data structure to a name so it can be later accessed by that name.
+As Jackendoff\cite{Jackendoff_2002b}~explains, binding is also motivated by the empirical discovery of the distributed and segmented~encoding of features along the cortex.\noteCP{Ah? I would not cite Jackendoff for brain level stuff. The problem of ones (or twos?) where the same lexical items appear in a sentence would be more relevant. You have to link the words to their positions, or roles.}
 An example of this would be color and shape in the case of vision, which are robustly integrated during perception but can be independently impaired by brain damage.
 
 The binding problem in all its generality actually comprises four different sub problems, namely~\emph{General Coordination},~\emph{Feature-Binding},~\emph{Variable Binding} and the~\emph{Subjective Unity of Perception}\cite{Feldman_2012}.
@@ -173,7 +171,7 @@ In which, for example, we want to avoid confusion between a red circle and a blu
 
 ~\emph{Variable binding} is better illustrated by the capacity to run logical inference on data structures that encode relationships between their items.
 For example the sentence ``\emph{Mary owns a book}" allows to establish a relation of the type \emph{own(Mary, book)} that implies \emph{owner(book, Mary)}, such that we can later ask the question ``\emph{Who owns this book?}''.
-Moreover it is naturally related to the \emph{Unification} phenomenon, that comprises the binding of variables in a data structure independently of their particular values.\noteCP{I do not understand. Unification refers to merging two data structures.}
+Moreover it is naturally related to the \emph{Unification} phenomenon, that comprises the binding of variables in a data structure independently of their particular values.\noteCP{I do not understand. For me Unification refers to merging two data structures.}
 Like the abstract notions of combining a "determiner variable type" and "noun variable type" in a phrase.\noteCP{Not a sentence.}
 
 \subsection{Some neuroimaging studies of binding of language}
@@ -196,7 +194,7 @@ Assuming the phrase grammar and bottom-up parsing scheme employed by Nelson et a
 
 Second, we selected a fMRI experiment \cite{Pallier_2011} to portray the capacity of the model to capture results from multiple neuroimaging spatio-temporal scales.
 In this experiment trials with lists of 12 words obtained by concatenating phrases of a given length, were presented to healthy subjects.
-All conditions then correspond to a divisor of 12\noteP{Too abstract for me} that determine the number of words (constituents) of each phrase, going from a list of unrelated to words to a complete phrase of 12 words.
+All conditions then correspond to a divisor of 12\noteCP{Too abstract for me} that determine the number of words (constituents) of each phrase, going from a list of unrelated to words to a complete phrase of 12 words.
 Besides normal words, the design also included pseudoword conditions that maintained morphological markers and closed-class (function) words.
 This allowed the authors to depict a clear separation of syntactic and semantic binding patterns in language related regions.
 The syntactic specific patterns are the closest to the abstract considerations of binding in our model assuming the same phrase grammar and parsing scheme employed for comparison with the ECoG results.
