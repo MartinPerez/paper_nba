@@ -430,9 +430,9 @@ The default assumption is that inter-spike intervals are Poisson distributed, al
 It is clear that $I(t)$ in Eq. \ref{eq-lif} now should be considered as a stochastic variable and that the threshold crossings of LIF neurons themselves are stochastic events as a consequence.
 Fig. \ref{fig-spike}  demonstrates a simple scenario: a population of 10000 LIF neurons, driven by a stochastic input - Poisson generated spike trains, where each LIF neuron experiences about 800 input spikes per second.
 The simulation shows a spike raster of the population response:
-firstly nothing: although each LIF neuron receives input spikes and as a consequence has its membrane potential driven up, none of the neurons have reached threshold;
-secondly a spike volley: most neurons hit threshold at approximately the same time;
-thirdly a period of relative silence: only interrupted by a few stragglers;
+first nothing: although each LIF neuron receives input spikes and as a consequence has its membrane potential driven up, none of the neurons have reached threshold;
+then a spike volley: most neurons hit threshold at approximately the same time;
+followed by a period of relative silence: only interrupted by a few stragglers;
 at last a gradually achieved final neural state of asynchronous random firing.
 More complex networks can be formed by feeding the output spikes of one population into other populations.
 
@@ -487,12 +487,12 @@ The equations of the model are:
 
 We consider the AdExp model as presented by Brette and Gerstner \cite{brette2005}, which describes individual neurons by the following equations:
 \begin{align}
-  C_m \frac{dV}{dt}    & =  -g_l(V - E_l)  + g_l e^{ \frac{(V - V_T)}{\Delta Th}} \\
-  \tau_w \frac{dw}{dt} & =  -w \nonumber
+  C_m \frac{dV}{dt}    & =  -g_l(V - E_l)  + g_l e^{ \frac{(V - V_T)}{\Delta_{T}}} \\
+  \tau_w \frac{dw}{dt} & =  a(V-E_l) -w \nonumber
 \end{align}
 
-Where $C_m$ is the membrane capacitance, $g_l$ the leak conductance, $E_l$ the leak potential (equivalent to the reversal potential for the LIF), $V_T$ a threshold potential, $\Delta_T$ a shape parameter for the spike, $\tau_w$ the adaptation time constant, $V$ the membrane potential and $w$ the adaptation parameter.
-we use the parameters given by Brette and Gerstner (2005):
+Where $C_m$ is the membrane capacitance, $g_l$ the leak conductance, $E_l$ the leak potential (equivalent to the reversal potential for the LIF), $V_T$ a threshold potential, $\Delta_T$ a shape parameter for the spike, $\tau_w$ the adaptation time constant, $a$ the subthreshold adaptation parameter,  $V$ the membrane potential and $w$ the adaptation parameter. Upon a spike, the neuron is undergoes a transition in $w$: $w \rightarrow w +b$, where $b$ is the spike adaptation parameter.
+We use the parameters given by Brette and Gerstner (2005).
 
 \noteMdK{I need to look them up and edit them in.}
 
@@ -523,7 +523,7 @@ For a model with $n$ state variables $\vec{V}$, a point model takes the form:
 \end{equation}
 and the density equation:
 \begin{equation}
-\frac{\partial \rho}{\partial t} + \frac{\partial}{\partial \vec{V}} \cdot ( \vec{F} \rho) = \int dh p(h) \nu (\rho(\vec{V} - \vec{h}) -\rho(\vec{V}))
+\frac{\partial \rho}{\partial t} + \frac{\partial}{\partial \vec{V}} \cdot \frac{( \vec{F} \rho)}{\tau} = \int dh p(h) \nu (\rho(\vec{V} - \vec{h}) -\rho(\vec{V}))
 \end{equation},
 where $\vec{h}$ represents the effect of an input spike.
 
