@@ -116,7 +116,7 @@
   \newline
   \\
 
-  Martin Perez-Guevara\textsuperscript{1*}, , Marc De Kamps\textsuperscript{2*}, Christophe Pallier\textsuperscript{1}
+  Martin Perez-Guevara\textsuperscript{1*}, Marc De Kamps\textsuperscript{2*}, Christophe Pallier\textsuperscript{1}
   \\
   \bigskip \textbf{1} Cognitive Neuroimaging Unit, CEA DSV/I2BM,
   INSERM, Université Paris-Sud, Université Paris-Saclay,
@@ -139,8 +139,8 @@
 
 \section*{Abstract}
 
-In the course of sentence comprehension, the brain must assign words to their syntactic and semantic roles \cite{smolensky2006harmonic,Jackendoff_2002b}. These operations must rely on some form of variable binding \cite{marcus14}.
-One of the few attempts have been made to model complete circuits capable of variable binding with spiking neural population networks is the Neural Blackboard Architecture (NBA) proposed by van~der~Velde and de~Kamps \cite{van_der_Velde_2006}.
+In the course of sentence comprehension, the brain must assign words to their syntactic and semantic roles \cite{smolensky2006harmonic,Jackendoff_2002b}, relying on variable binding operations \cite{marcus14}.
+One of the few attempts to model complete circuits capable of variable binding with spiking neural population networks is the Neural Blackboard Architecture (NBA) proposed by van~der~Velde and de~Kamps \cite{van_der_Velde_2006}.
 
 Here we demonstrate that a NBA implementation, only tuned to operational constraints, naturally reproduces the temporal dynamics of two neuroimaging experiments involving linguistic binding at different spatio-temporal scales. 
 The model mimicks certain aspects of intracortical recordings (ECoG) obtained during sentence comprehension \cite{Nelson_2017} and also reproduces the pattern of responses observed in a fMRI experiment that manipulated the size of syntactic constituents \cite{Pallier_2011}.
@@ -157,11 +157,11 @@ These results alongside the flexibility of the NBA to represent arbitrary hierar
 {\label{931947}}
 
 Human languages rely on composition operations at several levels of representations: phonemes combine into morphemes which combine into words which themselves combine into phrases and sentences.
-In Chomsky's Minimalist Program for Syntax \cite{Chomsky_2013}, the center stage is given to `Merge', the operation which combines words and phrases to create larger phrases, 
+For example, in Chomsky's Minimalist Program for Syntax \cite{Chomsky_2013}, the center stage is given to `Merge', the operation which combines words and phrases to create larger phrases, 
 
 Proposing a satisfactory neural model for the ``composition'' operations required by language is linked to solving the binding problem \cite{marcus14}.
 The term binding was introduced into the neuro-scientific community by von der Malsburg\cite{von_der_Malsburg_1994} during the first explorations of neural phase synchronization for ``variable binding'', which is a term taken literally from computer science, meaning to link a data structure to a name so it can be later accessed by that name.
-As Jackendoff\cite{Jackendoff_2002b}~explains, binding is also motivated by the empirical discovery of the distributed and segmented~encoding of features along the cortex.\noteCP{Ah? I would not cite Jackendoff for brain level stuff. The problem of ones (or twos?) where the same lexical items appear in a sentence would be more relevant. You have to link the words to their positions, or roles.}
+As Jackendoff\cite{Jackendoff_2002b}~explains, binding is also motivated by the empirical discovery of the distributed and segmented~encoding of features along the cortex.\noteCP{Ah? noàt very clear and I would not cite Jackendoff for brain level stuff. The problem of ones (or twos?) where the same lexical items appear in a sentence would be more relevant. You have to link the words to their positions, or roles.}
 An example of this would be color and shape in the case of vision, which are robustly integrated during perception but can be independently impaired by brain damage.
 
 The binding problem in all its generality actually comprises four different sub problems, namely~\emph{General Coordination},~\emph{Feature-Binding},~\emph{Variable Binding} and the~\emph{Subjective Unity of Perception}\cite{Feldman_2012}.
@@ -290,38 +290,20 @@ For a deeper review we recommend reading a recent paper with a circuit design an
 \begin{figure}[h!]
   \begin{center}
     \includegraphics[width=1.00\columnwidth]{figures/gating_circuit3/gating_circuit3}
-    \caption{The Neural Blackboard architecture. \textbf{A.} Gating
-      circuit that allows the implementation of conditional neural
-      activity transfer between Neural assemblies X and Y through a
-      gate assembly. The gate keeper assembly (GK) is activated by the
-      X assembly and then inhibits the gate assembly (G). To let
-      information flow through the gate assembly, a control assembly
-      (Ctl) must therefore inhibit the gate keeper assembly.
-      \textbf{B.} Architecture of a single compartment circuit of a
-      connection matrix. Six gating circuits are arranged in a way
-      that makes conditional bidirectional neural activity flow
-      between two main assemblies possible. Control assemblies
-      regulate the direction of information flow and allow the
-      activation of sub assemblies. The two sub assemblies excite the
-      working memory assembly which, once activated, encode the binding
-      of the main assemblies and allow activation to flow between them
-      if the controls allow it too. \textbf{C.} Each connection matrix contain
-      n by m compartment circuits that encode the same relationship
-      type between the same pair of assembly categories. There are m
-      available assemblies for one category and n available assemblies
-      for the complementary category and only one cell circuit can
-      activate its working memory assembly to link two particular
-      assemblies due to mutual row and column inhibition of cells in
-      the connection matrix. The size of the connection matrix
-      effectively represents memory limitations. A blackboard is
-      composed of an arbitrary number of connection matrices that
-      encode different relationship types for a pair of assembly
-      categories. \textbf{D.} A blackboard is composed of multiple connection
-      matrices, where each of them is defined by two node categories
-      and a relationship type between them. \textbf{E.} Example of a possible
-      tree structure that can be represented
-      based on the specified connection matrices.
-    }
+    \caption{The Neural Blackboard architecture.
+      \textbf{A.} Gating circuit that allows the implementation of conditional neural activity transfer between Neural assemblies X and Y through a gate assembly.
+      The gate keeper assembly (GK) is activated by the X assembly and then inhibits the gate assembly (G).
+      To let information flow through the gate assembly, a control assembly (Ctl) must therefore inhibit the gate keeper assembly.
+      \textbf{B.} Architecture of a single compartment circuit of a connection matrix.
+      Six gating circuits are arranged in a way that makes conditional bidirectional neural activity flow between two main assemblies possible.
+      Control assemblies regulate the direction of information flow and allow the activation of sub assemblies.
+      The two sub assemblies excite the working memory assembly which, once activated, encode the binding of the main assemblies and allow activation to flow between them if the controls allow it too.
+      \textbf{C.} Each connection matrix contain n by m compartment circuits that encode the same relationship type between the same pair of assembly categories.
+      There are $m$ available assemblies for one category and $n$ available assemblies for the complementary category and only one cell circuit can activate its working memory assembly to link two particular assemblies due to mutual row and column inhibition of cells in the connection matrix.
+      The size of the connection matrix effectively represents memory limitations.
+      A blackboard is composed of an arbitrary number of connection matrices that encode different relationship types for a pair of assembly categories.
+      \textbf{D.} A blackboard is composed of multiple connection matrices, where each of them is defined by two node categories and a relationship type between them.
+      \textbf{E.} Example of a possible tree structure that can be represented based on the specified connection matrices. }
       \label{Blackboard}
   \end{center}
 \end{figure}
@@ -329,19 +311,17 @@ For a deeper review we recommend reading a recent paper with a circuit design an
 
 Nodes in Figures {\ref{Blackboard}}.A and {\ref{Blackboard}}.B represent neural assemblies that can be interpreted as linked spiking neural populations.
 The most basic component of the NBA is a ``Gating Circuit'' illustrated in Figure {\ref{Blackboard}}.A.
-The main idea is that neural activity would flow from the assembly of variable X to the assembly of variable Y if the Gate (G) assembly was not inhibited by the Gake Keeper (GK) assembly, that is itself excited by assembly X.
+The main idea is that neural activity would flow from the assembly of variable X\noteCP{Why do you call X a variable?} to the assembly of variable Y if the Gate (G) assembly was not inhibited by the Gake Keeper (GK) assembly, that is itself excited by assembly X.
 So to allow directional activity flow from X to Y, a Control (Ctl) assembly has to inhibit the GK assembly.
 Notice that it is trivial to extend the gating circuit for bidirectional control of activity flow as illustrated in Figure {\ref{Blackboard}}.B.
 Introducing bidirectional conditional control signals is what gives the NBA the possibility of implementing separately queries like 'what follows X' or 'what follows Y'.
 
 The second basic component of the NBA is a working memory (WM) mechanism based on Delay Activity\cite{de_Kamps_2005}.
-It consists in a neural population that portrays Delay Activity after being excited beyond a certain threshold achieved by the coactivation of input populations.
+It consists in a neural population that portrays\noteCP{???} Delay Activity after being excited beyond a certain threshold achieved by the coactivation of input populations.
 Then WM can act as a short lived bidirectional link between two assemblies. This conforms a ``Memory Circuit'' as depicted in Figure {\ref{Blackboard}}.B.
 
 Two bidirectional ``Gating Circuits'' connected by a ``Memory Circuit'' form a ``Compartment Circuit'' capable of implementing variable binding and query operations.
 The key point of this circuit is that Main assemblies (MA) representing features of grounded concepts or variables activate Sub assemblies (SA) if a control signal driven by another mechanism allows it.
-\noteCP{In such models, it seems to me that no representation is *actually* grounded as there are not interfacing with the real world. No?}
-\noteMP{MAs could be both, the feature of grounded concepts like a grammatical category or variables like syntactic object types, is it clearer now?}
 Then coactivation of SAs is what realizes a temporary binding of MAs by activating WM.
 So one ``Compartment Circuit'' models specifically the neural activity of the variable binding operation applied to two concepts or variables.
 It is operated by a mechanism that drives control signals simultaneously in multiple ``Compartment Circuits'' to instantiate binary tree like data structures on which query/unbinding operations can be performed later. 
@@ -357,11 +337,12 @@ To understand how a sentence is processed in the NBA, lets consider first the si
 The MAs activate with timings corresponding to word presentation.
 Then the assumed parsing mechanism determine that combinations of the particular grammatical categories of the words presented are necessary in the blackboard, driving several ``Compartment Circuits'' from which the one modelled completes coactivation of SAs to drive WM and realize word binding.
 In the case of a complete phrase, the parsing mechanism also takes into account the time at which binding of word grammatical categories take place.
-Then these bindings can also drive MA nodes that represent phrasal syntactic categories, to be further combined with the grammatical categories of other words according to the tree structure predicted by the grammar.
+Then these bindings can also drive MA nodes that represent phrasal syntactic categories, to be further combined with the grammatical categories of other words according to the tree structure predicted by the grammar.\noteCP{Sorry, but I find it quite difficult to follow. Can you make the example more concrete with actual words and gramatical categories, e.g. ``Peter sleeps'')
 
 Finally, higher level mechanisms of the NBA like the ``Connection Matrix'' portrayed in Figure {\ref{Blackboard}}.C, allow the implementation of a complete ``Blackboard''.
 It basically contains sets of mutually inhibitory ``Compartment Circuits'' representing the possible set of abstract variable relations learned by the ``Blackboard''.
-Like the possible combination of syntactic categories allowed by a phrase grammar. Here is where the previously mentioned considerations of small world connectivity come together into place with a general overarching control mechanism.
+Like the possible combination of syntactic categories allowed by a phrase grammar.\noteCP{not a sentence}
+Here is where the previously mentioned considerations of small world connectivity come together into place with a general overarching control mechanism.\noteCP{???}
 
 We portray the ``Blackboard'' as a regular grid for illustrative purposes, although there is already a proof of concept implementation with randomly connected networks\cite{van_der_Velde_2011}.
 Also implementing a general syntactic control mechanism should be feasible. As suggested by the Feed-forward artificial neural networks employed in previous NBA simulations~\cite{van_der_Velde_2010} and recent state of the art feedforward network architectures that have shown top performance for diverse language parsing tasks~\cite{andor2016globally}.
@@ -374,7 +355,8 @@ Nonetheless simulating these higher level mechanisms is a task out of the scope 
 {\label{488128}}
 
 \subsection{Simulation framework}\label{simulation-framework}
-We assume that the NBA lives in cortex, and  seek a good compromise between realistic modelling of the cortical dynamics and the tractability of the simulation.
+
+We assume that the NBA lives in the cortex, and seek a good compromise between realistic modelling of the cortical dynamics and the tractability of the simulation.
 State-of-the-art simulations of larger cortical structures are based on point model neurons that allow the inclusion of biological details such as synaptic dynamics and adaptation, but are restricted to about the size of a cortical column \cite{potjans2014}.
 For larger scale networks, such as ours, a population-based approach is currently the only feasible approach.
 The two choices are: rate based models or population density techniques (PDTs).
@@ -437,13 +419,11 @@ It shows, first, that the simulation results indeed are very close to that of th
     \includegraphics[width=1.0\columnwidth]{fig2.pdf}
 
     \caption{\textbf{A.} A spike raster showing an LIF population undergoing a jump response.
-        Neurons are at equilbrium at $t = 0$. From $t=0$ each neuron receives a Poisson distributed input spike train ($\lambda$ = 800 Hz, $h= 0.03$, i.e. an input spike
-        raises the PSP by 3\% of the difference between threshold and equilibrium potential, $\tau = 50$ ms, following \cite{omurtag2000simulation}).
+        Neurons are at equilbrium at $t = 0$. From $t=0$ each neuron receives a Poisson distributed input spike train ($\lambda$ = 800 Hz, $h= 0.03$, i.e. an input spike raises the PSP by 3\% of the difference between threshold and equilibrium potential, $\tau = 50$ ms, following \cite{omurtag2000simulation}).
         \textbf{B.} Firing rate calculated from the PDT method (solid curve), compared to firing rate from spiking neuron simulation (red markers).
         \textbf{C.} The density calculated by the PDT method (solid curve) at $t=0.3$ s, compared to a histogram of the membrane potential over the population at the
         same time.
-        \textbf{D.} Wilson-Cowan prediction for the firing rate, compared to PDT result. Importantly, Wilson-Cowan output must be tuned: the steady state value to which it 
-converges is not predicted by the Wilson-Cowan equations, but must be provided as a sigmoid. 
+        \textbf{D.} Wilson-Cowan prediction for the firing rate, compared to PDT result. Importantly, Wilson-Cowan output must be tuned: the steady state value to which it converges is not predicted by the Wilson-Cowan equations, but must be provided as a sigmoid. 
        In contrast, the PDT method calculates the firing rate from first priciples, and agrees well with the spiking neuron simulation, within statistics.
       }
 \label{pdt_case}
@@ -634,27 +614,13 @@ All the C++ scripts behind the circuit and sub-circuit simulations, taking advan
   \begin{center}
     \includegraphics[width=0.70\columnwidth]{figures/sub_circuits3/sub_circuits3}
     \caption{Sub-circuit simulation topologies.
-Each number
-      corresponds to its respective experiment.
-For better
-      visualization all baseline nodes are excluded from the
-      topologies.
-A.
-Single neural population driven by baseline
-      activity.
-This topology~ reminds of the fact that all MA, SA, G
-      and GK populations are driven initially in the same way by a
-      persistent baseline fixed rate.
-B.
-Chain of populations where
-      activity is temporally interrupted by a control node.
-C.
-Closed
-      loop formed by MA, SA and Gs.
-D.
-Closed loop broken by the
-      addition of GKs.
-{\label{637398}}%
+      Each number corresponds to its respective experiment.
+      For better visualization all baseline nodes are excluded from the topologies.
+      A. Single neural population driven by baseline activity.
+      This topology~ reminds of the fact that all MA, SA, G and GK populations are driven initially in the same way by a persistent baseline fixed rate.
+      B. Chain of populations where activity is temporally interrupted by a control node.
+      C. Closed loop formed by MA, SA and Gs.
+      D. Closed loop broken by the addition of GKs. {\label{637398}}%
     }
   \end{center}
 \end{figure}
@@ -691,11 +657,9 @@ Finally we learned that the number of baseline connections that best approximate
 \begin{figure}[h!]
   \begin{center}
     \includegraphics[width=1.00\columnwidth]{figures/experiment_001/experiment_001}
-    \caption{Baseline neural dynamics The plots at the top depict how
-      the steady state rate of a neural population relates to the
-      number of baseline connections under a baseline input of 1Hz.
-      The plots at the bottom show example temporal dynamics
-      corresponding to its upper plot.}
+    \caption{Baseline neural dynamics.
+      The plots at the top depict how the steady state rate of a neural population relates to the number of baseline connections under a baseline input of 1Hz.
+      The plots at the bottom show example temporal dynamics corresponding to its upper plot.}
     \label{674368}
 
   \end{center}
@@ -786,20 +750,10 @@ To allow anticipatory control mistakes for the complete circuit simulation we se
   \begin{center}
     \includegraphics[width=0.70\columnwidth]{figures/experiment_3/experiment_3}
 
-    \caption{Closed loop activity and memory sub-circuit activation
-      regions.
-Plots at the top show an example steady state and max
-      activity rate of the event combination with weaker rate
-      dynamics, in contrast to the steady state rate of the closed
-      loop enhanced activity formed by WM activation.
-Plots at the
-      bottom identify the parameter regions, where the WM steady state
-      rate (SSR) and maximum rate (MR) threshold region is the one
-      that gives most constrained range of circuit parameters to offer
-      the most flexible coordination of input and control events.
-The
-      event rate curves correspond to an input rate of 10Hz and 25Hz
-      for the LIF and AdEx models respectively.}
+    \caption{Closed loop activity and memory sub-circuit activation regions.
+      Plots at the top show an example steady state and max activity rate of the event combination with weaker rate dynamics, in contrast to the steady state rate of the closed loop enhanced activity formed by WM activation.
+      Plots at the bottom identify the parameter regions, where the WM steady state rate (SSR) and maximum rate (MR) threshold region is the one that gives most constrained range of circuit parameters to offer the most flexible coordination of input and control events.
+      The event rate curves correspond to an input rate of 10Hz and 25Hz for the LIF and AdEx models respectively.}
     \label{197355}
 
   \end{center}
@@ -885,29 +839,16 @@ The third is that the AdEx simulation is sensitive also to small variations in t
 \begin{figure}[h!]
   \begin{center}
     \includegraphics[width=0.70\columnwidth]{figures/compartment_circuit_dynamics/compartment_circuit_dynamics}
-    \caption{Profiles of neural activity \textbf{A.} Neural activation driven
-      only by baseline input.
-\textbf{B.} Neural activation of the circuit when
-      only one MA is activated by a word event or WM at 500ms.
-      Portrays the neural activity related to an erroneous control
-      signal at 800ms.
-Its possible to see that the steady state of
-      neural activity is resilient to a slip of control, going to the
-      appropriate levels of neural activity once the control activity
-      is over.
-\textbf{C.} Neural activity of the Compartment Circuit for a
-      successful binding.
-The second MA gets activated at 800ms
-      alongside the controls.
-Since both MAs are active, the SAs
-      manage to activate WM to instantiate the binding of the MAs.
-Two
-      interesting dynamics arise from the binding.
-The first is that a
-      spike of activity in SAs, GKs and Gs takes place due to the
-      sudden inhibitory activity of WM on the GKs.
-The second is that
-      the memory circuit internally raises its baseline activity.%
+    \caption{Profiles of neural activity.
+      \textbf{A.} Neural activation driven only by baseline input. \textbf{B.} Neural activation of the circuit when only one MA is activated by a word event or WM at 500ms.
+      Portrays the neural activity related to an erroneous control signal at 800ms.
+      It is possible to see that the steady state of neural activity is resilient to a slip of control, going to the appropriate levels of neural activity once the control activity is over.
+      \textbf{C.} Neural activity of the Compartment Circuit for a successful binding.
+      The second MA gets activated at 800ms alongside the controls.
+      Since both MAs are active, the SAs manage to activate WM to instantiate the binding of the MAs.
+      Two interesting dynamics arise from the binding.
+      The first is that a spike of activity in SAs, GKs and Gs takes place due to the sudden inhibitory activity of WM on the GKs.
+      The second is that the memory circuit internally raises its baseline activity.%
     }
 
       \label{activity_profiles}
@@ -935,25 +876,12 @@ If WM was active for say less than 1900ms then activation of the first word MA w
   \begin{center}
     \includegraphics[width=1.00\columnwidth]{figures/compartments_tree_example/compartments_tree_example}
     \caption{Sentence processing example.
-A.
-Tree
-        structure hypothesized for a given 4 words phrase.
-It is shown
-        how compartment circuits correspond to sections of the tree
-        structure and how the nodes corresponding to grammatical
-        categories of words processed or phrase nodes are instantiated
-        in time under a bottom-up parsing approach.
-B.
-Blackboard time
-        series that correspond to the simulated processing of the
-        considered tree structure and time of activation of the nodes.
-        The separate activity of the LIF populations of each
-        compartment circuit are shown separately, followed by their
-        summary and total activity C.
-Same as~B but for AdEx
-        populations.
-{\label{679921}}%
-      }
+      A. Tree structure hypothesized for a given 4 words phrase.
+      It is shown how compartment circuits correspond to sections of the tree structure and how the nodes corresponding to grammatical categories of words processed or phrase nodes are instantiated in time under a bottom-up parsing approach.
+      B. Blackboard time series that correspond to the simulated processing of the considered tree structure and time of activation of the nodes.
+      The separate activity of the LIF populations of each compartment circuit are shown separately, followed by their summary and total activity.
+      C. Same as~B but for AdEx populations. {\label{679921}}%
+    }
   \end{center}
 \end{figure}
 
