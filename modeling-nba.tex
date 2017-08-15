@@ -145,7 +145,7 @@ One of the few attempts to model complete circuits capable of variable binding w
 Here we demonstrate that a NBA implementation, only tuned to operational constraints, naturally reproduces the temporal dynamics of two neuroimaging experiments involving linguistic binding at different spatio-temporal scales. 
 The model mimicks certain aspects of intracortical recordings (ECoG) obtained during sentence comprehension \cite{Nelson_2017} and also reproduces the pattern of responses observed in a fMRI experiment that manipulated the size of syntactic constituents \cite{Pallier_2011}.
 
-Our simulations are based on the dynamics of spiking point model neurons: leaky-integrate-and-fire (LIF) and adpative-exponential-integrate-and-fire (AdEx) neurons.
+Our simulations are based on the dynamics of spiking point model neurons: leaky-integrate-and-fire (LIF) and adaptive-exponential-integrate-and-fire (AdEx) neurons.
 Rather than simulating thousands of spiking neurons, we use population density techniques to model dynamics at the population level, similar to rate based models.
 Unlike rate based models, the correspondence to population-averaged quantities of spiking neurons can be shown rigorously; 
 In particular transient dynamics are captured more accurately than by rate based models.
@@ -164,7 +164,7 @@ The term binding was introduced into the neuro-scientific community by von der M
 Binding is also motivated by the empirical discovery of the distributed and segmented encoding of features along the cortex. For example color and shape, in the case of vision, are robustly integrated during perception but can be independently impaired by brain damage.
 
 The general binding problem actually comprises four different sub problems, namely~\emph{General Coordination},~\emph{Feature-Binding},~\emph{Variable Binding} and the~\emph{Subjective Unity of Perception}\cite{Feldman_2012}.
-The current work is specifically motivated by the~\emph{Variable Binding} sub-problem that is presented by Feldman as an abstract high level cognitive faculty, mainly required by symbolic thought to bind values to variables that form part of a structured representation.
+The current work is specifically motivated by the~\emph{Variable Binding} sub-problem that is presented by Feldman as an abstract high level cognitive faculty, mainly required by symbolic thought to bind values to instances of variable types that form part of a structured representation.
 In this respect, it is a function that arises mostly in human languages and goes beyond the extensively studied sensory, attention and short-term memory phenomena of feature binding, that only require linking features exclusively, in a bag, to avoid confusion with simultaneous representations, like a red circle and a blue square presented side by side in a screen.
 
 ~\emph{Variable binding} is illustrated by the capacity to run logical inference on data structures that encode relationships between their items.
@@ -186,8 +186,9 @@ But only recently we have started to characterize the detailed neural correlates
 
 We selected The ECoG analysis of Nelson et al.\cite{Nelson_2017} as the first study to compare with our model.
 It is one of the only two studies so far depicting spatially specific and temporally detailed neural dynamics of phrase processing thanks to analyses of intracranial neurophysiological data taken from epileptic patients.
-Moreover it is the first to characterize the specific patterns of phrase-structure formation, possibly revealing the first neural signatures of variable binding related operations. These are referred to, by Nelson et al., as "merge" operations, that combine syntactic objects (word types and phrases). \noteCP{You need to explain here the relationship with merge and variable binding. On the surface, it could seem that they have little in common.}.
-\noteMP{Is it clearer presented like this? I am kind of trying to say that merge approximates unification and variable binding in Chomskys program, although variable binding is a more flexible concept, if I understand everything correctly}. \noteCP{Unfortunately, I think this is not clear. You need to make a better case that the combination/merging operation requires variable. binding}. \noteMP{What about now? Taking into account change to first paragraph}.
+Moreover it is the first to characterize the specific patterns of phrase-structure formation, possibly revealing the first neural signatures of variable binding related operations. These are referred to, by Nelson et al., as "merge" operations, that combine syntactic objects (word types and phrase types).
+\noteCP{You need to explain here the relationship with merge and variable binding. On the surface, it could seem that they have little in common.}.
+\noteCP{Unfortunately, I think this is not clear. You need to make a better case that the combination/merging operation requires variable. binding}.  \noteMP{What about now? Taking into account change to first paragraph}.
 In the study words were presented sequentially to patients in a screen to be read under a Rapid Serial Visual Presentation paradigm.
 The task was to keep a phrase of up to 10 words in memory to compare it just after with a probe sentence composed of 2 to 5 words.
 We will show that simulation of the NBA portion responsible for variable binding, only tuned for correct operation, generates strikingly similar temporal patterns of neural activity when aggregating the binding operations corresponding to complete phrase processing, assuming the phrase grammar and bottom-up parsing scheme employed by Nelson et al. in their analyses.
@@ -230,6 +231,7 @@ Nonetheless, even though they attempt to offer biological plausible implementati
 This has been a reasonable strategy considering the computational cost of building circuits with detailed neural models based on point processes.
 Yet, as we will show, recent developments like population density
 techniques\cite{de2013generica} now permit to simulate state-of-the-art temporally detailed dynamics of circuits of neural populations.
+
 The current work is similar in spirit to the Blue Brain Project\cite{Markram_2006} in trying to tackle the ``predictive neuroscience'' and ``simulating the brain'' challenges put forward by Markram\cite{markram2013seven}.
 Instead of trying to implement a complete language parsing neural network trained from stimuli, we will focus on pushing the boundary of biological detail for the specific abstract mechanism of variable binding as proposed in the Neural Blackboard Architecture\cite{van_der_Velde_2006}, assuming other necessary mechanisms for parsing are in place.
 This simple mechanism will already provide temporally detailed predictions about the neural signatures of variable binding, to be contrasted with the brain imaging results obtained from ECoG and fMRI experiments.
@@ -244,7 +246,7 @@ That is, an average 17-year-old English speaker has a lexicon of more than 60.00
 Such magnitude effectively exceeds the estimated lifetime of the universe expressed in seconds, making it clear that a simple holistic encoding of sentences is not attainable in a human lifetime.
 Moreover the need to perform later unbinding operations for information extraction in linguistic data structures where order and variable types matter adds complexity to the possible mechanisms we can hypothesize.
 To surmount these modelling issues, two main approaches are discussed in the literature.
-The first relies on the framework of tensor product representations\cite{smolensky2006harmonic} and the second on connectivity based models that allow binding by process\cite{van_der_Velde_2015}.
+The first relies on the framework of tensor product representations\cite{smolensky2006harmonic} and the second on connectivity based models that allow ``binding by process''\cite{van_der_Velde_2015}.
 
 Smolensky provides an in-depth analysis of the typology of vector symbol architectures (VSA) that work with tensor operations.
 He shows that various proposals, including Synchronous Firing\cite{Shastri_1993}, Holographic Reduced Representations\cite{Plate_1995} and Recursive Auto-Associative Memories\cite{Chalmers_1992}, are just particular cases with varying implementation details of his general tensor framework.
@@ -253,7 +255,7 @@ He proposes that the brain employs explicit active encodings, in neural units, o
 The latter are resilient to squashing functions, like those proposed by Plate, that can importantly decrease the number of neural units necessary for the final representation as the tensors increase in dimensionality with more complex structures.
 Smolensky offer in great detail implementations of VSA with feedforward and symmetric recursive ANNs\cite{smolensky2006harmonic} and recently show how to extend the framework with an optimization scheme to instantiate input representational vectors\cite{Smolensky_2013}.
 Nonetheless neural dynamics do not play an important functional role, although it is possible to incorporate time as another abstract tensor for encoding purposes.
-Also there is no clear proposal on how to implement it with spiking neural networks that are also sensitive to the ignored dynamics.
+Also there is no clear proposal on how to implement it with spiking neural networks, which are also sensitive to the ignored dynamics.
 
 On the other hand, Van der Velde et al.\cite{van_der_Velde_2015} argues in favor of a small world network model that thanks to its connectivity properties allows the formation of complex structures.
 It does it by conditionally coactivating neural assemblies representing grounded concepts and instances of variable types, which is a process driven by a control mechanism.
@@ -271,11 +273,12 @@ Finally a working memory mechanism is provided, as explained in the previous par
 \noteCP{you should explain what are these problems, yet not necessarily all of them.}. \noteMP{is this explanation enough? Otherwise I would put it out. I just want to emphasize that the NBA can do much more than variable binding, but I am not sure if this is really informative here}.
 
 The level of abstraction of the NBA allows to apply it to several cognitive functions like motor control, attention and symbolic thought.
-In the case of syntactic parsing during language comprehension, one needs a grammar to specify the necessary variable bindings and some parsing scheme to determine the bindings' timing.
+In the case of syntactic parsing during language comprehension, one needs a grammar to specify the necessary variable type relations and some parsing scheme to determine the bindings' timing.
 In contrast to VSA, the NBA provides a circuit with nodes that can be readily interpreted in terms of spiking neural populations, accepting the trade off of giving up on explicit structural encodings in neural activation levels.
 Interpreting nodes as neural populations can be conceptually linked to the notion of cell assemblies.
 This would be reasonable considering that there is substantial biological evidence for the existence and functional relevance of cell assemblies as computational units\cite{Huyck_2013}.
-For example, based on the synaptic connectivity patterns of pyramidal neurons in the neocortex, Perin et al.\cite{Perin_2011} argued in favor of the theory of neuronal group selection of Edelman\cite{edelman1987neural} over Hebb's organizational principles\cite{hebb2005organization} that emphasize the role of single neurons in a computational circuit with less connectivity constraints.\noteCP{This sentence needs to be developped, or delected if not crucial}.\noteMP{I think developing this point is an overkill, I was just trying to say that there alternative theories that support a different view from neurons as the main units in explicit vector encodings, to give more substance to the notion of cell assemblies than just citing the review from Huyck. But then deleting it also feels like losing justification for my argument that there is substancial evidence, do you think the previous sentence would be fine by itself?}
+For example, based on the synaptic connectivity patterns of pyramidal neurons in the neocortex, Perin et al.\cite{Perin_2011} argued in favor of the theory of neuronal group selection of Edelman\cite{edelman1987neural} over Hebb's organizational principles\cite{hebb2005organization} that emphasize the computational role of single neurons.
+\noteCP{This sentence needs to be developped, or delected if not crucial}.\noteMP{I think developing this point is an overkill, I was just trying to say that there alternative theories that support a different view from neurons as the main units in explicit vector encodings, to give more substance to the notion of cell assemblies than just citing the review from Huyck. But then deleting it also feels like losing justification for my argument that there is substancial evidence, do you think the previous sentence would be fine by itself?}
 
 
 \subsection{The Neural Blackboard Architecture (NBA) applied to language}
@@ -319,17 +322,17 @@ Notice that it is trivial to extend the gating circuit for bidirectional control
 Introducing bidirectional conditional control signals is what gives the NBA the possibility of implementing separately queries like 'what follows X' or 'what follows Y'.
 
 The second basic component of the NBA is a working memory (WM) mechanism based on Delay Activity\cite{de_Kamps_2005}.
-It consists on a neural population, that after being excited beyond a certain threshold, achieved by the coactivation of input populations, will maintain a constant amount of activation for a short period of time. By maintaining its activity, WM acts as a short lived bidirectional link between two assemblies. This mechanism can be considered as the creation of an implicit pointer from one assembly to the other, such that future reactivation of one assembly can be driven from the other to perform query operations. This conforms a ``Memory Circuit'' as depicted in Figure {\ref{Blackboard}}.B.
+It consists on a neural assembly, that after being excited beyond a certain threshold, achieved by the coactivation of input populations, will maintain a constant amount of activation for a short period of time. By maintaining its activity, WM acts as a short lived bidirectional link between two assemblies. This mechanism can be considered as the creation of an implicit pointer from one assembly to the other, such that future reactivation of one assembly can be driven from the other to perform query operations. This conforms a ``Memory Circuit'' as depicted in Figure {\ref{Blackboard}}.B.
 
 Two bidirectional ``Gating Circuits'' connected by a ``Memory Circuit'' form a ``Compartment Circuit'' capable of implementing variable binding and query operations.
-The key point of this circuit is that Main assemblies (MA) representing features of grounded concepts or variables activate Sub assemblies (SA) if a control signal driven by another mechanism allows it.
+The key point of this circuit is that Main assemblies (MA), representing grounded concepts or instances of variables types, activate Sub assemblies (SA) if a control signal driven by another mechanism allows it.
 Then coactivation of SAs is what realizes a temporary binding of MAs by activating WM.
-So one ``Compartment Circuit'' models specifically the neural activity of the variable binding operation applied to two concepts or variables.
+So one ``Compartment Circuit'' models specifically the neural activity of a variable binding operation.
 It is operated by a mechanism that drives control signals simultaneously in multiple ``Compartment Circuits'' to instantiate binary tree like data structures on which query/unbinding operations can be performed later. 
 
 As might be evident by now, applying the NBA to syntactic processing in language consists on two simple assumptions.
-Firstly, equating the parsing mechanism to the control mechanism that coordinate binding events of words and syntactic objects.
-Secondly, determining the number of compartment circuits necessary to instantiate a complete syntactic structure and the content of MA nodes from a grammar theory.
+First, equating the parsing mechanism to the control mechanism that coordinate binding events of words and word types and phrase types.
+Second, determining the number of compartment circuits necessary to instantiate a complete syntactic structure and the content of MA nodes from a grammar theory.
 Although in this work we will employ a phrase grammar and bottom-up parsing scheme following theoretical assumptions of selected neuroimaging experiments.
 A promising feature of the NBA is that it has the flexibility to test any arbitrary parsing mechanism incorporating top-down considerations and an important variety of alternative theories of grammar.
 For example dependency grammars that assume multiple direct word bindings instead of the hierarchical phrase bindings modelled in this work have been employed in previous simulations\cite{van_der_Velde_2010}.
@@ -338,10 +341,10 @@ To understand how a sentence is processed in the NBA, lets consider first the si
 The MAs activate with timings corresponding to word presentation, so we are assuming that words were recognized to motivate their corresponding instantiated grammatical categories before we attempt to link them.
 Then an assumed parsing mechanism determines that a link operating on ``Adjective'' and ``Noun'' types is necessary in the blackboard, driving activity in several ``Compartment Circuits'' from which only one, which we consider as the recruited ``Comparment Circuit'', completes coactivation of SAs to drive WM and realize binding between the word types.
 
-In the case of a complete phrase, like ``Fat sad student'', if we are assuming the instantiation of phrase types that form a hierarchical tree theorized by a phrase grammar, then the time at which the binding of the types of ``sad student'' takes place would be the time at which a ``Noun Phrase'' is activated and binded to the ``Adjective'' corresponding to ``Ten''.
+In the case of a complete phrase, like ``Fat sad student'', if we are assuming the instantiation of phrase types that form a hierarchical tree theorized by a phrase grammar, then the time at which the binding of the instantiated grammatical categories of ``sad student'' takes place would be the time at which a ``Noun Phrase'' is activated and binded to the ``Adjective'' corresponding to ``Ten''.
 
-Finally, a ``Connection Matrix'' portrayed in Figure {\ref{Blackboard}}.C, allow the implementation of a complete ``Blackboard''.
-It contains variable type relations learned by the ``Blackboard'' as sets of mutually inhibitory ``Compartment Circuits'' that enables the selection of the ``Compartment Circuits'' requested by the parsing mechanism.
+Finally, a ``Connection Matrix'' portrayed in Figure {\ref{Blackboard}}.C, allows the implementation of a complete ``Blackboard''.
+It contains variable type relations learned by the ``Blackboard'' as sets of mutually inhibitory ``Compartment Circuits'' that enable the selection of the ``Compartment Circuits'' requested by the control mechanism.
 We portray the ``Blackboard'' as a regular grid for illustrative purposes, although there is already a proof of concept implementation with randomly connected networks\cite{van_der_Velde_2011}.
 Also implementing a general syntactic control mechanism should be feasible. As suggested by the Feed-forward artificial neural networks employed in previous NBA simulations~\cite{van_der_Velde_2010} and recent state of the art feedforward network architectures that have shown top performance for diverse language parsing tasks~\cite{andor2016globally}.
 Moreover a more recent proposed extension of the NBA, that imitates the motor circuit of the marine mollusk Tritonia diomedea, shows how to generate patterns for sequential activation control\cite{van_Dijk_2015}.
@@ -435,7 +438,7 @@ Consequently, the state space is two dimensional.
 The motivation behind this model is that first, it includes adaptation, and second that it is the effective approximation of the complex conductance-based processes that take place in a real neuron.
 The equations of the model are:
 
-We consider the AdExp model as presented by Brette and Gerstner \cite{brette2005}, which describes individual neurons by the following equations:
+We consider the AdEx model as presented by Brette and Gerstner \cite{brette2005}, which describes individual neurons by the following equations:
 \begin{align}
   C_m \frac{dV}{dt}    & =  -g_l(V - E_l)  + g_l e^{ \frac{(V - V_T)}{\Delta_{T}}} \\
   \tau_w \frac{dw}{dt} & =  a(V-E_l) -w \nonumber
@@ -451,13 +454,13 @@ We use the parameters given by Brette and Gerstner (2005).
 \begin{figure}[h!]
   \begin{center}
     \includegraphics[width=1.0\columnwidth]{aexp_overview.pdf}
-    \caption{{AdExp dynamics {\label{fig-adexp}} Left: Overview of AdExp dynamics.
+    \caption{{AdEx dynamics {\label{fig-adex}} Left: Overview of AdEx dynamics.
         Right: a heat plot of the density profile during simulation. On the horizontal axis the membrane potential, on the vertical axis the apativity parameter.
       }}
   \end{center}
 \end{figure}
 
-We illustrate the dynamics of the neuron in Fig. \ref{fig-adexp}.
+We illustrate the dynamics of the neuron in Fig. \ref{fig-adex}.
 The direction of the dynamics is shown by arrows, the speed of the dynamics by the size of the cells:
 big cells implies fast dynamics as the cells represent equidistant time steps.
 This shows that at $w =0$ dynamics are leaky,  i.e. towards the equilibrium, except at high values of $V$, on the right, which corresponds to spike generation.
@@ -479,7 +482,7 @@ where $\vec{h}$ represents the effect of an input spike.
 
 We represent the density function by a heat plot on state space: the highest values or white, low values are red.
 We are able to simulate the density function by a method analogous to that of \cite{dekamps2013,iyer2013}, generalized to two dimensions.
-In Fig. \ref{fig-adexp} we show the result of a simulation: the density function as a fixed point in time.
+In Fig. \ref{fig-adex} we show the result of a simulation: the density function as a fixed point in time.
 As before, we can calculate the firing rate of the population by calculating the the flux across threshold (which is still given by $V= V_{threshold}$, i.e. the right hand side of the grid).
 
 The simulation software, MIIND, is publicly available \url{http://miind.sf.net}. The LIF version of the algorithm has been available for some time \cite{dekamps2008}, while the two dimensional version has become available recently \cite{dekamps2017b}.
