@@ -339,7 +339,7 @@ For example dependency grammars that assume multiple direct word bindings instea
 
 To understand how a sentence is processed in the NBA, lets consider first the simplest case of binding two words, like ``Sad student'', belonging to grammatical categories instantiated in the MAs of one ``Compartment Circuit'', such that one MA is an ``Adjective'' corresponding to ``sad'' and the other one is a ``Noun'' corresponding to ``student''.
 The MAs activate with timings corresponding to word presentation, so we are assuming that words were recognized to motivate their corresponding instantiated grammatical categories before we attempt to link them.
-Then an assumed parsing mechanism determines that a link operating on ``Adjective'' and ``Noun'' types is necessary in the blackboard, driving activity in several ``Compartment Circuits'' from which only one, which we consider as the recruited ``Comparment Circuit'', completes coactivation of SAs to drive WM and realize binding between the word types.
+Then an assumed parsing mechanism determines that a link operating on ``Adjective'' and ``Noun'' types is necessary in the blackboard, driving activity in several ``Compartment Circuits'' from which only one, that we consider as the recruited ``Comparment Circuit'', completes coactivation of SAs to drive WM and realize binding between the word types.
 
 In the case of a complete phrase, like ``Fat sad student'', if we are assuming the instantiation of phrase types that form a hierarchical tree theorized by a phrase grammar, then the time at which the binding of the instantiated grammatical categories of ``sad student'' takes place would be the time at which a ``Noun Phrase'' is activated and binded to the ``Adjective'' corresponding to ``Ten''.
 
@@ -362,9 +362,9 @@ State-of-the-art simulations of larger cortical structures are based on point mo
 For larger scale networks, such as ours, a population-based approach is currently the only feasible approach.
 The two choices are: rate based models or population density techniques (PDTs).
 In rate based models, the population is described by a single variable, usually related to the population firing rate or average membrane potential of neurons in the population. 
-A prominent example is the  Wilson-Cowan equation \cite{wilson1972}, which describes the dynamics of the population activity as a first order linear differential equation driven by inputs.
-Another example is the Jansen-Rit model \cite{jansen1995}, which is primarily motivated by phenomenological considerations.
-In both examples, the relationship with the underlying neural state is unclear. We have opted for PDTs, also a population based approach,  but one where the relationship with the dynamics of  a group of spiking point model neurons can be made rigorous.
+A prominent example is the  Wilson-Cowan equation \cite{wilson1972excitatory}, which describes the dynamics of the population activity as a first order linear differential equation driven by inputs.
+Another example is the Jansen-Rit model \cite{jansen1995electroencephalogram}, which is primarily motivated by phenomenological considerations.
+In both examples, the relationship with the underlying neural state is unclear. We have opted for PDTs, also a population based approach, but one where the relationship with the dynamics of a group of spiking point model neurons can be made rigorous.
 Although they are computationally more expensive than rate based models, they are easier to manage than a full-blown model using spiking neurons, which would need hundreds of thousands of neurons at the scale of the cortical network considered here.
 We will briefly set out the assumptions that we use in modelling populations and describe the numerical methods involved.
 
@@ -379,9 +379,9 @@ If the neuron has a potential different from its equilibrium potential, or when 
 Here $V$ is the membrane potential in V, $\tau$ the membrane time constant in s, $V_{rev}$ the reversal potential and $I(t)$ and external current, which may comprise contributions from other neurons in the form of spikes, and therefore may be stochastic.
 If the membrane is driven far above the equilibrium potential, at a potential $V_{th}$, the threshold, the neuron spikes.
 We assume it will be inactive for an absolute refractive period $\tau_{ref}$ and then find itself reset to the equilibrium potential after that.  
-This scenario is easy to simulate: using a simulator like NEST \cite{nest}, or BRIAN \cite{brian}, one can create populations of LIF neurons.
+This scenario is easy to simulate: using a simulator like NEST \cite{gewaltig2007nest}, or BRIAN \cite{stimberg2014equation}, one can create populations of LIF neurons.
 In the simplest case a population is driven by synthetically generated input spike trains, where the spike train events are created by a random generators.
-The default assumption is that inter-spike intervals are Poisson distributed, although this can be extended to non-Markov processes \cite{lai2017}.
+The default assumption is that inter-spike intervals are Poisson distributed, although this can be extended to non-Markov processes \cite{lai2017population}.
 It is clear that $I(t)$ in Eq. \ref{eq-lif} now should be considered as a stochastic variable and that the threshold crossings of LIF neurons themselves are stochastic events as a consequence.
 Fig. \ref{fig-spike}  demonstrates a simple scenario: a population of 10000 LIF neurons, driven by a stochastic input - Poisson generated spike trains, where each LIF neuron experiences about 800 input spikes per second.
 The simulation shows a spike raster of the population response:
@@ -396,7 +396,7 @@ A population is described by a density function, which expresses how the populat
 For LIF neurons this is a function $\rho(V)$, where $\rho(V)dV$ is the fraction of neurons with their membrane potential in interval $[V, V + dV)$ (when we integrate the density function over a certain state interval, we will refer to the  result as  the amount of \emph{mass} in that interval).
 The initial distribution of the neurons in the population must be chosen, but the evolution of the density is tractable.
 It is clear that neurons move through state space due to the deterministic neural dynamics, Eq \ref{eq-lif} for LIF neurons, and also go transitions due to the input spikes.
-The collective contribution of the stochastic process to the evolution of the density profile can be  modelled using a Poisson master equation \cite{gardiner}; the contribution of the deterministic dynamics  can be modelled using an advection equation (see \cite{omurtag2000} for a lucid explanation). 
+The collective contribution of the stochastic process to the evolution of the density profile can be  modelled using a Poisson master equation \cite{gardiner}; the contribution of the deterministic dynamics  can be modelled using an advection equation (see \cite{omurtag2000simulation} for a lucid explanation). 
 
 
 As a consequence, the process of simulating thousands of neurons is now replaced by modelling the evolution of a density which is given by a single equation:
@@ -409,7 +409,7 @@ As a consequence, the process of simulating thousands of neurons is now replaced
 Here $p(h)$ is the distribution of synaptic efficacies, $\nu$ the frequency of the incoming spike trains, $\rho$ the density function, $t$ the time since start of simulation and $v$ the membrane potential.
 Mass that is being pushed across threshold corresponds to neurons spiking; consequently  the firing rate of the population can be calculated directly from the mass flux across threshold.
 
-Efficient and stable simulation methods are available \cite{nykamp2000,dekamps2003,dekamps2013,iyer2013}, and remarkably, the process of solving Eq. \ref{eq-synapse} is computationally less expensive for LIF neurons than the direct simulation using NEST \cite{nykamp2000}.
+Efficient and stable simulation methods are available \cite{nykamp2000population, de2003simple, de2013generic, iyer2013influence}, and remarkably, the process of solving Eq. \ref{eq-synapse} is computationally less expensive for LIF neurons than the direct simulation using NEST \cite{nykamp2000population}.
 The process of keeping track of a single density function, and the communication between populations using firing rates rather than individual spikes, frees the modeller from keeping track of thousands of spikes per second and leads to simpler simulations.
 Fig \ref{pdtcase} shows the very close correspondence between direct simulations of LIF spiking neurons and population density results.
 It shows, first, that the simulation results indeed are very close to that of the spiking simulation, and second, that Wilson-Cowan dynamics must be tuned in a way that PDTs do not: the correct steady state activation must be provided to the Wilson-Cowan dynamics in the form of a sigmoid, while in PDTs The correct steady state firing rate is calculated from first principles - input firing rate, synaptic efficacies and neural parameters - without any need for tuning. \noteMP{I joined the last two sentences}
@@ -417,7 +417,7 @@ It shows, first, that the simulation results indeed are very close to that of th
 
 \begin{figure}[h!]
   \begin{center}
-    \includegraphics[width=1.0\columnwidth]{fig2.pdf}
+    \includegraphics[width=1.0\columnwidth]{figures/pdt_overview.pdf}
 
     \caption{\textbf{A.} A spike raster showing an LIF population undergoing a jump response.
         Neurons are at equilbrium at $t = 0$. From $t=0$ each neuron receives a Poisson distributed input spike train ($\lambda$ = 800 Hz, $h= 0.03$, i.e. an input spike raises the PSP by 3\% of the difference between threshold and equilibrium potential, $\tau = 50$ ms, following \cite{omurtag2000simulation}).
@@ -433,12 +433,12 @@ It shows, first, that the simulation results indeed are very close to that of th
 
 
 The population density formalism can be extended to higher dimensional models.
-For example, the adaptive-exponential-integrate-and-fire neuron (AdEx) \cite{brette2005} is a two dimensional model that has the membrane potential and an adaptivity parameter as a variable.
+For example, the adaptive-exponential-integrate-and-fire neuron (AdEx) \cite{brette2005adaptive} is a two dimensional model that has the membrane potential and an adaptivity parameter as a variable.
 Consequently, the state space is two dimensional.
 The motivation behind this model is that first, it includes adaptation, and second that it is the effective approximation of the complex conductance-based processes that take place in a real neuron.
 The equations of the model are:
 
-We consider the AdEx model as presented by Brette and Gerstner \cite{brette2005}, which describes individual neurons by the following equations:
+We consider the AdEx model as presented by Brette and Gerstner \cite{brette2005adaptive}, which describes individual neurons by the following equations:
 \begin{align}
   C_m \frac{dV}{dt}    & =  -g_l(V - E_l)  + g_l e^{ \frac{(V - V_T)}{\Delta_{T}}} \\
   \tau_w \frac{dw}{dt} & =  a(V-E_l) -w \nonumber
@@ -447,13 +447,11 @@ We consider the AdEx model as presented by Brette and Gerstner \cite{brette2005}
 Where $C_m$ is the membrane capacitance, $g_l$ the leak conductance, $E_l$ the leak potential (equivalent to the reversal potential for the LIF), $V_T$ a threshold potential, $\Delta_T$ a shape parameter for the spike, $\tau_w$ the adaptation time constant, $a$ the subthreshold adaptation parameter,  $V$ the membrane potential and $w$ the adaptation parameter. Upon a spike, the neuron is undergoes a transition in $w$: $w \rightarrow w +b$, where $b$ is the spike adaptation parameter.
 We use the parameters given by Brette and Gerstner (2005).
 
-\noteMdK{I need to look them up and edit them in.}
-
-\noteMP{Maybe is too much to give the parameters for LIF and AdEx? no? particularly since we are not changing them and already giving detailed reference of the paper and model. I do not see how this detail would help understanding what comes next.}.
+\noteMdK{I need to look them up and edit them in.} \noteMP{Maybe is too much to give the parameters for LIF and AdEx? particularly since we are not changing them and already giving detailed reference of the paper and model.}.
 
 \begin{figure}[h!]
   \begin{center}
-    \includegraphics[width=1.0\columnwidth]{aexp_overview.pdf}
+    \includegraphics[width=1.0\columnwidth]{figures/aexp_overview.pdf}
     \caption{{AdEx dynamics {\label{fig-adex}} Left: Overview of AdEx dynamics.
         Right: a heat plot of the density profile during simulation. On the horizontal axis the membrane potential, on the vertical axis the apativity parameter.
       }}
@@ -481,95 +479,51 @@ and the density equation:
 where $\vec{h}$ represents the effect of an input spike.
 
 We represent the density function by a heat plot on state space: the highest values or white, low values are red.
-We are able to simulate the density function by a method analogous to that of \cite{dekamps2013,iyer2013}, generalized to two dimensions.
+We are able to simulate the density function by a method analogous to that of \cite{de2013generica,iyer2013influence}, generalized to two dimensions.
 In Fig. \ref{fig-adex} we show the result of a simulation: the density function as a fixed point in time.
 As before, we can calculate the firing rate of the population by calculating the the flux across threshold (which is still given by $V= V_{threshold}$, i.e. the right hand side of the grid).
 
-The simulation software, MIIND, is publicly available \url{http://miind.sf.net}. The LIF version of the algorithm has been available for some time \cite{dekamps2008}, while the two dimensional version has become available recently \cite{dekamps2017b}.
-
-\noteMP{I would create a new section just here. I think it automatically creates de right transition from the details of the neural simulation to the details of the NBA motivation and architectural decisions}.
+The simulation software, MIIND, is publicly available \url{http://miind.sf.net}. The LIF version of the algorithm has been available for some time \cite{de_Kamps_2008}, while the two dimensional version has become available recently \cite{dekamps2017b}.
 
 
 \subsection{NBA simulation}\label{architectural-decisions}
 
 Previous simulations of the NBA approximate the mean activity of neural assemblies with Wilson Cowan dynamics \cite{Frank_2014}.
-Nonetheless, as shown in \ref{simulation-framework}, direct simulations of leaky-integrate-and-fire (LIF) neurons \cite{omurtag2000simulation} have faster transient behaviour than the pseudo dynamics described by the Wilson Cowan equations.
-While such transient behaviour can be accurately approximated with PDTs \cite{de2013generic} implemented in the MIIND software \cite{de_Kamps_2008}. 
+Nonetheless, as explained in section \ref{simulation-framework}, direct simulations of leaky-integrate-and-fire (LIF) neurons \cite{omurtag2000simulation} have faster transient behaviour than the pseudo dynamics described by the Wilson Cowan equations, while such transient behaviour can be accurately approximated with PDTs \cite{de2013generic} implemented in the MIIND software \cite{de_Kamps_2008}.
 Then employing this implementation is a natural choice for this work, since we are interested in modelling the transient dynamics of variable binding to compare the simulation with real temporally detailed patterns of intracortical neural measurements like ECoG.
 
 One could further argue that it is desirable to go to the limit of available realistic simulations approximating conductance with point model neurons as those implementable with the RON, GENESIS and NEST software reviewed by Brette et al. \cite{brette2007simulation}.
 Nonetheless it has been shown that simpler 2D models, like adaptive exponential integrate-and-fire (AdEx), can already predict correctly 96\% of the spikes of detailed conductance models\cite{brette2005adaptive}.
 Also, this model reproduces many known electrophysiological features, as can be appreciated in the spike-frequency adaptation review of Benda et al. \cite{Benda_2003,Benda_2014}.
 
-So expanding our simulations to this model is a good upper bound compromise on biological plausibility and will allow us to evaluate the limitations of the simpler LIF model, that ignores adaptation effects, to study the neural dynamics of variable binding under the NBA framework.
+Expanding our simulations to this model is a good upper bound compromise on biological plausibility and will allow us to evaluate the limitations of the simpler LIF model, that ignores adaptation effects, to study the neural dynamics of variable binding under the NBA framework.
 Moreover, conveniently for us, AdEx has been recently added to MIIND. Although it is at least two orders of magnitude more computationally expensive than a LIF model, it is still feasible to implement it in a circuit with only tens of populations like the one we will simulate.
 To our knowledge this is the first time that the AdEx model will be employed to approximate the neural dynamics of a circuit of this magnitude reproducing cognitive function.
 
 In the case of Delay Activity (DA) populations like Working Memory (WM), we decided as a first approach to model such mechanism artificially.
 We plan to address the different alternatives to model persistent cortical activity with interacting neural populations in future work.
-As suggested by de~Kamps\cite{de_Kamps_2005} not only models of recurrent excitation but also recurrent inhibition can account for this phenomena.
+As suggested by de Kamps\cite{de_Kamps_2005} not only models of recurrent excitation but also recurrent inhibition can account for this phenomena.
 In the current simulation a constant firing rate is kicked off by a specified level of input that is sustained for a desired period of time.
 Contrary to previous simulations \cite{velde2015ambiguity}, we do not consider Sub-Assemblies (SAs) as DA populations.
 We find that SAs can show rich and interesting dynamics just by fulfilling their function of mediating activation for WM.
 
-In the case of Main-Assemblies (MAs) we model them as receiving input from DA populations representing word input in some cases and WM populations representing phrases in other cases.
-This extension is done to satisfy the assumptions of a phrase grammar that requires representation of deep tree hierarchical structures. Such that we can separate the notion of a phrase resulting from previous word bindings stored in a WM, from the recruitment of MAs due to word grammatical category recognition that would need to take place during sentence processing.
-Note that for other grammar types, like dependency grammars considered in previous NBA simulations\cite{velde2015ambiguity}, that consider words as nodes in their syntactic representations, we would only need to model word input for the MAs of the necessary compartment circuits.
+In the case of Main-Assemblies (MAs) we model them as receiving input from DA populations representing word types in some cases and WM populations representing phrase types in other cases.
+This extension is done to satisfy the assumptions of a phrase grammar that requires representation of deep tree hierarchical structures, such that we can separate the notion of a phrase resulting from previous word type bindings stored in WM, from the recruitment of MAs representing word grammatical category instantiations that take place during sentence processing.
+Note that for other grammar types, like dependency grammars considered in previous NBA simulations\cite{velde2015ambiguity}, that consider words as nodes in their syntactic representations, we would only need to model word types for the MAs of the necessary compartment circuits.
 
 
 \subsection{Compartment circuit parameters}\label{compartment-circuit-parameters}
 
 The compartment circuit contains two different types of neural populations.
-Artificial neural populations following a boxcar event model and biological neural populations following LIF or AdEx neural models.
+Artificial neural populations following a boxcar event model, shown in Figure \ref{circuit_spec}.B and biological neural populations following LIF or AdEx neural models.
 Both biological neural models have a wide range of parameters that have been tuned in the literature to follow the behavior of a regular spiking pyramidal cell in the cortex according to electro-physiological measurements.
 These were taken from Omurtag et al. (2000) \cite{omurtag2000simulation} in the case of LIF neurons and from Brette et al.
 (2005) \cite{Brette_2005} in the case of AdEx neurons.
 
-
-As a first step we wanted to only explore the behavior of the circuit of neural populations in generality following well studied sets of parameters.
-Nonetheless it is clear that studying the neural dynamics of specific brain regions might require adapting the parameters of the neural models to local measurements.
-Also considering parallely multiple neuron typologies and modelling their corresponding microcircuitry of cortical columns as attempted already with LIF models to simulate local field potentials for a very small patch of cortex\cite{Mazzoni_2015,Hagen_2015}.
-Each neural population can be either excitatory or inhibitory and so only connections from the same type can come from them, respecting Dale's law.
-The biological neural populations are conformed by a pair of Main Assemblies (MA), a pair of Sub Assemblies (SA), six Gate Assemblies (G) and six Gate Keeper Assemblies (GK).
-On the other hand the artificial neural populations are conformed by Control assemblies (Ctl), Working memory assemblies (WM), Event Input Assemblies (Inp) and a Baseline Assembly (B) that drives baseline neural activity.
-A complete diagram of the compartment circuit with example parameter values for LIF populations is given in Figure 3.
-
-That the artificial populations follow a boxcar event model means that we just have to specify the starting point of events, the persistent firing rate of the population and the duration of the persistent activity.
-In the case of the delay activity of WM we also have to provide a kickoff input rate threshold that automatically triggers the boxcar event instead of providing a start time point.
-The duration of persistent activity was pragmatically set up long enough to visualize the steady state of the neural dynamics.
-Finally the persistent activity rate and kickoff rate threshold were arbitrarily selected from feasible parameter range values given by various simulations of the circuit dynamics that will become clear in the following section.
-
-Selecting firing rates to tune the compartment circuit is a complex task given the contrast between the extremely simplified circuit and real neural networks that contain multiple types of neurons with diverging behavior across cortical layers \cite{Wohrer_2013}.
-Wohrer et al \cite{Wohrer_2013} shows, from measurements in rat cortex, that the actual firing rate distributions of neural networks do not differ much between resting state and evoked activity.
-The small difference would come from very few neurons that manage to drive up the mean firing rate in recordings while most neurons in the population are almost silent, some with rates as low as 0.1 Hz \cite{Kerr_2005}, whose activity might not even be picked up by most recording devices.
-Although theoretical analysis of the distribution of firing rates in randomly recurrently connected networks of LIF neurons near the fluctuation-driven regime suggests considering mean firing rates around 6.4 Hz \cite{Roxin_2011}.
-Based on the review of Wohrer et al. \cite{Wohrer_2013}, particularly on the firing rate in motor areas of behaving macaques, we decided to kickstart biological neural populations activity up to a conservative baseline firing rate of 1 Hz and study the neural dynamics of circuit input firing rates of up to 10Hz.
-
-There are two parameters governing transmission of neural activity between neural populations.
-First we consider the synaptic efficacy of connections, which was setup to be homogeneous across the circuit under the lack of appropriate hypothesis to tinker it in a detailed manner.
-As exposed by London \cite{London_2002}, current understanding of synapsis is limited and even contextual measurements of efficacy might be more appropriate to understand the impact of synaptic input on spike output that actual set parameters of the synapse.
-Moreover recent evidence \cite{Briggs_2013} shows that synaptic efficacy might be modulated by attention processes and is naive to consider it as a fixed parameter in a circuit.
-The study of Briggs \cite{Briggs_2013} suggest that synchronous firing of neurons with the same input has probabilities between 3.1 and 7.6 while single firing has probabilities ranging from 28\% to 36\% depending on the type of neurons considered and the attention state.
-Based on these reports, we decided to verify, through an initial sub-circuit experiment, the effect that synaptic efficacy could have on the circuit temporal dynamics, contrasting a low (10\%) and high (30\%) value of synaptic efficacy for both LIF and AdEx populations.
-This allowed us to verify if the tradeoff between efficacy and number of connections was a trivial one, simply requiring more connections when assuming a lower efficacy to attain similar ouput firing rates for the same input rates.
-This, as will be shown in the results section, was not the case for AdEx populations.
-Nonetheless the difference in the qualitative nature of the temporal dynamics was confirmed to not be crucial for the circuit setup, so for the remaining simulations we employed the more conservative 10\% synaptic efficacy regime.
-
-The second parameter governing transmission of neural activity was the number of connections between a pair of neural populations.
-Unlike synaptic efficacy, the number of connections were determined from a series of simulation experiments.
-First the number of connections from baseline persistent activity was set such that, during rest, the circuit steady state activity would stabilize around 1 Hz.
-The number of baseline connections necessary is a function of input firing rate, synaptic efficacy and neural model, such that a lower synaptic efficacy required a higher number of connections.
-Then the number of connections coming from excitatory populations was determined such that bidirectional gating circuits would have a stable steady state firing rate when both Gs allow neural activity to be transmited.
-Finally the number of connections coming from inhibitory nodes were setup high enough to block neural activity flow in a gating circuit, which means that GKs driven by MAs would be able to completely inhibit activity in Gs.
-Our simple approach to neural rate transmission ignores many intricacies like activity regimes that might allow rich internal computations.
-\cite{Ostojic_2014}.
-Also connections distribution might have an impact in spike based communication \cite{Teramae_2012}.
-Still we decided to keep connections between populations as simple and homogeneous as possible for a first approach.
-
 \begin{figure}[h!]
   \begin{center}
     \includegraphics[width=1.00\columnwidth]{figures/circuit_specs3/circuit_specs3}
-    \caption{{Compartment circuit example {\label{471683}} A.
+    \caption{{Compartment circuit example {\label{circuit_spec}} A.
 Details
         of the Compartment Circuit implementation.
 Only half of the
@@ -584,32 +538,51 @@ The behavior of the artificial neural populations and their
   \end{center}
 \end{figure}
 
+As a first step we wanted to only explore the general behavior of the circuit of neural populations following well studied sets of parameters.
+Nonetheless it is clear that studying the neural dynamics of specific brain regions might require adapting the parameters of the neural models to local measurements.
+It could also be important to consider parallely multiple neuron typologies and modelling their corresponding microcircuitry of cortical columns, as attempted already with LIF models, to simulate local field potentials for a very small patch of cortex\cite{Mazzoni_2015,Hagen_2015}.
+
+Each neural population can be either excitatory or inhibitory and so only connections from the same type can come from them, respecting Dale's law.
+The biological neural populations are conformed by a pair of Main Assemblies (MA), a pair of Sub Assemblies (SA), six Gate Assemblies (G) and six Gate Keeper Assemblies (GK).
+On the other hand the artificial neural populations are conformed by Control assemblies (Ctl), Working memory assemblies (WM), Event Input Assemblies (Inp) and a Baseline Assembly (B) that drives baseline neural activity.
+A complete diagram of the compartment circuit with example parameter values for LIF populations is given in Figure \ref{circuit_spec}.
+
+The boxcar event model of artificial populations requires specification of the starting point of events, the persistent firing rate of the population and the duration of the persistent activity.
+In the case of the delay activity of WM we also have to provide a kickoff input rate threshold that automatically triggers the boxcar event instead of providing a start time point.
+The duration of persistent activity was pragmatically set up long enough to visualize the steady state of the neural dynamics and allow all required bindings between phrase types and word types.
+Finally the persistent activity rate and kickoff rate threshold were arbitrarily selected from feasible parameter range values given by various simulations of the circuit dynamics that will become clear in the following section.
+
+Selecting firing rates to tune the compartment circuit is a complex task given the contrast between the extremely simplified circuit and real neural networks that contain multiple types of neurons with diverging behavior across cortical layers \cite{Wohrer_2013}.
+Wohrer et al \cite{Wohrer_2013} shows, from measurements in rat cortex, that the actual firing rate distributions of neural networks do not differ much between resting state and evoked activity.
+The small difference would come from very few neurons that manage to drive up the mean firing rate in recordings while most neurons in the population are almost silent, some with rates as low as 0.1 Hz \cite{Kerr_2005}, whose activity might not even be picked up by most recording devices.
+Although theoretical analysis of the distribution of firing rates in randomly recurrently connected networks of LIF neurons near the fluctuation-driven regime suggests considering mean firing rates around 6.4 Hz \cite{Roxin_2011}.
+Based on the review of Wohrer et al. \cite{Wohrer_2013}, particularly on the firing rate in motor areas of behaving macaques, we decided to kickstart biological neural populations activity up to a conservative baseline firing rate of 1 Hz and study the neural dynamics of circuit input firing rates of up to 10Hz.
+
+There are two parameters governing transmission of neural activity between neural populations.
+First we consider the synaptic efficacy of connections, which was setup to be homogeneous across the circuit under the lack of appropriate hypothesis to tinker it in a detailed manner.
+As exposed by London \cite{London_2002}, current understanding of synapsis is limited and even contextual measurements of efficacy might be more appropriate to understand the impact of synaptic input on spike output that actual set parameters of the synapse.
+Moreover recent evidence \cite{Briggs_2013} shows that synaptic efficacy might be modulated by attention processes and is naive to consider it as a fixed parameter in a circuit.
+The study of Briggs \cite{Briggs_2013} suggest that synchronous firing of neurons with the same input has probabilities between 3.1 and 7.6 while single firing has probabilities ranging from 28\% to 36\% depending on the type of neurons considered and the attention state.
+Based on these reports, we decided to verify, through an initial sub-circuit experiment, the effect that synaptic efficacy could have on the circuit temporal dynamics, contrasting a low (10\%) and high (30\%) value of synaptic efficacy for both LIF and AdEx populations.
+This allowed us to verify if the tradeoff between efficacy and number of connections was a trivial one, simply requiring more connections when assuming a lower efficacy to attain similar ouput firing rates for the same input rates, which, as will be show in the results section, was not the case for AdEx populations.
+Nonetheless the difference in the qualitative nature of the temporal dynamics was confirmed to not be crucial for the circuit setup, so for the remaining simulations we employed the more conservative 10\% synaptic efficacy regime.
+
+The second parameter governing transmission of neural activity was the number of connections between a pair of neural populations.
+Unlike synaptic efficacy, the number of connections were determined from a series of simulation experiments.
+First the number of connections from baseline persistent activity was set such that, during rest, the circuit steady state activity would stabilize around 1 Hz.
+The number of baseline connections necessary is a function of input firing rate, synaptic efficacy and neural model, such that a lower synaptic efficacy required a higher number of connections.
+Then the number of connections coming from excitatory populations was determined such that bidirectional gating circuits would have a stable steady state firing rate when both Gs allow neural activity to be transmitted.
+Finally the number of connections coming from inhibitory nodes were setup high enough to block neural activity flow in a gating circuit, which means that GKs driven by MAs would be able to completely inhibit activity in Gs.
+Our simple approach to neural rate transmission ignores many intricacies like activity regimes that might allow rich internal computations.
+\cite{Ostojic_2014}.
+Also connections distribution might have an impact in spike based communication \cite{Teramae_2012}.
+Still we decided to keep connections between populations as simple and homogeneous as possible for a first approach.
+
 \subsection{Simulation experiments performed}\label{simulation-experiments-performed}
 
-Since it is possible to tune the circuit to reproduce arbitrary firing rate values under which circuit dynamics are similar and stable, we simply aimed at picking reasonable parameter values such that the circuit would mantain overall modest firing rate values with respect to the literature of neural measurements.
+Since it is possible to tune the circuit to reproduce a wide range of firing rate absolute values under which circuit dynamics are similar and stable, we simply aimed at picking reasonable parameter values such that the circuit would maintain overall modest firing rate values with respect to the literature of neural measurements.
 To setup parameters and compare in detail the compartment circuit dynamics for LIF and AdEx neural populations, four simulation experiments were performed taking different sub-circuits into account.
-A diagram of each sub-circuit is shown in Figure 4.
-The first simulation simply consists on the activity of one neural population driven by a fix activity rate of 1 Hz.
-We used this simulation to explore the necessary number of baseline connections to drive baseline activity in the circuit to approximately 1 Hz.
-The second simulation allowed us to explore how neural activity flows through a chain of neural populations being regulated by a control mechanism.
-The third simulation explores how neural activity is enhanced by a closed loop between a MA and SA, since it will be the case in the memory sub-circuit that activity is allowed to flow bidirectionally once the WM delay activity is unleashed.
-Finally the fourth simulation consists on adding GKs to the closed loop sub-circuit of the second simulation to explore how many inhibitory connections are necessary to keep activity from flowing in the circuit unless the controls allow it.
-
-After determining reasonable parameter values, we simulated the complete circuit, portrayed in Figure 3, for both LIF and AdEX neural populations.
-Then we contrasted the obtained neural patterns of the MA, SA, G and GK neural populations with binding and constituency effects available in the neuroimaging literature.
-First we show similitudes between the activity of one compartment circuit and ECoG time series patterns of binding revealed by Nelson et al\cite{Nelson_2017}.
-We naively compare the firing rates of our simulation directly to the patterns observed in ECoG recordings, considering the correlation that exist between the high gamma power of local field potential signals and firing rates\cite{Ray_2011,Manning_2009}.
-Nonetheless a quantitative comparison would require a more careful consideration, employing recent models tuned to electro-physiological measurements that offer a way to translate neural activity to local field potentials\cite{Mazzoni_2015,Hagen_2015}.
-
-Then we simulate the binding activity related to the processing of complete phrases.
-Assuming a syntactic tree structure given by a phrase grammar theory and the order of control events given by a bottom up parsing scheme.
-As a first simplified approximation to the NBA dynamics, we instantiated parallely the necessary compartment circuits to represent a complete assumed tree structure.
-Once we obtained time series for the processing of the entire phrase, by summing activity across similar node categories of the multiple compartment circuits required, we convolved the time series with the Glover Hemodynamic Response Function\cite{Glover_1999}.
-This allowed us to approximate the hemodynamic constituency effects depicted by Pallier et al. (2011)\cite{Pallier_2011}.
-We managed to show that the sublinear function that surprised the authors, governing the amplitude of HRF responses for the different stimuli categories, is approximated by the dynamics of binding events assumed by the NBA.
-
-Since the quantitative level of neural activity can be easily tuned for a wide range of parameter values with similar behavior, when comparing the circuit neural dynamics with the neuroimaging literature, we only focused on the qualitative neural temporal patterns observed.
-All the C++ scripts behind the circuit and sub-circuit simulations, taking advantage of the MIIND software\cite{de_Kamps_2008}, are accessible in the Blackboard application folder of the MIIND github repository https://github.com/dekamps/miind.
+A diagram of each sub-circuit is shown in Figure \ref{sub_circuits}.
 
 \begin{figure}[h!]
   \begin{center}
@@ -621,10 +594,36 @@ All the C++ scripts behind the circuit and sub-circuit simulations, taking advan
       This topology~ reminds of the fact that all MA, SA, G and GK populations are driven initially in the same way by a persistent baseline fixed rate.
       B. Chain of populations where activity is temporally interrupted by a control node.
       C. Closed loop formed by MA, SA and Gs.
-      D. Closed loop broken by the addition of GKs. {\label{637398}}%
+      D. Closed loop broken by the addition of GKs. {\label{sub_circuits}}%
     }
   \end{center}
 \end{figure}
+
+The first simulation simply consists on the activity of one neural population driven by a fix activity rate of 1 Hz.
+We used this simulation to explore the necessary number of baseline connections to drive baseline activity in the circuit to approximately 1 Hz.
+The second simulation allowed us to explore how neural activity flows through a chain of neural populations being regulated by a control mechanism.
+The third simulation explores how neural activity is enhanced by a closed loop between a MA and SA, since it will be the case in the memory sub-circuit that activity is allowed to flow bidirectionally once the WM delay activity is unleashed.
+Finally the fourth simulation consists on adding GKs to the closed loop sub-circuit of the second simulation to explore how many inhibitory connections are necessary to keep activity from flowing in the circuit unless the control mechanism allows it.
+
+After determining reasonable parameter values, we simulated the complete circuit, portrayed in Figure \ref{circuit_spec}, for both LIF and AdEX neural populations.
+Then we contrasted the obtained neural patterns of the MA, SA, G and GK neural populations with binding and constituency effects available in the neuroimaging literature.
+
+We simulate the binding activity related to the processing of complete phrases, by assuming a syntactic tree structure given by a phrase grammar theory and the order of control events given by a bottom up parsing scheme.
+As a first simplified approximation to the NBA dynamics, we instantiated parallely only the required compartment circuits to represent the complete assumed tree structure.
+We obtain the entire phrase neural time series, by summing activity across similar node categories of the multiple compartment circuits required.
+
+First, we show similitudes between the activity of simple phrases and ECoG time series patterns of binding revealed by Nelson et al\cite{Nelson_2017}.
+We naively compare the firing rates of our simulation directly to the patterns observed in ECoG recordings, considering the correlation that exist between the high gamma power of local field potential signals and firing rates\cite{Ray_2011,Manning_2009}.
+Nonetheless a quantitative comparison would require a more careful consideration, employing recent models tuned to electro-physiological measurements that offer a way to translate neural activity to local field potentials\cite{Mazzoni_2015,Hagen_2015}.
+
+Second, we concatenate simple phrases to reproduce the stimuli of Pallier et al.(2011)\cite{Pallier_2011}.
+Then we convolve the stimuli neural time series with the Glover Hemodynamic Response Function\cite{Glover_1999}.
+This allowed us to approximate the hemodynamic constituency effects depicted by Pallier et al. (2011)\cite{Pallier_2011}.
+We show that the sublinear function given by the number of constituents, governing the amplitude of HRF responses for the different stimuli categories, is naturally approximated by the binding events assumed by the NBA, alongside an increasing pattern in HRF peak onsets.
+
+Since the quantitative level of neural activity can be easily tuned for a wide range of parameter values with similar behavior, when comparing the circuit neural dynamics with the neuroimaging literature, we only focused on the qualitative neural temporal patterns observed.
+All the C++ scripts behind the circuit and sub-circuit simulations, taking advantage of the MIIND software\cite{de_Kamps_2008}, are accessible in the Blackboard application folder of the MIIND github repository at https://github.com/dekamps/miind.
+
 
 \section{Results}
 
