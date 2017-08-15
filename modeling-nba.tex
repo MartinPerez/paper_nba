@@ -161,45 +161,46 @@ For example, in Chomsky's Minimalist Program for Syntax \cite{Chomsky_2013}, the
 
 Proposing a satisfactory neural model for the ``composition'' operations required by language is linked to solving the binding problem \cite{marcus14}.
 The term binding was introduced into the neuro-scientific community by von der Malsburg\cite{von_der_Malsburg_1994} during the first explorations of neural phase synchronization for ``variable binding'', which is a term taken literally from computer science, meaning to link a data structure to a name so it can be later accessed by that name.
-As Jackendoff\cite{Jackendoff_2002b}~explains, binding is also motivated by the empirical discovery of the distributed and segmented~encoding of features along the cortex.\noteCP{Ah? noàt very clear and I would not cite Jackendoff for brain level stuff. The problem of ones (or twos?) where the same lexical items appear in a sentence would be more relevant. You have to link the words to their positions, or roles.}
-An example of this would be color and shape in the case of vision, which are robustly integrated during perception but can be independently impaired by brain damage.
+Binding is also motivated by the empirical discovery of the distributed and segmented encoding of features along the cortex. For example color and shape, in the case of vision, are robustly integrated during perception but can be independently impaired by brain damage.
 
-The binding problem in all its generality actually comprises four different sub problems, namely~\emph{General Coordination},~\emph{Feature-Binding},~\emph{Variable Binding} and the~\emph{Subjective Unity of Perception}\cite{Feldman_2012}.
+The general binding problem actually comprises four different sub problems, namely~\emph{General Coordination},~\emph{Feature-Binding},~\emph{Variable Binding} and the~\emph{Subjective Unity of Perception}\cite{Feldman_2012}.
 The current work is specifically motivated by the~\emph{Variable Binding} sub-problem that is presented by Feldman as an abstract high level cognitive faculty, mainly required by symbolic thought to bind values to variables that form part of a structured representation.
-In this respect, it is a function that arises mostly in human languages and goes beyond the extensively studied sensory, attention and short-term memory phenomena of feature binding.
-In which, for example, we want to avoid confusion between a red circle and a blue square represented simultaneously.\noteCP{not a sentence}
+In this respect, it is a function that arises mostly in human languages and goes beyond the extensively studied sensory, attention and short-term memory phenomena of feature binding, that only require linking features exclusively, in a bag, to avoid confusion with simultaneous representations, like a red circle and a blue square presented side by side in a screen.
 
-~\emph{Variable binding} is better illustrated by the capacity to run logical inference on data structures that encode relationships between their items.
-For example the sentence ``\emph{Mary owns a book}" allows to establish a relation of the type \emph{own(Mary, book)} that implies \emph{owner(book, Mary)}, such that we can later ask the question ``\emph{Who owns this book?}''.
-Moreover it is naturally related to the \emph{Unification} phenomenon, that comprises the binding of variables in a data structure independently of their particular values.\noteCP{I do not understand. For me Unification refers to merging two data structures.}
-Like the abstract notions of combining a "determiner variable type" and "noun variable type" in a phrase.\noteCP{Not a sentence.}
+~\emph{Variable binding} is illustrated by the capacity to run logical inference on data structures that encode relationships between their items.
+For example the sentence ``\emph{Mary owns a book}" allows to establish a relation of the type \emph{own(Mary, book)} that implies \emph{owner(book, Mary)}, such that we can later ask the question ``\emph{Who owns this book?}'', which would not be answerable under a simpler feature binding mechanism that would just confuse the three words in a bag as just belonging to the same sentence.
+To implement this in language, most linguistic theories propose that there are types of words, named grammatical categories, like 'noun' and 'verb', that are instantiated during sentence comprehension to be combined under a finite set of constraints.
+These instantiated word types would point to each other to form a graph data structure, a tree, on which query and join operations can be performed, and they would also point to their corresponding specific words.
+Then solving ~\emph{Variable binding} in language, requires a biologically feasible implementation of a pointer mechanism that can link instantiated grammatical categories and their corresponding words, which we will demonstrate with the Neural Blackboard Architecture.
+
 
 \subsection{Some neuroimaging studies of binding of language}
 
 {\label{729344}}
 
-Variable binding is crucial to support the constituency property assumed by most linguistic theories.
-This property requires the assignment of words to grammatical categories, that can be interpreted as variables\noteCP{I don't think that grammatical categories act as variables, they are types if anything. I find this confusing}, such that they are further combined into tree-like hierarchical data structures.
+Most linguistic theories assume a constituency property that allows to combine and replace smaller phrases in larger phrases.
+Since solving variable binding requires to explain how to implement links between bits of information, like words and word types, to create basic data structures, like phrases in language, it is likely to also explain how to create links between such basic structures.
+
 Behavioral evidence for constituents in phrases has been around for a while\cite{bever1969underlying, abrams1969syntactic}, with more recent studies demonstrating the reuse of recently heard syntactic structures through syntactic priming experimental paradigms\cite{bock2007persistent, branigan2000syntactic}.
 But only recently we have started to characterize the detailed neural correlates of constituency and word binding with diverse brain-imaging techniques\cite{Nelson_2017, fedorenko2016neural, brennan2016abstract, ding2016cortical, bemis2012basic, Pallier_2011, bastiaansen2010syntactic, longe2006grammatical}.
 
 We selected The ECoG analysis of Nelson et al.\cite{Nelson_2017} as the first study to compare with our model.
 It is one of the only two studies so far depicting spatially specific and temporally detailed neural dynamics of phrase processing thanks to analyses of intracranial neurophysiological data taken from epileptic patients.
-Moreover it is the first to characterize the specific patterns of phrase-structure formation. Possibly revealing the first neural signatures of variable binding operations. These are referred to, by Nelson et al., as "merge" operations, that combine syntactic objects (lexical items and sets) \noteCP{You need to explain here the relationship with merge and variable binding. On the surface, it could seem that they have little in common.}
-\noteMP{Is it clearer presented like this? I am kind of trying to say that merge approximates unification and variable binding in Chomskys program, although variable binding is a more flexible concept, if I understand everything correctly}.\noteCP{Unfortunately, I think this is not clear. You need to make a better case that the combination/merging operation requires variable. binding}
+Moreover it is the first to characterize the specific patterns of phrase-structure formation, possibly revealing the first neural signatures of variable binding related operations. These are referred to, by Nelson et al., as "merge" operations, that combine syntactic objects (word types and phrases). \noteCP{You need to explain here the relationship with merge and variable binding. On the surface, it could seem that they have little in common.}.
+\noteMP{Is it clearer presented like this? I am kind of trying to say that merge approximates unification and variable binding in Chomskys program, although variable binding is a more flexible concept, if I understand everything correctly}. \noteCP{Unfortunately, I think this is not clear. You need to make a better case that the combination/merging operation requires variable. binding}. \noteMP{What about now? Taking into account change to first paragraph}.
 In the study words were presented sequentially to patients in a screen to be read under a Rapid Serial Visual Presentation paradigm.
 The task was to keep a phrase of up to 10 words in memory to compare it just after with a probe sentence composed of 2 to 5 words.
-We will show that simulation of the NBA portion responsible for variable binding, only tuned for correct operation, generates strikingly similar temporal patterns of neural activity when aggregating the binding operations assumed for complete phrase processing.
-Assuming the phrase grammar and bottom-up parsing scheme employed by Nelson et al. in their analyses.\noteCP{not a sentence}
+We will show that simulation of the NBA portion responsible for variable binding, only tuned for correct operation, generates strikingly similar temporal patterns of neural activity when aggregating the binding operations corresponding to complete phrase processing, assuming the phrase grammar and bottom-up parsing scheme employed by Nelson et al. in their analyses.
 
 Second, we selected a fMRI experiment \cite{Pallier_2011} to portray the capacity of the model to capture results from multiple neuroimaging spatio-temporal scales.
 In this experiment trials with lists of 12 words obtained by concatenating phrases of a given length, were presented to healthy subjects.
-All conditions then correspond to a divisor of 12\noteCP{Too abstract for me} that determine the number of words (constituents) of each phrase, going from a list of unrelated to words to a complete phrase of 12 words.
+Conditions were formed from all combinations of m by n that give 12, satisfying the form n phrases of m words, like 2 phrases of 6 words.
 Besides normal words, the design also included pseudoword conditions that maintained morphological markers and closed-class (function) words.
-This allowed the authors to depict a clear separation of syntactic and semantic binding patterns in language related regions.
-The syntactic specific patterns are the closest to the abstract considerations of binding in our model assuming the same phrase grammar and parsing scheme employed for comparison with the ECoG results.
-Initially the authors assumed an "accumulation" model inspired from neurophysiological measurements of sequence learning tasks in awake macaque monkeys, in which a linear increase of neural activation is expected with the number of constituents.
-Instead a sub-linear pattern surprised the authors,\noteCP{I would not say that. A simplistic model made the linear prediction. It relied on assumption that of very sparse representations and superposition. A tiny modif saying that the representation are not so sparse (~20\% of neurons in an assembly)  predicts the sublinear effect.}  while being naturally explained by our model alongside expected patterns of hemodynamic peak onset differences.
+This allowed the authors to depict a clear separation of syntactic and semantic binding neural activation patterns in language related regions, which is interesting to us, since syntactic specific patterns are the closest to the abstract considerations of binding of our model, assuming the same phrase grammar and parsing scheme employed for comparison with the ECoG results.
+The authors found a sub-linear pattern of neural activation as the number of constituents increase, which could not be explained by a simple "accumulation" model motivated by measurements of sequence learning tasks in awake macaque monkeys.
+The Neural Blackboard Architecture predicts this sub-linear effect from the circuit recruitment process required by the number of binding operations, alongside expected patterns of hemodynamic peak onset differences from delay activity considerations.
+
+\noteCP{I would not say that. A simplistic model made the linear prediction. It relied on assumption that of very sparse representations and superposition. A tiny modif saying that the representation are not so sparse (~20\% of neurons in an assembly)  predicts the sublinear effect.}.\noteMP{I changed the wording. Now I just try to point out that is not trivial to explain the sublinear effect from simpler models and that our model captures the effect. Also I clarify what explains them in the model, maybe its too soon for that?}.
 
 
 \subsection{Neural models of language}
@@ -244,8 +245,6 @@ Such magnitude effectively exceeds the estimated lifetime of the universe expres
 Moreover the need to perform later unbinding operations for information extraction in linguistic data structures where order and variable types matter adds complexity to the possible mechanisms we can hypothesize.
 To surmount these modelling issues, two main approaches are discussed in the literature.
 The first relies on the framework of tensor product representations\cite{smolensky2006harmonic} and the second on connectivity based models that allow binding by process\cite{van_der_Velde_2015}.
-\noteCP{What does 'by process' mean. Is it English, or a theoretical concept?}
-\noteMP{It is a theoretical concept posed forward by Van der Velde, I added the reference here to the paper where he introduces the term, will deelop the details in the following paragraphs}.
 
 Smolensky provides an in-depth analysis of the typology of vector symbol architectures (VSA) that work with tensor operations.
 He shows that various proposals, including Synchronous Firing\cite{Shastri_1993}, Holographic Reduced Representations\cite{Plate_1995} and Recursive Auto-Associative Memories\cite{Chalmers_1992}, are just particular cases with varying implementation details of his general tensor framework.
@@ -257,23 +256,26 @@ Nonetheless neural dynamics do not play an important functional role, although i
 Also there is no clear proposal on how to implement it with spiking neural networks that are also sensitive to the ignored dynamics.
 
 On the other hand, Van der Velde et al.\cite{van_der_Velde_2015} argues in favor of a small world network model that thanks to its connectivity properties allows the formation of complex structures.
-It does it by conditionally coactivating neural assemblies representing grounded concepts and variables, which is a process driven by a control mechanism.
-In this framework, working memory acts as a control that diminishes inhibition on paths of neural flow necessary to maintain the bindings established by the initial transient coactivation.
+It does it by conditionally coactivating neural assemblies representing grounded concepts and instances of variable types, which is a process driven by a control mechanism.
+In this framework, working memory acts as a control that diminishes inhibition on paths of neural flow necessary to maintain the bindings established by the initial transient coactivation, such that pointers have been implicitly declared between the coactivated concepts.
 Contrary to the tensor framework, data structures are implicitly encoded by the short lived reinforced paths of neural activity flow.
 Then query operations are possible by reactivating nodes, included in a query, that induce coactivation of answer nodes, thanks to the reinforced connectivity.
 This successive coactivation of neural assemblies, that leads to a short-term lived graph that implicitly encodes the final data structure, is referred to as ``binding by process''.
 Van der Velde et al. insist on the need of connectivity considerations to produce behavior in a sensory-motor loop and to provide an internal frame of reference for the brain to implement queries.
-He argues that models like Shruti\cite{Shastri_1993}, contrary to the analysis of Feldman\cite{Feldman_2012}, gain their capacity to implement behavior from being ultimately connectivity based too.\noteCP{This sentence needs to be developped, or delected if not crucial}
 
-The latter idea is at the basis of the Neural Blackboard Architecture proposed by Van der Velde and De Kamps\cite{van_der_Velde_2006}, that claims to also solve the other challenges posed by Jackendoff to model language in the human brain.
-Namely ``The massiveness of binding'', ``The problem of 2'', ``The problem of variables'' and ``Binding in working memory vs long-term memory''.\noteCP{Not a sentence. And you should explain what are these problems, yet not necessarily all of them.}
-Its level of abstraction allows to apply it to several cognitive functions like motor control, attention and symbolic thought.
+The latter idea is at the basis of the Neural Blackboard Architecture (NBA) proposed by Van der Velde and De Kamps\cite{van_der_Velde_2006}. Thanks to its properties, it can solve the challenges posed by Jackendoff to model language in the human brain, namely ``The massiveness of binding'', ``The problem of 2'', ``The problem of variables'' and ``Binding in working memory vs long-term memory''.
+First ``The massiveness of binding'' is addressed by instantiation of variable types as assemblies that are binded to grounded concepts and other variable types instances, allowing the creation of combinatoric structures on demand.
+Then ``The problem of variables'' is handled by the previously explained coactivation mechanism capable of creating pointers from grounded concepts to variable type instances.
+``The Problem of 2'' is managed by having multiple neural assemblies that instantiate the same variable type in the architecture but that can occupy different parts of the same data structure.
+Finally a working memory mechanism is provided, as explained in the previous paragraph, that allows transient short-term coactivations of concepts to be maintained without interfering with the possibility of storing related data structures in the long term in other parts of cortex with other mechanisms.
+\noteCP{you should explain what are these problems, yet not necessarily all of them.}. \noteMP{is this explanation enough? Otherwise I would put it out. I just want to emphasize that the NBA can do much more than variable binding, but I am not sure if this is really informative here}.
+
+The level of abstraction of the NBA allows to apply it to several cognitive functions like motor control, attention and symbolic thought.
 In the case of syntactic parsing during language comprehension, one needs a grammar to specify the necessary variable bindings and some parsing scheme to determine the bindings' timing.
-
 In contrast to VSA, the NBA provides a circuit with nodes that can be readily interpreted in terms of spiking neural populations, accepting the trade off of giving up on explicit structural encodings in neural activation levels.
 Interpreting nodes as neural populations can be conceptually linked to the notion of cell assemblies.
 This would be reasonable considering that there is substantial biological evidence for the existence and functional relevance of cell assemblies as computational units\cite{Huyck_2013}.
-For example, based on the synaptic connectivity patterns of pyramidal neurons in the neocortex, Perin et al.\cite{Perin_2011} argued in favor of the theory of neuronal group selection of Edelman\cite{edelman1987neural} over Hebb's organizational principles\cite{hebb2005organization} that emphasize the role of single neurons in a computational circuit with less connectivity constraints.\noteCP{This sentence needs to be developped, or delected if not crucial}
+For example, based on the synaptic connectivity patterns of pyramidal neurons in the neocortex, Perin et al.\cite{Perin_2011} argued in favor of the theory of neuronal group selection of Edelman\cite{edelman1987neural} over Hebb's organizational principles\cite{hebb2005organization} that emphasize the role of single neurons in a computational circuit with less connectivity constraints.\noteCP{This sentence needs to be developped, or delected if not crucial}.\noteMP{I think developing this point is an overkill, I was just trying to say that there alternative theories that support a different view from neurons as the main units in explicit vector encodings, to give more substance to the notion of cell assemblies than just citing the review from Huyck. But then deleting it also feels like losing justification for my argument that there is substancial evidence, do you think the previous sentence would be fine by itself?}
 
 
 \subsection{The Neural Blackboard Architecture (NBA) applied to language}
@@ -311,14 +313,13 @@ For a deeper review we recommend reading a recent paper with a circuit design an
 
 Nodes in Figures {\ref{Blackboard}}.A and {\ref{Blackboard}}.B represent neural assemblies that can be interpreted as linked spiking neural populations.
 The most basic component of the NBA is a ``Gating Circuit'' illustrated in Figure {\ref{Blackboard}}.A.
-The main idea is that neural activity would flow from the assembly of variable X\noteCP{Why do you call X a variable?} to the assembly of variable Y if the Gate (G) assembly was not inhibited by the Gake Keeper (GK) assembly, that is itself excited by assembly X.
+The main idea is that neural activity would flow from the assembly X to the assembly Y if the Gate (G) assembly was not inhibited by the Gake Keeper (GK) assembly, that is itself excited by assembly X.
 So to allow directional activity flow from X to Y, a Control (Ctl) assembly has to inhibit the GK assembly.
 Notice that it is trivial to extend the gating circuit for bidirectional control of activity flow as illustrated in Figure {\ref{Blackboard}}.B.
 Introducing bidirectional conditional control signals is what gives the NBA the possibility of implementing separately queries like 'what follows X' or 'what follows Y'.
 
 The second basic component of the NBA is a working memory (WM) mechanism based on Delay Activity\cite{de_Kamps_2005}.
-It consists in a neural population that portrays\noteCP{???} Delay Activity after being excited beyond a certain threshold achieved by the coactivation of input populations.
-Then WM can act as a short lived bidirectional link between two assemblies. This conforms a ``Memory Circuit'' as depicted in Figure {\ref{Blackboard}}.B.
+It consists on a neural population, that after being excited beyond a certain threshold, achieved by the coactivation of input populations, will maintain a constant amount of activation for a short period of time. By maintaining its activity, WM acts as a short lived bidirectional link between two assemblies. This mechanism can be considered as the creation of an implicit pointer from one assembly to the other, such that future reactivation of one assembly can be driven from the other to perform query operations. This conforms a ``Memory Circuit'' as depicted in Figure {\ref{Blackboard}}.B.
 
 Two bidirectional ``Gating Circuits'' connected by a ``Memory Circuit'' form a ``Compartment Circuit'' capable of implementing variable binding and query operations.
 The key point of this circuit is that Main assemblies (MA) representing features of grounded concepts or variables activate Sub assemblies (SA) if a control signal driven by another mechanism allows it.
@@ -333,17 +334,14 @@ Although in this work we will employ a phrase grammar and bottom-up parsing sche
 A promising feature of the NBA is that it has the flexibility to test any arbitrary parsing mechanism incorporating top-down considerations and an important variety of alternative theories of grammar.
 For example dependency grammars that assume multiple direct word bindings instead of the hierarchical phrase bindings modelled in this work have been employed in previous simulations\cite{van_der_Velde_2010}.
 
-To understand how a sentence is processed in the NBA, lets consider first the simplest case of binding two words belonging to grammatical categories instantiated in the MAs of one ``Compartment Circuit''.
-The MAs activate with timings corresponding to word presentation.
-Then the assumed parsing mechanism determine that combinations of the particular grammatical categories of the words presented are necessary in the blackboard, driving several ``Compartment Circuits'' from which the one modelled completes coactivation of SAs to drive WM and realize word binding.
-In the case of a complete phrase, the parsing mechanism also takes into account the time at which binding of word grammatical categories take place.
-Then these bindings can also drive MA nodes that represent phrasal syntactic categories, to be further combined with the grammatical categories of other words according to the tree structure predicted by the grammar.\noteCP{Sorry, but I find it quite difficult to follow. Can you make the example more concrete with actual words and gramatical categories, e.g. ``Peter sleeps'')
+To understand how a sentence is processed in the NBA, lets consider first the simplest case of binding two words, like ``Sad student'', belonging to grammatical categories instantiated in the MAs of one ``Compartment Circuit'', such that one MA is an ``Adjective'' corresponding to ``sad'' and the other one is a ``Noun'' corresponding to ``student''.
+The MAs activate with timings corresponding to word presentation, so we are assuming that words were recognized to motivate their corresponding instantiated grammatical categories before we attempt to link them.
+Then an assumed parsing mechanism determines that a link operating on ``Adjective'' and ``Noun'' types is necessary in the blackboard, driving activity in several ``Compartment Circuits'' from which only one, which we consider as the recruited ``Comparment Circuit'', completes coactivation of SAs to drive WM and realize binding between the word types.
 
-Finally, higher level mechanisms of the NBA like the ``Connection Matrix'' portrayed in Figure {\ref{Blackboard}}.C, allow the implementation of a complete ``Blackboard''.
-It basically contains sets of mutually inhibitory ``Compartment Circuits'' representing the possible set of abstract variable relations learned by the ``Blackboard''.
-Like the possible combination of syntactic categories allowed by a phrase grammar.\noteCP{not a sentence}
-Here is where the previously mentioned considerations of small world connectivity come together into place with a general overarching control mechanism.\noteCP{???}
+In the case of a complete phrase, like ``Fat sad student'', if we are assuming the instantiation of phrase types that form a hierarchical tree theorized by a phrase grammar, then the time at which the binding of the types of ``sad student'' takes place would be the time at which a ``Noun Phrase'' is activated and binded to the ``Adjective'' corresponding to ``Ten''.
 
+Finally, a ``Connection Matrix'' portrayed in Figure {\ref{Blackboard}}.C, allow the implementation of a complete ``Blackboard''.
+It contains variable type relations learned by the ``Blackboard'' as sets of mutually inhibitory ``Compartment Circuits'' that enables the selection of the ``Compartment Circuits'' requested by the parsing mechanism.
 We portray the ``Blackboard'' as a regular grid for illustrative purposes, although there is already a proof of concept implementation with randomly connected networks\cite{van_der_Velde_2011}.
 Also implementing a general syntactic control mechanism should be feasible. As suggested by the Feed-forward artificial neural networks employed in previous NBA simulations~\cite{van_der_Velde_2010} and recent state of the art feedforward network architectures that have shown top performance for diverse language parsing tasks~\cite{andor2016globally}.
 Moreover a more recent proposed extension of the NBA, that imitates the motor circuit of the marine mollusk Tritonia diomedea, shows how to generate patterns for sequential activation control\cite{van_Dijk_2015}.
@@ -1039,6 +1037,8 @@ In conclusion we hope~to have shown that we are close to producing biologically 
 
 
 ///////////////////// POSSIBLE ADDITIONS TO DISCUSSION (IGNORE)
+
+ADD TO DISCUSSION BUT MAYBE ALSO TO NEUROIMAGING RESULTS A REFLECTION ON THE NUMBER OF CIRCUITS RECRUITED FOR BINDING AS AN EXPLANATION FOR THE SUB LINEAR EFFECT, SO OUR MODEL WOULD PROPOSE A NEW PREDICTION WITH DIFFERENT COMBINATIONS OF PHRASES COMPLETELY BASED ON THE NUMBER OF COMPARMENT CIRCUITS IMPLIED BY THE GRAMMAR. THEN I CAN DISCUSS THE PROBLEM IF WE CHANGE THE GRAMMAR, WHAT WOULD A DEPEDENCY GRAMMAR PREDICT AS NUMBER OF COMPARTMENT CIRCUITS?
 
 
 Comment on the possible extension of the model to other linguistic hypothesis like dependency grammars that consider the words directly as nodes? instead of having phrasal nodes?
