@@ -102,12 +102,12 @@
 
 %% END MACROS SECTION
 \usepackage{color}
-\newcommand{\noteCP}[1]{}
+%\newcommand{\noteCP}[1]{}
 \newcommand{\noteMdK}[2]{}
-\newcommand{\noteMP}[3]{(}
-%\newcommand{\noteCP}[1]{(CP: \textcolor{red}{#1})}
+\newcommand{\noteMP}[3]{(MP: \textcolor{blue}{#1})}
+\newcommand{\noteCP}[1]{(CP: \textcolor{red}{#1})}
 \newcommand{\notenewMdK}[2]{(MdK: \textcolor{purple}{#1})}
-%\newcommand{\noteMP}[3]{(MP: \textcolor{blue}{#1})}
+\newcommand{\notenewMP}[3]{(MP: \textcolor{blue}{#1})}
 
 \begin{document}
 \vspace*{0.2in}
@@ -145,22 +145,21 @@
 In the course of sentence comprehension, the brain must assign words to their syntactic and semantic roles \cite{smolensky2006harmonic,Jackendoff_2002b}, relying on variable binding operations \cite{marcus14}.
 One of the few attempts to model complete circuits capable of variable binding with spiking neural population networks is the Neural Blackboard Architecture (NBA) proposed by van~der~Velde and de~Kamps \cite{van_der_Velde_2006}.
 
-Here we demonstrate that an NBA implementation, only tuned to operational constraints, naturally reproduces the temporal dynamics of two neuroimaging experiments involving 
-linguistic binding at different spatio-temporal scales. 
-\notenewMdK{Don't like 'mimicks' at all.}
-The model mimicks certain aspects of intracortical recordings (ECoG) obtained during sentence comprehension \cite{Nelson_2017} and also reproduces the pattern of responses observed in a fMRI experiment that manipulated the size of syntactic constituents \cite{Pallier_2011}.
-\notenewMdK{Propose: Nelson \emph{et al.} (2017) report intracortical recordings (ECoG) during sentence comprehension. Here, we show how similar signals originate from
-a proposed architecture of neural circuits whose function is the neural implementation of the binding process, suggesting that Nelson \emph{et al.} indeed observed 
-correlates of binding. In an fMRI experiment, Pallier \emph{et al.} )(2011)  found that the haemodynamic response of sentence processing showed a sublinear dependency
-on the size of the syntactic constituents. Our model replicates this finding.}
+Here we demonstrate that an NBA implementation, only tuned to operational constraints, naturally reproduces the neural activity patterns of two neuroimaging experiments involving linguistic binding at different spatio-temporal scales.
 
+Nelson \emph{et al.} (2017) reveals high-temporal resolution neural dynamics of sentence comprehension from intracortical recordings (ECoG).
+Here, we show how similar signals originate from a proposed architecture of neural circuits whose function is the neural implementation of the binding process, suggesting that Nelson \emph{et al.} indeed observed 
+correlates of binding.
+In an fMRI experiment, Pallier \emph{et al.} )(2011) found that the hemodynamic response of sentence processing showed a sublinear dependency
+on the size of the syntactic constituents.
+Our model also replicates this finding.
 
-\notenewMdK{Reworded: use 'diff' for the differences.}
 Our simulations are based on the dynamics of spiking point model neurons: leaky-integrate-and-fire (LIF) and adaptive-exponential-integrate-and-fire (AdEx) neurons.
 Rather than simulating thousands of spiking neurons, we use population density techniques (PDTs) to model dynamics at the population level. Although related to rate based models, 
 for PDTs the correspondence to population-averaged quantities of spiking neurons can be shown rigorously.
 In particular transient dynamics are captured more accurately than by rate based models.
-These results, alongside the flexibility of the NBA to represent arbitrary hierarchical tree structures and parsing schemes, \notenewMdK{This is a strong statement that needs justification later in the paper.}
+
+These results, alongside the flexibility of the NBA to represent arbitrary binary tree structures and parsing schemes, \notenewMdK{This is a strong statement that needs justification later in the paper.} \notenewMP{I hope this should be clear after reading the methods}
 makes it a promising tool for linguistic hypothesis exploration and future refined quantitative accounts of multi-scale neuroimaging measurements.
 
 
@@ -169,7 +168,7 @@ makes it a promising tool for linguistic hypothesis exploration and future refin
 {\label{931947}}
 
 Human languages rely on composition operations at several levels of representations: phonemes combine into morphemes which combine into words which themselves combine into 
-phrases and sentences.For example, in Chomsky's Minimalist Program for Syntax \cite{Chomsky_2013}, the center stage is given to `Merge', the operation which combines words and phrases to create larger phrases, 
+phrases and sentences. For example, in Chomsky's Minimalist Program for Syntax \cite{Chomsky_2013}, the center stage is given to `Merge', the operation which combines words and phrases to create larger phrases.
 
 Proposing a satisfactory neural model for the ``composition'' operations required by language is linked to solving the binding problem \cite{marcus14}.
 The term binding was introduced into the neuro-scientific community by von der Malsburg\cite{von_der_Malsburg_1994} during the first explorations of neural phase synchronization for ``variable binding'', which is a term taken literally from computer science, meaning to link a data structure to a name so it can be later accessed by that name.
@@ -223,8 +222,6 @@ measurements of sequence learning tasks in awake macaque monkeys.
 The Neural Blackboard Architecture predicts this sub-linear effect from the circuit recruitment process required by the number of binding operations, 
 alongside expected patterns of hemodynamic peak onset differences from delay activity considerations.
 
-\noteCP{I would not say that. A simplistic model made the linear prediction. It relied on assumption that of very sparse representations and superposition. A tiny modif saying that the representation are not so sparse (~20\% of neurons in an assembly)  predicts the sublinear effect.}.\noteMP{I changed the wording. Now I just try to point out that is not trivial to explain the sublinear effect from simpler models and that our model captures the effect. Also I clarify what explains them in the model, maybe its too soon for that?}.
-\notenewMdK{I think it's appropriate here.}
 
 \subsection{Neural models of language}
 
@@ -244,46 +241,42 @@ Although expecting at the moment something similar in the case of language might
 Superior Temporal Gyrus from electrocorticography (ECoG)\cite{Mesgarani_2014}.
 Moreover, as presented in the previous section, recently several spatial and temporal detailed neural correlates of constituency and binding have been revealed.
 
-\notenewMdK{I think your answer to Chris' comment should be in here. The argument should be: there are a large number of language models that have been biologically
-motivated (cite the whole bubs here), but they do not compete with the NBA in the way tensor products do. What do you mean? Are these models not combinatorial? Then say so.
-The point, I think should be that from the two models on the market (because they address 'combinatorial productivity'?) tensor products and NBA, only the NBA proposes a detailed
-neural implementation.}
+Numerous Artificial Neural Networks (ANNs) have been implemented, motivated by biological principles in the brain, to model particular aspects of brain language function or to reproduce behavior in specific language tasks.
+Nonetheless they lack dynamic biological considerations necessary to match their output with neuroimaging measurements, and except for Vector Symbol Architectures (VSA)\cite{smolensky2006harmonic}, they are difficult to integrate into a general framework for the implementation of the complete language function.\notenewMP{first part of modification based on Chris and Marc comments. I address separately the ANN and SNN models.}
 
-
-Numerous Artificial Neural Network models for specific and general language tasks have been implemented.
-For an extensive review of these, categorized by language function, we recommend reading Bocancia\cite{bocancia2014psycholinguistically}, 
+For an extensive review of these models, categorized by language function, we recommend reading Bocancia\cite{bocancia2014psycholinguistically}, 
 Christiansen et al.\cite{Christiansen_1999} and Miikkulainen\cite{miikkulainen1997natural}.
 Among these we mention the Shruti architecture for logical inference\cite{Wendelken_2004} and the latest optimization and quantization framework of Smolensky for phonological 
 production\cite{Smolensky_2013}.
-Nonetheless more relevant to our work are efforts to model language function with more biologically plausible spiking neural network models, 
-that would eventually allow to establish a mechanistic link between neural measurements and computational linguistic hypothesis.
-Examples of these are CABot\cite{Huyck_2009}, BioPLa\cite{rosa2004thematic}, TRANNS\cite{bocancia2014psycholinguistically}, the language models of Markert et al.\cite{Markert_2007}, the corticostriatal model of Dominey et al.\cite{Dominey_2009}, the discrete combinatorial neural assemblies of Pulvermuller\cite{Pulverm_ller_2009, Pulverm_ller_2010}, the words model of Garagnani et al.\cite{Garagnani_2017} and the DORA mechanism proposed by Martin et al. for hierarchical linguistic structures\cite{Martin_2017}.
-\noteCP{Feels a lot of name dropping: it would be nice to details a tiny bit 2 or 3 ideas from these papers.}
-\noteMP{They are supposed to be here just for detailed reference of spiking neural network models, but they do not really compete with the NBA in the way the tensor framework does and as in the case of the previously mentioned ANNs they are related to specific or general language tasks that very indirectly implement variable binding. I changed the wording of their presentation and think detailing them would just deviate from the point}.
 
-All these efforts have been successful at demonstrating the feasibility of approximating language tasks with biologically constrained neural networks.
-Nonetheless, even though they attempt to offer biological plausible implementations, many biological details necessary to match in-vivo neural patterns of the modelled processes have been kept out of scope.
+More relevant to our work are previous efforts to model language function with more biologically plausible Spiking Neural Networks (SNNs), 
+that would eventually allow to establish a mechanistic link between neural measurements and computational linguistic hypothesis.
+Contrary to the VSA and the Neural Blackboard Architecture (NBA)\cite{van_der_Velde_2006}, these do not follow a general theoretical framework, to address all the neural challenges of a complete language function implementation, that can also provide a mechanistic explanation for the most basic computational components and behaviors. \notenewMP{second part of modification based on Chris and Marc comments}
+
+Representative examples of these models are CABot\cite{Huyck_2009}, BioPLa\cite{rosa2004thematic}, TRANNS\cite{bocancia2014psycholinguistically}, the language models of Markert et al.\cite{Markert_2007}, the corticostriatal model of Dominey et al.\cite{Dominey_2009}, the discrete combinatorial neural assemblies of Pulvermuller\cite{Pulverm_ller_2009, Pulverm_ller_2010}, the words model of Garagnani et al.\cite{Garagnani_2017} and the DORA mechanism proposed by Martin et al. for hierarchical linguistic structures\cite{Martin_2017}.
+
+In most models, biological details necessary to match high temporal resolution in-vivo neural patterns of language processes have been kept out of scope.
 This has been a reasonable strategy considering the computational cost of building circuits with detailed neural models based on point processes.
 Yet, as we will show, recent developments like population density
 techniques\cite{de2013generica} now permit to simulate state-of-the-art temporally detailed dynamics of circuits of neural populations.
 
-\notenewMdK{I have commented out the sentence on the BBP here, it might  be confusing.}
-%The current work is similar in spirit to the Blue Brain Project\cite{Markram_2006} in trying to tackle the ``predictive neuroscience'' and ``simulating the brain'' challenges put forward by Markram\cite{markram2013seven}.
-Instead of trying to implement a complete language parsing neural network trained from stimuli, we will focus on pushing the boundary of biological detail for the specific abstract mechanism of variable binding as proposed in the Neural Blackboard Architecture\cite{van_der_Velde_2006}, assuming other necessary mechanisms for parsing are in place.
+Instead of trying to implement a complete language parsing neural network trained from stimuli, we will focus on pushing the boundary of biological detail for the specific, and most basic, abstract mechanism of variable binding as proposed in the Neural Blackboard Architecture\cite{van_der_Velde_2006}, assuming other necessary mechanisms for parsing are in place.
 This simple mechanism will already provide temporally detailed predictions about the neural signatures of variable binding, to be contrasted with the brain imaging results obtained from ECoG and fMRI experiments.
+Moreover it can act as the center piece for future integration of the rest of the NBA mechanisms covering other functional aspects of the brain language function.
+
 
 \subsection{Main proposals for variable binding implementation}
 
 {\label{946708}}
 
-Due to the combinatoric nature of language structures, modeling binding with simple linking mechanisms like combination-encoding cells 
+Due to the combinatoric nature of language structures, modelling binding with simple linking mechanisms like combination-encoding cells 
 become unfeasible\cite{von_der_Malsburg_1999}.Van der Velde\cite{van_der_Velde_2006} cites a simple example: an average 17-year-old English speaker has a lexicon of more than 
 60.000 words, which easily allows a set of 10\textsuperscript{20} or more possible phrases of 20 or less words, that can be produced and understood.
 Such a magnitude effectively exceeds the estimated lifetime of the universe expressed in seconds, 
 making it clear that a simple holistic encoding of sentences is not attainable in a human lifetime.
 Moreover the need to perform later unbinding operations for information extraction in linguistic data structures where order and variable types matter 
-adds \notenewMdK{constraints?} complexity to the possible mechanisms we can hypothesize.
-To surmount these modelling \notenewMdK{they are not modelling issues!}  issues, two main approaches are discussed in the literature.
+adds constraints to the possible mechanisms we can hypothesize.
+To surmount these issues, two main approaches are discussed in the literature.
 The first relies on the framework of tensor product representations\cite{smolensky2006harmonic} and 
 the second on connectivity based models that allow ``binding by process''\cite{van_der_Velde_2015}.
 
@@ -294,24 +287,23 @@ He proposes that the brain employs explicit active encodings, in neural units, o
 that can be later queried with tensor contractions acting as unbinding operations.
 The latter are resilient to squashing functions, like those proposed by Plate, that can importantly decrease the number of neural units necessary for the final 
 representation as the tensors increase in dimensionality with more complex structures.
-Smolensky offer in great detail implementations of VSA with feedforward and symmetric recursive ANNs\cite{smolensky2006harmonic} and has recently shown 
+Smolensky offers in great detail implementations of VSA with feedforward and symmetric recursive ANNs\cite{smolensky2006harmonic} and has recently shown 
 how to extend the framework with an optimization scheme to instantiate input representational vectors\cite{Smolensky_2013}.
-Nonetheless, neural dynamics do not play an important functional role here, although it is possible to incorporate time as another abstract tensor for encoding purposes.
-\notenewMdK{What does that mean?}
-Also there is no clear proposal on how to implement it with spiking neural networks, which are also sensitive to the ignored dynamics.
+Nonetheless, no important operational consideration is given to time, although it is possible to employ it as a tensor for vector encoding purposes, as is done for Synchronous Firing.
+This limits the neural dynamics predictions of the framework and its interpretation with SNNs.
+\notenewMdK{What does that mean?}. \notenewMP{better?}
 
-On the other hand, Van der Velde \emph {et al.} \cite{van_der_Velde_2015} argue in favor of a small world network model that, thanks to its connectivity properties 
+On the other hand, Van der Velde and De Kamps \cite{van_der_Velde_2015} argue in favor of a small world network model that, thanks to its connectivity properties 
 allows the formation of complex structures.
 It does so by conditionally coactivating neural assemblies representing grounded concepts and instances of variable types, which is a process driven by a control mechanism.
 In this framework, working memory acts as a control that reduces inhibition on paths of neural flow necessary to maintain the bindings 
-established by the initial transient coactivation, such that pointers \notenewMdK{maybe 'links'} have been  declared implicitly between the coactivated concepts.
+established by the initial transient coactivation, such that pointers \notenewMdK{maybe 'links'}. \notenewMP{I am using the pointer terminology in other parts too, It sounded helpful in my mind to grasp the concept. You think I should get rid of it?} have been  declared implicitly between the coactivated concepts.
 Contrary to the tensor framework, data structures are implicitly encoded by the short lived reinforced paths of neural activity flow.
 Then query operations are possible by reactivating nodes - included in the query - that induce coactivation of answer nodes, thanks to the reinforced connectivity.
 This successive coactivation of neural assemblies, that leads to a short-term lived graph that implicitly encodes the final data structure, 
 is referred to as ``binding by process''.
-Van der Velde \emph{et al.} insist on the need of connectivity considerations to produce behavior in a sensory-motor loop and to provide an internal frame of reference for the brain to implement queries.
+Van der Velde and De Kamps insist on the need of connectivity considerations to produce behavior in a sensory-motor loop and to provide an internal frame of reference for the brain to implement queries.
 
-\notenewMdK{Why 'van der Velde et al' and later 'van der Velde and de Kamps'. Would say one or the other, where et al is usually reserved for three or more authors}
 The latter idea is at the basis of the Neural Blackboard Architecture (NBA) proposed by Van der Velde and De Kamps \cite{van_der_Velde_2006}. Thanks to its properties, 
 it can solve the challenges posed by Jackendoff to model language in the human brain, namely ``The massiveness of binding'', ``The problem of 2'', ``The problem of variables'' and ``Binding in working memory vs long-term memory''.
 First ``The massiveness of binding'' is addressed by instantiation of variable types as assemblies that are binded to grounded concepts and other variable types instances, 
@@ -323,16 +315,9 @@ Finally a working memory mechanism is provided, as explained in the previous par
 
 The level of abstraction of the NBA allows to apply it to several cognitive functions like motor control, attention and symbolic thought.
 In the case of syntactic parsing during language comprehension, one needs a grammar to specify the necessary variable type relations and some parsing scheme to determine the bindings' timing.
-In contrast to VSA, the NBA provides a circuit with nodes that can be readily interpreted in terms of spiking neural populations, accepting the trade off of giving up on 
-explicit structural encodings in neural activation levels.
-\notenewMdK{A tradeoff is between something and something. Not clear to me what in this sentence.}
-Interpreting nodes as neural populations can be conceptually linked to the notion of cell assemblies.
-This would be reasonable considering that there is substantial biological evidence for the existence and functional relevance of cell assemblies as computational units\cite{Huyck_2013}.
-For example, based on the synaptic connectivity patterns of pyramidal neurons in the neocortex, Perin et al.\cite{Perin_2011} argue 
-in favor of the theory of neuronal group selection of Edelman\cite{edelman1987neural} 
-over Hebb's organizational principles\cite{hebb2005organization} that emphasize the computational role of single neurons.
-\noteCP{This sentence needs to be developped, or delected if not crucial}.\noteMP{I think developing this point is an overkill, I was just trying to say that there alternative theories that support a different view from neurons as the main units in explicit vector encodings, to give more substance to the notion of cell assemblies than just citing the review from Huyck. But then deleting it also feels like losing justification for my argument that there is substancial evidence, do you think the previous sentence would be fine by itself?}
-\noteMdK{Agree with Chris here.}
+In contrast to VSA, the NBA provides a circuit with nodes that can be readily interpreted in terms of spiking neural populations.
+This can be conceptually linked to the notion of cell assemblies, whose existence and functional relevance, as computational units, is supported on substantial biological evidence\cite{Huyck_2013}.
+
 
 \subsection{The Neural Blackboard Architecture (NBA) applied to language}
 
@@ -380,7 +365,10 @@ So to allow directional activity flow from X to Y, a Control (Ctl) assembly has 
 Notice that it is trivial to extend the gating circuit for bidirectional control of activity flow as illustrated in Figure {\ref{Blackboard}}.B.
 Introducing bidirectional conditional control signals is what gives the NBA the possibility of implementing separately queries like 'what follows X?' or 'what follows Y?'.
 
-The second basic component of the NBA is a working memory (WM) mechanism based on Delay Activity\cite{de_Kamps_2005}. \notenewMdK{Consider Brunel and Wang.}
+The second basic component of the NBA is a proposal for working memory (WM).
+Persistent neural activity in response to stimuli is considered to be the neural process underlying active (working) memory, and its implementation is hypothesized to be based on excitatory reverberation\cite{wang2001synaptic}.
+Based on this, the NBA considers a Delay Activity\cite{de_Kamps_2005} mechanism as a biologically plausible implementation of WM. \notenewMdK{Consider Brunel and Wang.}.
+\notenewMP{is this mini intro fine?}.
 It consists on a neural assembly, that after being excited beyond a certain threshold, achieved by the coactivation of input populations, will maintain a constant amount of activation for a short period of time. By maintaining its activity, WM acts as a short lived bidirectional link between two assemblies. This mechanism can be considered as the creation of an implicit pointer from one assembly to the other, such that future reactivation of one assembly can be driven from the other to perform query operations. This conforms a ``Memory Circuit'' as depicted in Figure {\ref{Blackboard}}.B.
 
 Two bidirectional ``Gating Circuits'' connected by a ``Memory Circuit'' form a ``Compartment Circuit'' capable of implementing variable binding and query operations.
@@ -393,9 +381,8 @@ It is operated by a mechanism that drives control signals simultaneously in mult
 As might be evident by now, applying the NBA to syntactic processing in language consists of two simple assumptions.
 First, equating the parsing mechanism to the control mechanism that coordinate binding events of words and word types and phrase types.
 Second, determining the number of compartment circuits necessary to instantiate a complete syntactic structure and the content of MA nodes from a grammar theory.
-\notenewMdK{What is the rile of 'Although' here?}
-Although in this work we will employ a phrase grammar and bottom-up parsing scheme following theoretical assumptions of selected neuroimaging experiments.
-A promising feature of the NBA is that it has the flexibility to test any arbitrary parsing mechanism incorporating top-down considerations and an important variety of alternative theories of grammar.
+In this work we will only employ a phrase grammar and bottom-up parsing scheme following theoretical assumptions of selected neuroimaging experiments.
+Nonetheless, a promising feature of the NBA is that it has the flexibility to test any arbitrary parsing mechanism incorporating top-down considerations and an important variety of alternative theories of grammar based on binary trees.
 For example dependency grammars that assume multiple direct word bindings instead of the hierarchical phrase bindings modelled in this work have been employed in previous simulations\cite{van_der_Velde_2010}.
 
 To understand how a sentence is processed in the NBA, let us consider first the simplest case of binding two words, like ``Sad student'', 
@@ -429,7 +416,7 @@ Simulating these higher level mechanisms is a task out of the scope of this work
 \subsection{Simulation framework}\label{simulation-framework}
 
 We assume that the NBA lives in the cortex, and seek a good compromise between realistic modelling of the cortical dynamics and the tractability of the simulation.
-State-of-the-art simulations of larger cortical structures are based on point model neurons that allow the inclusion of biological details such as synaptic dynamics and adaptation, but are restricted to about the size of a cortical column \cite{potjans2014}.
+State-of-the-art simulations of larger cortical structures are based on point model neurons that allow the inclusion of biological details such as synaptic dynamics and adaptation, but are restricted to about the size of a cortical column \cite{potjans2012cell}.
 For larger scale networks, such as ours, a population-based approach is currently the only feasible approach.
 The two choices are: rate based models or population density techniques (PDTs).
 In rate based models, the population is described by a single variable, usually related to the population firing rate or average membrane potential of neurons in the population. 
@@ -462,12 +449,12 @@ followed by a period of relative silence: only interrupted by a few stragglers;
 at last a gradually achieved final neural state of asynchronous random firing.
 More complex networks can be formed by feeding the output spikes of one population into other populations.
 
-This is a fascinating but unwieldy process and statistical methods have been used to describe it at the population level \cite{stein1996,knight1972,omurtag2000simulation}.
+This is a fascinating but unwieldy process and statistical methods have been used to describe it at the population level \cite{stein1967some,knight1972dynamics,omurtag2000simulation}.
 A population is described by a density function, which expresses how the population is distributed over state space.
 For LIF neurons this is a function $\rho(V)$, where $\rho(V)dV$ is the fraction of neurons with their membrane potential in interval $[V, V + dV)$ (when we integrate the density function over a certain state interval, we will refer to the  result as  the amount of \emph{mass} in that interval).
 The initial distribution of the neurons in the population must be chosen, but the evolution of the density is tractable.
 It is clear that neurons move through state space due to the deterministic neural dynamics, Eq \ref{eq-lif} for LIF neurons, and also go transitions due to the input spikes.
-The collective contribution of the stochastic process to the evolution of the density profile can be  modelled using a Poisson master equation \cite{gardiner}; the contribution of the deterministic dynamics  can be modelled using an advection equation (see \cite{omurtag2000simulation} for a lucid explanation). 
+The collective contribution of the stochastic process to the evolution of the density profile can be  modelled using a Poisson master equation \cite{crispin1994handbook}; the contribution of the deterministic dynamics  can be modelled using an advection equation (see \cite{omurtag2000simulation} for a lucid explanation). 
 
 
 As a consequence, the process of simulating thousands of neurons is now replaced by modelling the evolution of a density which is given by a single equation:
