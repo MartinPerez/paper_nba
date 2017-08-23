@@ -202,8 +202,6 @@ It is one of the only two studies so far demonstrating spatially specific and te
 made possible by analyses of intracranial neurophysiological data taken from epileptic patients.
 Moreover it is the first one to characterize the specific patterns of phrase-structure formation, possibly revealing the first neural signatures of variable binding 
 related operations. Nelson et al. refer to them as "merge" operations that combine syntactic objects (word types and phrase types).
-\noteCP{You need to explain here the relationship with merge and variable binding. On the surface, it could seem that they have little in common.}.
-\noteCP{Unfortunately, I think this is not clear. You need to make a better case that the combination/merging operation requires variable. binding}.  \noteMP{What about now? Taking into account change to first paragraph}.
 In the study words were presented sequentially to patients in a screen to be read under a Rapid Serial Visual Presentation paradigm.
 The task was to keep a phrase of up to 10 words in memory to compare it just after with a probe sentence composed of 2 to 5 words.
 We will show that simulation of the NBA portion responsible for variable binding, while only tuned for correct operation, generates strikingly similar temporal patterns of 
@@ -242,7 +240,7 @@ Superior Temporal Gyrus from electrocorticography (ECoG)\cite{Mesgarani_2014}.
 Moreover, as presented in the previous section, recently several spatial and temporal detailed neural correlates of constituency and binding have been revealed.
 
 Numerous Artificial Neural Networks (ANNs) have been implemented, motivated by biological principles in the brain, to model particular aspects of brain language function or to reproduce behavior in specific language tasks.
-Nonetheless they lack dynamic biological considerations necessary to match their output with neuroimaging measurements, and except for Vector Symbol Architectures (VSA)\cite{smolensky2006harmonic}, they are difficult to integrate into a general framework for the implementation of the complete language function.\notenewMP{first part of modification based on Chris and Marc comments. I address separately the ANN and SNN models.}
+Nonetheless they lack dynamic biological considerations necessary to match their output with neuroimaging measurements, and except for Vector Symbol Architectures (VSA)\cite{smolensky2006harmonic}, they are difficult to integrate into a general framework for the implementation of the complete language function.
 
 For an extensive review of these models, categorized by language function, we recommend reading Bocancia\cite{bocancia2014psycholinguistically}, 
 Christiansen et al.\cite{Christiansen_1999} and Miikkulainen\cite{miikkulainen1997natural}.
@@ -251,7 +249,7 @@ production\cite{Smolensky_2013}.
 
 More relevant to our work are previous efforts to model language function with more biologically plausible Spiking Neural Networks (SNNs), 
 that would eventually allow to establish a mechanistic link between neural measurements and computational linguistic hypothesis.
-Contrary to the VSA and the Neural Blackboard Architecture (NBA)\cite{van_der_Velde_2006}, these do not follow a general theoretical framework, to address all the neural challenges of a complete language function implementation, that can also provide a mechanistic explanation for the most basic computational components and behaviors. \notenewMP{second part of modification based on Chris and Marc comments}
+Contrary to the VSA and the Neural Blackboard Architecture (NBA)\cite{van_der_Velde_2006}, these do not follow a general theoretical framework, to address all the neural challenges of a complete language function implementation, that can also provide a mechanistic explanation for the most basic computational components and behaviors.
 
 Representative examples of these models are CABot\cite{Huyck_2009}, BioPLa\cite{rosa2004thematic}, TRANNS\cite{bocancia2014psycholinguistically}, the language models of Markert et al.\cite{Markert_2007}, the corticostriatal model of Dominey et al.\cite{Dominey_2009}, the discrete combinatorial neural assemblies of Pulvermuller\cite{Pulverm_ller_2009, Pulverm_ller_2010}, the words model of Garagnani et al.\cite{Garagnani_2017} and the DORA mechanism proposed by Martin et al. for hierarchical linguistic structures\cite{Martin_2017}.
 
@@ -291,13 +289,12 @@ Smolensky offers in great detail implementations of VSA with feedforward and sym
 how to extend the framework with an optimization scheme to instantiate input representational vectors\cite{Smolensky_2013}.
 Nonetheless, no important operational consideration is given to time, although it is possible to employ it as a tensor for vector encoding purposes, as is done for Synchronous Firing.
 This limits the neural dynamics predictions of the framework and its interpretation with SNNs.
-\notenewMdK{What does that mean?}. \notenewMP{better?}
 
 On the other hand, Van der Velde and De Kamps \cite{van_der_Velde_2015} argue in favor of a small world network model that, thanks to its connectivity properties 
 allows the formation of complex structures.
 It does so by conditionally coactivating neural assemblies representing grounded concepts and instances of variable types, which is a process driven by a control mechanism.
 In this framework, working memory acts as a control that reduces inhibition on paths of neural flow necessary to maintain the bindings 
-established by the initial transient coactivation, such that pointers \notenewMdK{maybe 'links'}. \notenewMP{I am using the pointer terminology in other parts too, It sounded helpful in my mind to grasp the concept. You think I should get rid of it?} have been  declared implicitly between the coactivated concepts.
+established by the initial transient coactivation, such that pointers have been  declared implicitly between the coactivated concepts.
 Contrary to the tensor framework, data structures are implicitly encoded by the short lived reinforced paths of neural activity flow.
 Then query operations are possible by reactivating nodes - included in the query - that induce coactivation of answer nodes, thanks to the reinforced connectivity.
 This successive coactivation of neural assemblies, that leads to a short-term lived graph that implicitly encodes the final data structure, 
@@ -311,7 +308,6 @@ allowing the creation of combinatoric structures on demand.
 Then ``The problem of variables'' is handled by the previously explained coactivation mechanism capable of creating pointers from grounded concepts to variable type instances.
 ``The Problem of 2'' is managed by having multiple neural assemblies that instantiate the same variable type in the architecture but that can occupy different parts of the same data structure.
 Finally a working memory mechanism is provided, as explained in the previous paragraph, that allows transient short-term coactivations of concepts to be maintained without interfering with the possibility of storing related data structures in the long term in other parts of cortex with other mechanisms.
-\noteCP{you should explain what are these problems, yet not necessarily all of them.}. \noteMP{is this explanation enough? Otherwise I would put it out. I just want to emphasize that the NBA can do much more than variable binding, but I am not sure if this is really informative here}.
 
 The level of abstraction of the NBA allows to apply it to several cognitive functions like motor control, attention and symbolic thought.
 In the case of syntactic parsing during language comprehension, one needs a grammar to specify the necessary variable type relations and some parsing scheme to determine the bindings' timing.
@@ -367,9 +363,7 @@ Introducing bidirectional conditional control signals is what gives the NBA the 
 
 The second basic component of the NBA is a proposal for working memory (WM).
 Persistent neural activity in response to stimuli is considered to be the neural process underlying active (working) memory, and its implementation is hypothesized to be based on excitatory reverberation\cite{wang2001synaptic}.
-Based on this, the NBA considers a Delay Activity\cite{de_Kamps_2005} mechanism as a biologically plausible implementation of WM. \notenewMdK{Consider Brunel and Wang.}.
-\notenewMP{is this mini intro fine?}.
-It consists on a neural assembly, that after being excited beyond a certain threshold, achieved by the coactivation of input populations, will maintain a constant amount of activation for a short period of time. By maintaining its activity, WM acts as a short lived bidirectional link between two assemblies. This mechanism can be considered as the creation of an implicit pointer from one assembly to the other, such that future reactivation of one assembly can be driven from the other to perform query operations. This conforms a ``Memory Circuit'' as depicted in Figure {\ref{Blackboard}}.B.
+Based on this, the NBA considers a Delay Activity\cite{de_Kamps_2005} mechanism as a biologically plausible implementation of WM. It consists on a neural assembly, that after being excited beyond a certain threshold, achieved by the coactivation of input populations, will maintain a constant amount of activation for a short period of time. By maintaining its activity, WM acts as a short lived bidirectional link between two assemblies. This mechanism can be considered as the creation of an implicit pointer from one assembly to the other, such that future reactivation of one assembly can be driven from the other to perform query operations. This conforms a ``Memory Circuit'' as depicted in Figure {\ref{Blackboard}}.B.
 
 Two bidirectional ``Gating Circuits'' connected by a ``Memory Circuit'' form a ``Compartment Circuit'' capable of implementing variable binding and query operations.
 The key point of this circuit is that Main assemblies (MA), representing grounded concepts or instances of variables types, activate Sub assemblies (SA) 
@@ -554,7 +548,7 @@ the simulation with real temporally detailed patterns of intracortical neural me
 
 The decision to use AdEx, rather than LIF neurons has two motivations: first, adaptation is ubiquitous and its inclusion has a substantial impact on the dynamical range
 allowed within the constraints of the blackboard architecture. Second,  it has been shown that 2D models, like AdEx, can already predict correctly 96\% of the spikes of 
-detailed conductance models\cite{brette2005adaptive}.  Also, this model reproduces many known electrophysiological features, as can be appreciated in the spike-frequency adaptation review of Benda et al. \cite{Benda_2003,Benda_2014}. Our approach is consistent with a trend towards simpler, geometrically motivated  2D   models  that preserve the essence of more complex biophysically motivated models \cite{izhikevich}.
+detailed conductance models\cite{brette2005adaptive}.  Also, this model reproduces many known electrophysiological features, as can be appreciated in the spike-frequency adaptation review of Benda et al. \cite{Benda_2003,Benda_2014}. Our approach is consistent with a trend towards simpler, geometrically motivated  2D   models  that preserve the essence of more complex biophysically motivated models \cite{izhikevich2007dynamical}.
 
 AdEx is now available in  MIIND. To our knowledge this is the first time that the AdEx model will be employed to approximate the neural dynamics of a circuit of this magnitude reproducing cognitive function.
 
@@ -607,12 +601,6 @@ For instance, the biophysical mechanisms of WM are still not understood complete
 We modelled in this way, Control assemblies (Ctl), Working memory assemblies (WM), Event Input Assemblies (Inp) and a Baseline Assembly (B) that drives baseline neural activity of all completely simulated neural populations.
 A complete diagram of the compartment circuit with example parameter values for LIF populations is given in Figure \ref{circuit_spec}.\\~\\
 
-\noteMdK{I think it's confusing to talk about 'biological' and 'artificial' populations. At the end of the day, even the 'artificial' populations model biological events.
-What you can say is: there is a group of populations where we have to simplify dynamics: in working memory we assume the existence of delay activity and model this
-phenomenologically; we also model external input events as given. But for most population we model the response according to the underlying biophysical neural model.}
- 
-\notenewMP{I modified previous paragraphs to better accommodate the change}\\~\\
-
 We use a boxcar event model for persistent activity. This model requires specification of the starting point of events, the persistent firing rate of the population and the duration of the persistent activity.
 In the case of the Delay Activity of WM we also have to provide a kickoff input rate threshold that automatically triggers the boxcar event instead of providing a start time point.
 The duration of persistent activity was pragmatically set up long enough for the neural dynamics to reach steady state and allow the formation of  all required bindings between phrase types and 
@@ -626,10 +614,7 @@ Although theoretical analysis of the distribution of firing rates in randomly re
 Based on the review of Wohrer et al. \cite{Wohrer_2013}, particularly on the firing rate in motor areas of behaving macaques, we decided to kickstart biological neural populations activity up to a conservative baseline firing rate of 1 Hz and study the neural dynamics of circuit input firing rates of up to 10Hz.
 
 There are two parameters governing transmission of neural activity between neural populations.
-First, the synaptic efficacy of connections, which was setup to be uniform across the circuit under the lack of appropriate hypothesis to tinker it in a detailed manner.
-\noteMdK{The next sentence is incomprehensible.}. 
-\notenewMP{I changed importantly the rest of the paragraph, better?}. 
-According to London \cite{London_2002}, current understanding of synapsis is limited and contextual measurements and parametrization of efficacy might be more appropriate than fixing individual connection parameters.
+First, the synaptic efficacy of connections, which was setup to be uniform across the circuit under the lack of appropriate hypothesis to tinker it in a detailed manner. According to London \cite{London_2002}, current understanding of synapsis is limited and contextual measurements and parametrization of efficacy might be more appropriate than fixing individual connection parameters.
 For example recent evidence \cite{Briggs_2013} shows that synaptic efficacy might be modulated by attention processes.
 In the study of Briggs \cite{Briggs_2013} neurons of the thalamus were stimulated while measuring evoked responses from corresponding monosynaptically connected neurons in primary visual cortex.
 With this procedure the authors showed that, the percentage of shocks that evoke a postsynaptic response, the average efficacy, ranged from 28\% to 36\% depending on the type of neurons considered and the attention state.
@@ -677,14 +662,11 @@ After determining reasonable parameter values, we simulated the complete circuit
 Then we compared the resulting neural patterns of the MA, SA, G and GK neural populations to binding and constituency effects available in the neuroimaging literature.
 
 We simulated the binding activity related to the processing of complete phrases, by assuming a syntactic tree structure given by a phrase grammar and the order of control events given by a bottom up parsing scheme.
-\noteMdK{What does parallely refer to in the next sentence?}.  \notenewMP{temporally align the time series of the different compartment circuits according to input onsets.}. 
 As a first simplified approximation to the NBA dynamics, we instantiated the required compartment circuits independently to represent the complete assumed tree structure and temporally align their neural signals according to input onsets.
 Like this we obtained entire phrase neural time series, by summing activity across similar node categories of the multiple independent compartment circuits instantiated.
 We used this procedure to simulate the neural activity of simple phrases, corresponding to increasing size right branching tree structures, to be compared with two different neuroimaging signals.
 
-First, we showed similarities between the activity of simple phrases and ECoG time series patterns of binding revealed by Nelson et al\cite{Nelson_2017}.
-\noteMdK{Where do you do this comparison? Here? Later?}. 
-\notenewMP{I clarify with a transition sentence in the previous paragraph}. 
+First, we showed similarities between the activity of simple phrases and ECoG time series patterns of binding revealed by Nelson et al\cite{Nelson_2017}. 
 We naively compared the firing rates of our simulation directly to the patterns observed in ECoG recordings, considering the correlation that exist between the high gamma power of local field potential signals and firing rates\cite{Ray_2011,Manning_2009}.
 Nonetheless a quantitative comparison would require a more careful consideration, employing recent models tuned to electro-physiological measurements that offer a way to translate neural activity to local field potentials\cite{Mazzoni_2015,Hagen_2015}.
 
