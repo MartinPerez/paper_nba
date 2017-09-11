@@ -186,8 +186,7 @@ Then solving ~\emph{Variable binding} in language, requires a biologically feasi
 
 
 \subsection{Some neuroimaging studies of binding of language}
-
-{\label{729344}}
+{\label{intro:imaging}}
 
 Most linguistic theories assume a constituency property that allows to combine and replace smaller phrases in larger phrases.
 Since solving variable binding requires an explanation of how to implement links between bits of information - like words and word types - to create basic data structures, like phrases in language, it is likely to also explain how to create links between such basic structures.
@@ -435,7 +434,7 @@ This scenario is easy to simulate: using a simulator like NEST \cite{gewaltig200
 In the simplest case a population is driven by synthetically generated input spike trains, where the spike train events are created by a random generators.
 The default assumption is that inter-spike intervals are Poisson distributed, although this can be extended to non-Markov processes \cite{lai2017population}.
 It is clear that $I(t)$ in Eq. \ref{eq-lif} now should be considered as a stochastic variable and that the threshold crossings of LIF neurons themselves are stochastic events as a consequence.
-Fig. \ref{pdtcase} A  demonstrates a simple scenario: a population of 10000 LIF neurons, driven by a stochastic input - Poisson generated spike trains, where each LIF neuron experiences about 800 input spikes per second.
+Fig. \ref{fig:pdt-case} A  demonstrates a simple scenario: a population of 10000 LIF neurons, driven by a stochastic input - Poisson generated spike trains, where each LIF neuron experiences about 800 input spikes per second.
 The simulation shows a spike raster of the population response:
 first nothing: although each LIF neuron receives input spikes and as a consequence has its membrane potential driven up, none of the neurons have reached threshold;
 then a spike volley: most neurons hit threshold at approximately the same time;
@@ -463,7 +462,7 @@ Mass that is being pushed across threshold corresponds to neurons spiking; conse
 
 Efficient and stable simulation methods are available \cite{nykamp2000population, de2003simple, de2013generic, iyer2013influence}, and remarkably, the process of solving Eq. \ref{eq-synapse} is computationally less expensive for LIF neurons than the direct simulation using NEST \cite{nykamp2000population}.
 The process of keeping track of a single density function, and the communication between populations using firing rates rather than individual spikes, frees the modeller from keeping track of thousands of spikes per second and leads to simpler simulations.
-Figure \ref{pdtcase} shows the very close correspondence between direct simulations of LIF spiking neurons and population density results.
+Figure \ref{fig:pdt-case} shows the very close correspondence between direct simulations of LIF spiking neurons and population density results.
 It shows, first, that the simulation results indeed are very close to that of the spiking simulation, and second, that Wilson-Cowan dynamics must be tuned in a way that PDTs do not: the correct steady state activation must be provided to the Wilson-Cowan dynamics in the form of a sigmoid, while in PDTs the correct steady state firing rate is calculated from first principles - input firing rate, synaptic efficacies and neural parameters - without any need for tuning. 
 
 
@@ -479,7 +478,7 @@ It shows, first, that the simulation results indeed are very close to that of th
         \textbf{D.} Wilson-Cowan prediction for the firing rate, compared to PDT result. Importantly, Wilson-Cowan output must be tuned: the steady state value to which it converges is not predicted by the Wilson-Cowan equations, but must be provided as a sigmoid. 
        In contrast, the PDT method calculates the firing rate from first priciples, and agrees well with the spiking neuron simulation, within statistics.
       }
-\label{pdt_case}
+\label{fig:pdt-case}
   \end{center}
 \end{figure}
 
@@ -564,17 +563,17 @@ We do this to satisfy the assumptions of a phrase grammar that requires represen
 Note that for other grammar types, like dependency grammars considered in previous NBA simulations\cite{velde2015ambiguity}, to consider words as nodes in their syntactic representations, we would only need to model word types for the MAs of the necessary compartment circuits.
 
 
-\subsection{Compartment circuit parameters}\label{compartment-circuit-parameters}
+\subsection{Compartment circuit parameters}\label{sec:circuit-parameters}
 
 The compartment circuit contains two different types of neural populations.
-Artificial neural populations following a boxcar event model, shown in Figure \ref{circuit_spec}.B and biological neural populations following LIF or AdEx neural models.
+Artificial neural populations following a boxcar event model, shown in Figure \ref{fig:circuit-spec}.B and biological neural populations following LIF or AdEx neural models.
 We took LIF parameters from Omurtag et al. (2000) \cite{omurtag2000simulation} and AdEx parameters
 from Brette and Gertsner \cite{Brette_2005}.
 
 \begin{figure}[h!]
   \begin{center}
     \includegraphics[width=1.00\columnwidth]{figures/circuit_specs3}
-    \caption{{Compartment circuit example {\label{circuit_spec}} A.
+    \caption{{Compartment circuit example {\label{fig:circuit-spec}} A.
 Details
         of the Compartment Circuit implementation.
 Only half of the
@@ -599,9 +598,10 @@ These neural populations comprise a pair of Main Assemblies (MA), a pair of Sub 
 Nonetheless there are a few other populations for which we simplified the simulation to the phenomenological level with an imitation of Delay Activity, which means that, after transient stimulation, a population retains its activation above a certain threshold for a given period of time.
 For instance, the biophysical mechanisms of WM are still not understood completely, but its characterization as Delay Activity is relatively uncontroversial.
 We modelled in this way, Control assemblies (Ctl), Working memory assemblies (WM), Event Input Assemblies (Inp) and a Baseline Assembly (B) that drives baseline neural activity of all completely simulated neural populations.
-A complete diagram of the compartment circuit with example parameter values for LIF populations is given in Figure \ref{circuit_spec}.\\~\\
+A complete diagram of the compartment circuit with example parameter values for LIF populations is given in Figure \ref{fig:circuit-spec}.\\~\\
 
-We use a boxcar event model for persistent activity. This model requires specification of the starting point of events, the persistent firing rate of the population and the duration of the persistent activity.
+We use a boxcar event model for persistent activity.
+This model requires specification of the starting point of events, the persistent firing rate of the population and the duration of the persistent activity.
 In the case of the Delay Activity of WM we also have to provide a kickoff input rate threshold that automatically triggers the boxcar event instead of providing a start time point.
 The duration of persistent activity was pragmatically set up long enough for the neural dynamics to reach steady state and allow the formation of  all required bindings between phrase types and 
 word types.
@@ -618,7 +618,7 @@ First, the synaptic efficacy of connections, which was setup to be uniform acros
 For example recent evidence \cite{Briggs_2013} shows that synaptic efficacy might be modulated by attention processes.
 In the study of Briggs \cite{Briggs_2013} neurons of the thalamus were stimulated while measuring evoked responses from corresponding monosynaptically connected neurons in primary visual cortex.
 With this procedure the authors showed that, the percentage of shocks that evoke a postsynaptic response, the average efficacy, ranged from 28\% to 36\% depending on the type of neurons considered and the attention state.
-Considering the possible efficacy variability in cortex, we decided to verify, through simulations of a sub-circuit, the sensitivity of the circuit temporal dynamics to low (10\%) and high (30\%) values of synaptic efficacy, where percentages are taken with respect to the difference between equilibrium and threshold potential, \notenewMP{I dont understand what the last clarification sentence means. }  for both LIF and AdEx populations.
+Considering the possible efficacy variability in cortex, we decided to verify, through simulations of a sub-circuit, the sensitivity of the circuit temporal dynamics to low (10\%) and high (30\%) values of synaptic efficacy, where percentages are taken with respect to the difference between equilibrium and threshold potential, for both LIF and AdEx populations.
 
 The second parameter governing transmission of neural activity was the number of connections between a pair of neural populations.
 Unlike synaptic efficacy, the number of connections were determined from a series of simulation experiments.
@@ -639,7 +639,7 @@ A diagram of each sub-circuit is shown in Figure \ref{sub_circuits}.
 
 \begin{figure}[h!]
   \begin{center}
-    \includegraphics[width=0.70\columnwidth]{figures/sub_circuits3}
+    \includegraphics[width=0.9\columnwidth]{figures/sub_circuits}
     \caption{Sub-circuit simulation topologies.
       Each number corresponds to its respective experiment.
       For better visualization all baseline nodes are excluded from the topologies.
@@ -658,7 +658,7 @@ The second simulation allowed us to explore how neural activity flows through a 
 The third simulation explores how neural activity is enhanced by a closed loop between a MA and SA, since it will be the case in the memory sub-circuit that activity is allowed to flow bidirectionally once the WM delay activity is unleashed.
 Finally the fourth simulation consists on adding GKs to the closed loop sub-circuit of the second simulation to explore how many inhibitory connections are necessary to keep activity from flowing in the circuit unless the control mechanism allows it.
 
-After determining reasonable parameter values, we simulated the complete circuit, shown in Figure \ref{circuit_spec}, for both LIF and AdEX neural populations.
+After determining reasonable parameter values, we simulated the complete circuit, shown in Figure \ref{fig:circuit-spec}, for both LIF and AdEX neural populations.
 Then we compared the resulting neural patterns of the MA, SA, G and GK neural populations to binding and constituency effects available in the neuroimaging literature.
 
 We simulated the binding activity related to the processing of complete phrases, by assuming a syntactic tree structure given by a phrase grammar and the order of control events given by a bottom up parsing scheme.
@@ -691,260 +691,274 @@ All the C++ scripts behind the circuit and sub-circuit simulations, taking advan
 {\label{461536}}
 
 In the first experiment we explored the steady state rate and temporal behavior of the different neural models with different synaptic efficacies.
-As indicated in the circuit topology of Figure \ref{fig:baseline_dynamics}, neural populations were driven by a persistent 1 Hz input rate.
-
-We show the steady state rate as a function of the number of baseline connections in the top plots of each neural model in Figure \ref{fig:baseline_dynamics}.
-In the bottom plots we display the firing rate dynamics of the model for different number of connections.
+As indicated in the circuit topology of Figure \ref{fig:baseline_dynamics_lif}, neural populations were driven by a persistent 1 Hz input rate.
+We show the steady state rate as a function of the number of baseline connections in the top plots of each neural model in Figures \ref{fig:baseline_dynamics_lif} and \ref{fig:baseline_dynamics_adex}.
+In the bottom plots we display the respective firing rate dynamics for different number of connections.
 
 
 \begin{figure}[h!]
   \begin{center}
-    \includegraphics[width=1.00\columnwidth]{figures/experiment_001}
-    \caption{Baseline neural dynamics.
-      The plots at the top depict how the steady state rate of a neural population relates to the number of baseline connections under a baseline input of 1Hz.
-      The plots at the bottom show example temporal dynamics corresponding to its upper plot.}
-    \label{fig:baseline_dynamics}
+    \includegraphics[width=1.00\columnwidth]{figures/baseline_dynamics_lif.png}
+    \caption{LIF Baseline neural dynamics.
+      The plots at the top show how the steady state rate of a neural population relates to the number of baseline connections for a baseline input of 1Hz.
+      The plots at the bottom show the temporal dynamics for different number of baseline connections.}
+    \label{fig:baseline_dynamics_lif}
+
+  \end{center}
+\end{figure}
+
+
+\begin{figure}[h!]
+  \begin{center}
+    \includegraphics[width=1.00\columnwidth]{figures/baseline_dynamics_adex.png}
+    \caption{AdEx Baseline neural dynamics.
+      The plots at the top show how the steady state rate of a neural population relates to the number of baseline connections for a baseline input of 1Hz.
+      The plots at the bottom show the temporal dynamics for different number of baseline connections.}
+    \label{fig:baseline_dynamics_adex}
 
   \end{center}
 \end{figure}
 
 
 In the case of a LIF population, by manipulating the number of connections, we can tune to any value the steady state rate.
-For all synaptic efficacy values, the firing rate increases smoothly until achieving the steady state after approximately 200 ms.
-
+For all synaptic efficacy values, the firing rate increases smoothly until achieving the steady state at approximately 200 ms.
 The AdEx population has a different temporal behavior.
-An immediate transient peak of activity on initial stimulation is then driven down by adaptation, achieving a steady state after approximately 600 ms.
+An immediate transient peak of activity on initial stimulation is driven down by adaptation, achieving a steady state at approximately 600 ms.
 The adaptation effect, on a 30\% synaptic efficacy, limits the range of values that the steady state rate can take by manipulating the number of connections.
 
-To implement a binding in a Compartment Circuit, we needed to control, at different moments, the total input rate of the Working Memory population, that was determined by the summed firing rate of the Sub assemblies.
-Since steady state rate values were limited in the AdEx model with high synaptic efficacy, it was not possible, in that case, to flexibly operate the circuit with non simultaneous input events.
+As explained in the Methods section \ref{sec:circuit-parameters},
+binding takes place in the Compartment Circuit when the kickoff input rate threshold of the Working Memory (WM) population is reached.
+The total input rate of WM depends on the sum of the firing rate of both Sub-Assemblies in the Compartment Circuit, which themselves are driven by separate input events.
+Since steady state rate values are limited in the AdEx model with high synaptic efficacy, operation of the circuit would be more constrained with non simultaneous input events, than in the low synaptic efficacy case.
 
-Because we wanted to explore the behavior of the Compartment circuit for all cases of input events, we decided to restrict all remaining simulations to a 10\% synaptic efficacy.
-We also fixed the number of baseline connections to 115 and 1646, for LIF and AdEx populations respectively, since these values best approximated the desired 1Hz steady state firing rate.
+Because we wanted to explore the behavior of the Compartment circuit for all possible timings of input events, we decided to restrict all remaining simulations to a 10\% synaptic efficacy.
+We also fixed the number of baseline connections to 115 and 1646, for LIF and AdEx populations respectively, since these values best approximated the desired 1Hz steady state firing rate under a 10\% synaptic efficacy.
 
 
 \subsubsection{Experiment 2: Neural activity flow and control
-  release}\label{experiment-2-neural-activity-flow-and-control-release}
+  release}\label{sec:experiment-2}
 
-In the second experiment we explored how the timing of input and control events would affect the rate of activity across a chain of neural populations.
-We employed the sub-circuit topology presented in Figure /ref{fig:experiment_2}, in which a fixed input rate drove the activity of the sub-circuit during a given time window, mediated by a control fixed rate acting during a different time window.
+For the second experiment we wanted to understand how firing rate, in the Sub-assemblies of the Compartment Circuit, would vary with the timing of the onset of input and control events.
+To accomplish this we employed the sub-circuit topology presented in Figure \ref{fig:experiment-2}.
+In this topology the Gate (G) population is permanently inhibited by a Control (Ctl) population with persistent activity, such that the Sub-Assembly (SA) can not be driven by the Main-Assembly (MA) until a control event, that inhibits the Control population, takes place.
+For this experiment, the number of excitatory connections was fixed to 9 for LIF populations and 20 for AdEx populations.
+The effect of modifying the number of excitatory connections will be explored in Experiment 3 in Results section \ref{results:experiment-3}.
 
 
 \begin{figure}[h!]
   \begin{center}
-    \includegraphics[width=0.70\columnwidth]{figures/experiment2_ctl_plots}
+    \includegraphics[width=1.0\columnwidth]{figures/control_subcircuit}
 
     \caption{Neural dynamics of input and control events.
-For each
-      neural model two input rates are simulated with the three
-      extreme combination of events: Input first, Control first and
-      Coordinated.
-~9 and 20 excitatory connections are assumed for
-      the LIF and AdEx models respectively.
-We show the time series of
-      the firing rate in the last population of the chain
-      (corresponding to a SA node of topology B in Figure 4).
+We plot the temporal dynamics of the Sub Assembly population corresponding to the sub-circuit topology shown.
+9 and 20 excitatory connections are assumed for the LIF and AdEx models respectively.
+We show the time series after 1000 ms, time at which all neural populations have achieved a steady state rate from their initial events at time 0.
+For each neural model two constant input rates are simulated for the input events, 10 Hz and 20 Hz for LIF, and 20 Hz and 30 Hz for AdEx.
+There are three possible extreme cases of timing between the input and control events;
+When the input event takes place at 0 ms and the control event at 1000 ms (Input First);
+When both events start at 1000 ms (Simultaneous);
+And when the control event starts at 0 ms followed by the input event at 1000 ms (Control First).
 }
-    \label{fig:experiment_2}
+    \label{fig:experiment-2}
   \end{center}
 \end{figure}
 
 
-This corresponds to a Main Assembly (MA)  that drives up the activity successively of a Gate Assembly (G) and Sub Assembly (SA), while G activity is modulated by the control signal. 
-Inhibition of the activity in G from the control rate, isolates SA activity from the input stimulation.
-The input and control events can start at any arbitrary moment for any duration and what interests us are the dynamics of the circuit when inhibition, assumed in the complete circuit to be always present, stops allowing MA to freely excite G and SA.
+We considered two possible persistent rates for the input event, 10 Hz or 20 Hz for the LIF model and 20 Hz or 30 Hz for the AdEx model.
+We needed higher input rates for the AdEx model since adaptation induces smaller steady state rates with respect to the LIF model.
+There are three possible extreme cases of timing between the input and control events;
+When the input event takes place at 0 ms and the control event at 1000 ms (Input First);
+When both events start at 1000 ms (Simultaneous);
+And when the control event starts at 0 ms followed by the input event at 1000 ms (Control First).
+These timing of events are extreme cases because 1000 ms is enough time for the neural populations to achieve a steady state rate after any event initiated at 0 ms.
+Any other timing in which populations have still not achieved a steady state before the arrival of the second event would produce neural dynamics with patterns in between the extreme cases.
+For language stimuli, timing cases can be interpreted as different types of parsing mechanisms, where Control First corresponds to a predictive (top-down) one and Simultaneous and Input First to a reactive (bottom-up) one.
+We show in Figure \ref{fig:experiment-2} the firing rate time series of the Sub-Assembly (SA) for all possible event timing cases and input firing rates.
 
-There are three extreme cases that characterize the circuit behavior.
-When the input starts and the circuit achieves the steady state before G inhibition stops (Input first), when G inhibition stops and the circuit achieves a steady state before the input starts (Control first) and when both input starts and inhibition stops at the same moment (Coordinated).
-Analyzing this sub-circuit let us determine what kind of input rates are necessary to drive the maximum and steady state rate of SA to some desired activation threshold for WM.
-Moreover it gave insight into what are the most constrained type of events for each neural model.
+First we observe that the input rate do not change the relative behavior of the timing cases but only increase the steady state rate and transient fluctuations.
+We see that the timing cases do not modify the final steady state rate, which only depends on the input rate, but influence the maximum rate of the transient activity fluctuations.
+In the case of AdEx, the speed at which the steady state is approximated is also affected by the timing cases, for example the Simultaneous case takes approximately 400 ms more than the Control First case, to achieve the steady state, for a 30 Hz input rate.
+The steady state rate is in most cases and neural models the lowest firing rate, with some short transient exceptions.
+Moreover the timing cases have different relative behaviors depending on the neural model, as can be seen from the Control First case that has the lowest transient rates for AdEx but the highest ones for LIF.
 
-In Figure 6 we portray the neural dynamics of the last population of the chain (SA).
-The steady state in a LIF model is achieved at a similar time (under 200 ms) for all event cases.
-The Input first and Coordinated events have a similar quantitative behavior, which means that the dynamics of stopping inhibition are insensitive to MA having achieved a steady state from the input stimulation.
-Nonetheless starting the input on the absence of inhibition permits higher initial fluctuations of the firing rate and so higher maximum rates of activity.
-On the other hand, the AdEx model shows a more complicated behavior.
-Due to adaptation effects, the maximum output rate response will depend on the current state of the population.
-Basically~the closer the population is to its steady state, the less responsive it will be due to the accumulated adaptation.
-In AdEx populations the steady state takes longer to be achieved (just approximated after 400ms) and its convergence rate depends on the input rate and events combination.
-Also the maximum firing rate of the dynamics strongly depends on the event case.
-Contrary to the LIF model, stopping inhibition in advance minimizes the rate dynamics due to the stronger adaptation present at the steady state of G.
-Then starting the input before stopping inhibition improves the rate dynamics at G and SA, which increase the further MA is from achieving a steady state after the input starts and so are maximized with perfect coordination of input and control.
+Successful binding in the Compartment Circuit depends on the sum of activity of two SAs, that reaches the kickoff threshold rate of the Working Memory (WM) population.
+Assuming activity of SAs is driven by two separate input events, like two words to be binded presented 200 ms apart, the timing of the two input events and the timing cases of their respective control events will determine the possible range of values for the WM kickoff threshold.
+We can also think the other way around and say that the range of values of the WM kickoff threshold constrain the possible timing of all events.
 
-From these observations we learn that the combination of events that reduce the most the rate dynamics depend strongly on the neural model selected.
-Being the Input first or Coordinated cases for the LIF model and the Control first case for the AdEx model.
-Moreover, as is apparent in Figure 6, the AdEx model requires a higher input rate to achieve modest increases in the steady state of the output rate, which limits the behavior of a circuit of AdEx populations under constant input rates.
+An example scenario, illustrated in Figure \ref{fig:experiment-2} for a LIF population with 20 Hz input, would be that the onset of input events correspond to the onset of word presentation, 200 ms apart, where the timing of the first SA input event follows the Input First case and the timing of the second SA input event follows the Control First case.
+In that scenario any WM kickoff threshold between 16 Hz and approximately 44 Hz would be reached by the sum of the 15 Hz steady state rate of the first SA and the firing rate of the second SA achieving a transient maximum of approximately 29 Hz.
 
-
-
-\subsubsection{Experiment 3:~Enhanced neural activity from closed
-  loop}
-
-{\label{758539}}
-
-In a third experiment we tested the behavior of the sub-circuit corresponding to topology C of Figure 4.
-
-emph{As discussed earlier, beyond a certain number of excitatory connections there is the possibility of runaway activity in an excitatory loop.
-
-As mentioned before there is a number of excitatory connections after which the output rate is higher than the input rate, such that populations wired in a closed loop would enter an uncontrolled self reinforced activity regime.}
-
-Since we expect such a loop to exist in our circuit during activation of WM, we had to constraint the number of excitatory connections employed.
+Since we wanted to consider all possible event timings when studying the Compartment Circuit dynamics, we took from this experiment the cases with the highest transient rates for each neural model, to later analyse the circuit parameter space.
+We see in Figure \ref{fig:experiment-2} that the Control First case has the highest transient rate for the LIF model, while the Simultaneous case has the highest transient rate for the AdEx model.
 
 
-Another important implication of the closed loop is that we would expect the steady state activity of the populations to be higher than in their emph{uncoupled states}, which also gives a lower bound to the activation threshold that we can select for WM, since otherwise WM would enter a state of perpetual self activation after being activated the first time. {need to briefly remind that working memory needs a threshold}
+\subsubsection{Experiment 3: Circuit operation according to the parameter space}
 
+{\label{results:experiment-3}}
 
+In a third experiment, we studied the parameter space of the input rate, the number of excitatory connections and the WM kickoff activation threshold, to understand the operational, event timing related, constraints of the Compartment Circuit when attempting to instantiate binding under different regions of the parameter space.
+As shown in Figure \ref{fig:experiment-3}, to explore the circuit behavior, we have to consider the Sub-Assembly (SA) temporal dynamics presented in Results section \ref{sec:experiment-2} and a sub-circuit topology representing an excitatory loop between two SAs.
 
-The steady state rate of the closed loop is shown in Figure 7 up to the number of excitatory connections that would lead to an uncontrolled activity regime.
-
-Taking also into consideration the results of the second experiment we can depict valid combinations of input rate, number of excitatory connections and WM activation threshold.
-In figure 7 we show the steady state rate (SS) curve for the events combination with the lowest rate dynamics and the maximum rate (Max) curve for the events combination with the highest rate dynamics.
-Notice that, as explained in the previous experiment, the relevant combination of events in the analysis are different in the case of LIF and AdEx populations.
-These curves delimit four parameter regions with different implications for the behavior of the NBA's memory circuit.
-The regions refer to the ranges of values that the WM activation threshold can take according to a given input rate and number of excitatory connections.
-The example curves shown in Figure 7 correspond to an input of 10Hz and 25Hz for LIF and AdEx populations respectively.
-
-The perpetual activation region refers to the area below the steady state of the closed loop activity and is independent of input rate.
-All other regions depend on the input rate that determines the lowest and highest rate dynamics.
-The flexible activation region refers to the area between the closed loop curve and the steady state of the event combination with the lowest rate dynamics.
-An activation threshold in that region would secure activation of WM to any combination of events, which makes it the most desirable range for the activation threshold.
-The constrained activation region is bounded by the max temporal rate of the highest rate dynamics and represent the range of values for which the timing of input and control events is constrained.
-Finally the impossible activation region is above the highest rate dynamics and represent rate values that can not be reached by the circuit dynamics.
-
-Characterizing the activation threshold regions is important to understand the reliability of the circuit when exposed to noisy input rates, arbitrary coordination of events, control mistakes or anticipatory control signals.
-With precise control of input rates and the timing of events corresponding to bottom up parsing, one could simply select an activation threshold just above the minimum rate dynamics to secure activation from the activity of two SAs.
-Nonetheless there are other scenarios that we should be able to test with parsing schemes diverging from pure bottom-up parsing, if we interpret prediction as anticipated control activation.
-In that case, if prediction fails we would be confronted with a control mistake for which we would not want the circuit to perform a binding.
-This would be illustrated by an input that drives activity in the first MA of a compartment circuit followed by a control event that allows activity to flow from all MAs, while the second MA never receives the input corresponding to the activation of its concept.
-In such a case one would need the threshold to be higher than the minimum of the impossible activation region for a given input rate and number of excitatory connections, such that the input of one SA alone could not trigger WM.
-This additional constraint can itself push the activation threshold beyond twice the maximum of the flexible activation region, forcing coordination of at least one input and control event, as can be appreciated for AdEx populations in Figure 7.
-To allow anticipatory control mistakes for the complete circuit simulation we selected a combination of 10Hz and 20Hz input rates, 8 and 20 excitatory connections and 10Hz and 9Hz activation thresholds for LIF and AdEx populations respectively.
 
 \begin{figure}[h!]
   \begin{center}
-    \includegraphics[width=0.70\columnwidth]{figures/experiment_3}
+    \includegraphics[width=1.\columnwidth]{figures/parameter_regions}
 
-    \caption{Closed loop activity and memory sub-circuit activation regions.
-      Plots at the top show an example steady state and max activity rate of the event combination with weaker rate dynamics, in contrast to the steady state rate of the closed loop enhanced activity formed by WM activation.
-      Plots at the bottom identify the parameter regions, where the WM steady state rate (SSR) and maximum rate (MR) threshold region is the one that gives most constrained range of circuit parameters to offer the most flexible coordination of input and control events.
-      The event rate curves correspond to an input rate of 10Hz and 25Hz for the LIF and AdEx models respectively.}
-    \label{197355}
+    \caption{Excitatory loop and WM activation parameter regions.
+At the top the two sub-circuit topologies from which SA firing rate curves are derived.
+Rate curves consist on firing rate as a function of the number of excitatory connections for a given input rate of 10Hz and 25Hz for the LIF and AdEx models respectively.
+From the chained neural population topology we consider the highest maximum transient rate and the steady state rate.
+From the excitatory loop topology we consider the steady state rate driven only by baseline activity.
+We color the regions between the curves to indicate the different WM activation cases determined by the value of the WM "half" kickoff threshold rate.
+The four parameter regions refer to the possible combination of input and control events that would allow binding to take place if the WM "half" kickoff threshold falls in the region:
+The perpetual activation region implies that WM will get permanently reactivated;
+The flexible activation region implies that all events cases can produce binding;
+The constrained activation region implies that only some combination of events' timings can permit binding;
+Finally the impossible region implies that no binding can take place for the given WM kickoff rate.}
+    \label{fig:experiment-3}
 
   \end{center}
 \end{figure}
 
-\subsubsection{Experiment 4: Inhibition of closed loop enhanced neural
-  activity}
+
+As shown in the Compartment Circuit diagram of Figure \ref{fig:circuit-spec} of Methods section \ref{sec:circuit-parameters}, once the Working Memory (WM) Delay activity is unleashed, both Gate Keepers (GKs) are inhibited, creating an excitatory loop between the Sub-Aseemblies (SAs).
+Beyond a certain number of excitatory connections, there is the possibility of runaway activity in the excitatory loop, which motivates a constraint in the parameter space of the Compartment Circuit.
+The excitatory loop activity considered is only driven by the 1 Hz baseline input rate, as would be the case in the circuit once the input events stop driving activity in Main-Assemblies (MAs) and as a consequence in SAs.
+In Figure \ref{fig:experiment-3} we plot the space of excitatory connections up to 11 connections and 21 connections for LIF and AdEx respectively, values at which we observed runaway activity in the excitatory loop.
+
+Alongside the excitatory loop baseline steady state rate curve of the SA, we also plot the input driven maximum transient firing rate and steady state rate of an SA, according to the different events' timing behavior presented in Results section \ref{sec:experiment-2}.
+The firing rate curves correspond to an input of 10 Hz and 25 Hz for LIF and AdEx populations respectively.
+All the firing rate curves correspond to the activity of only one SA, so whenever we represent the WM kickoff rate threshold in Figure \ref{fig:experiment-3}, we refer to the "Half" kickoff threshold.
+For example the convenient "Half" kickoff rate threshold of 6 Hz, marked with a green line in the LIF Model plot, implies a total WM kickoff rate threshold of 12 Hz.
+
+From the relationship between the three firing rate curves, we can establish four parameter regions with different implications for the behavior of the Compartment Circuit:
+First, below the excitatory loop baseline steady state rate, we have a parameter region for which WM would be continuously reactivated.
+The initial activation of WM leads to the excitatory loop steady state rate, so if the kickoff threshold is below it, WM will be reactivated perpetually.
+We call this the WM perpetual activation region;
+Second, in the area between the loop steady state and the input steady state curves, all input and control event timing cases will lead to activation of WM, which can be explained by the steady state rate being the lowest transient rate.
+We call this the WM flexible activation region;
+Third, in the region between the input driven maximum transient rate and the steady state rate curves, activation of WM will not take place for some timings of input and control events.
+The higher the WM kickoff threshold in this region, less input and control event timing cases can activate WM.
+We call this the WM constrained activation region;
+Finally, above the input driven highest maximum transient rate, it is clear that activation of WM can not be achieved under any circumstance, which is why we denote it as the WM impossible activation region.
+
+To understand the constrained activation region, it helps to take a look back at Figure \ref{fig:experiment-2} of Results section \ref{sec:experiment-2}.
+Consider the AdEx model with a 30 Hz input rate.
+We can see that a WM kickoff rate of 14 Hz would be reached by adding the steady state of one SA and the transient rate of any events' timing case for the second SA.
+If we raise the WM kickoff rate to 20 Hz then we would need the events driving the second SA activity to follow the Input First or Simultaneous timing cases, while raising it further to 25 Hz would leave the Simultaneous case as the only option.
+
+We still do not know the parameter variability allowed by the cortex to implement the circuit, so we consider the proportion between the constrained and flexible activation parameter regions as a indicator of the difficulty to operate the Compartment Circuit under the different neural models.
+Based on this, we observe in Figure \ref{fig:experiment-3} that the AdEx model is more likely to induce constraints in the timing of input and control events to perform the bindings necessary to represent complete structures in cortex.
+To allow the most flexible behavior exploration of the Compartment Circuit, when simulating language processing, we decided to select parameters in the flexible activation region.
+We selected a combination of 10Hz and 20Hz input rates, 8 and 20 excitatory connections and 10Hz and 9Hz WM kickoff rates for LIF and AdEx populations respectively.
+
+
+\subsubsection{Experiment 4: Inhibition of undesired excitatory loops}
 
 {\label{554287}}
 
-For the fourth and last sub-circuit experiment, corresponding to topology D of Figure 4.
-We aimed at tuning the amount of inhibitory connections in the circuit such that the neural activity in GKs could inhibit the activity in Gs when there is no intervention of control signals.
-In this way we break permanently the closed loop of activity unless a bidirectional control signal or WM activation allows it in the complete circuit dynamics.
-To realize this we picked the number of inhibitory connections necessary to inhibit max firing rates for the wide range of number of excitatory connections allowed by the closed loop dynamics.
-The maximum firing rate is employed instead of the steady state rate to observe inhibition of the strongest fluctuations.
-Based on the curves shown in Figure 8,~we set the number of inhibitory connections to 70 and 250 for LIF and ADEX populations respectively for the following simulations.
-
+In the fourth experiment, we aimed at tuning the amount of inhibitory connections between Gate Keepers (GKs) and Gates (Gs) to avoid excitatory loops between Main-Assemblies (MAs) and Sub-Assemblies (SAs).
+We also wanted to reduce the sensitivity of the circuit to input fluctuations and the number of excitatory connections when the Gs are supposed to be closed.
+So we decided to study this with the sub-circuit topology of Figure \ref{fig:experiment-4}.
 
 
 \begin{figure}[h!]
   \begin{center}
-    \includegraphics[width=0.70\columnwidth]{figures/experiment_4}
-    \caption{Inhibition of closed loop neural activity.
-      Each curve represents how the maximum enhanced
-      neural activity of ~a closed loop circuit with a given number of
-      excitatory connections is driven back to baseline as we increase
-      the number of inhibitory connections.
-Considering a baseline
-      rate approximating a 1 Hz steady state in both Models.
-The
-      maximum firing rate is employed instead of the steady state rate
-      to observe inhibition of the strongest fluctuations.
+    \includegraphics[width=1.0\columnwidth]{figures/experiment_4}
+    \caption{Inhibition to avoid excitatory loop.
+The sub-circuit topology at the right depicts the inhibition of Gates (Gs) by the Gate Keepers (GKs) that are driven themselves by the Main and Sub Assemblies (MA and SA) to avoid an excitatory loop between them.
+Activity in the sub-circuit is driven only by a 1 Hz baseline rate.
+Each curve in the plots represent how the maximum transient rate of SA for a given number of excitatory connections varies as we increase the number of inhibitory connections.
+We present one plot for each neural model (LIF and AdEx).
+The maximum firing rate is employed instead of the steady state rate to observe sensitivity to transient rate fluctuations.
 }
-    \label{970310}
+    \label{fig:experiment-4}
   \end{center}
 \end{figure}
 
-\subsection{Complete compartment circuit simulations}
 
+We plot, in Figure \ref{fig:experiment-4}, the maximum transient firing rate of the SA as a function of the number of inhibitory connections for each number of excitatory connections.
+If the amount of inhibitory connections is not enough, transient activity of the SA will be increased by the effect of the excitatory loop.
+So it is possible to see how many inhibitory connections are necessary to eliminate the undesired excitatory loop effect between an MA and SA, by looking at the amount of inhibitory connections at which the maximum firing rate becomes insensitive to the number of excitatory connections.
+It is clear from the plots, that after a certain number of inhibitory connections, the excitatory loop is eliminated, such that unidirectional activity will be allowed only by controlled inhibition of the GKs.
+From this experiment, we decided to set the number of inhibitory connections to 70 and 250 for LIF and ADEX populations respectively.
+
+
+\subsection{Complete compartment circuit simulations}
 {\label{444332}}
 
-After selecting a valid set of parameters from the observations of the sub-circuit experiments we explored the behavior of the complete compartment circuit simulation.
-The dynamics of the compartment circuit can be summarized by a combination of the input events that drive activity in MAs and the control events that inhibit GKs such that activity can flow from MAs to Gs and SAs.
-In Table 1 we present a summary of the parameters for LIF and AdEx simulations and in Figure 9 we present the temporal dynamics of the compartment circuit under different combination of events.
+After selecting a valid set of parameters from the observations done in the sub-circuit experiments, we analysed the behavior of the complete compartment circuit simulation.
+The dynamics of the compartment circuit can be summarized by a combination of the input events that drive activity in Main Assemblies (MAs) and the control events that inhibit Gate Keepers (GKs) such that activity can flow from MAs to Gates (Gs) and from the latter to Sub-Assemblies (SAs).
+In Table \ref{table:simulation-parameters} we present a summary of the parameters taken for LIF and AdEx simulations and in Figure \ref{fig:activity_profiles} we present the temporal dynamics of the compartment circuit for a complete and incomplete binding.
+
 
 \begin{table}[h!]
   \centering \normalsize
-  \begin{tabular}{ccc}
-    Parameter & LIF & AdEx \\
+  \begin{tabular}{lcc}
+    \textbf{Parameter} & \textbf{LIF} & \textbf{AdEx} \\
     baseline connections & 115 & 1646 \\
     excitatory connections & 8 & 20 \\
     inhibitory connections & 70 & 250 \\
-    Baseline rate (Hz) & 10 & 20 \\
+    Input rate (Hz) & 10 & 20 \\
     WM/Ctl rate (Hz) & 10 & 20 \\
   \end{tabular}
   \caption{Complete simulation parameters}
-  \label{917316}
+  \label{table:simulation-parameters}
 \end{table}
 
-First we observed the dynamics of the circuit when no event take place, leading to baseline activity.
-In this state all biological populations are just receiving an input baseline rate of 1 Hz from the artificial baseline neural population.
-Nonetheless instead of having an output rate approximating 1 Hz as they would have in isolation, the different nodes reflect with their firing rate the architecture of the circuit.
-Gs show a low rate of activation due to GKs inhibition, while GKs how the highest rate driven by MA and baseline activity.
-MAs show an activation close to the approximated 1Hz baseline as well as SAs that have been isolated in the circuit thanks to GKs inhibition.
-SAs have a slightly higher steady state rate than MAs since they are the center recipient of neural activity of the circuit and at least some neural activation manages to leak the Gs.
-The baseline activity of the different neural models can be seen in part A of figure 9.
-
-Then in part B of Figure 9 we portray the partial activity of the circuit.
-This means that only one MA receives a fix input rate and a Ctl event takes place opening activity flow from both MAs to SAs.~We can observe that, as expected, the increased activity of the stimulated MA causes strong inhibitory activity in the GK that compensate the flow of neural activity from MA to G to avoid activation of the corresponding SA.
-Moreover it can be seen in Figure 9 that in the case that Ctl activation takes place when only one MA is active, the circuit effectively do not activate the binding WM and will simply return to an appropriate steady state once Ctl stops.
-
-Finally in part C of Figure 9 we can appreciate that in case both MAs are active and a Ctl event takes place, then the binding will take place by activation of WM.~During the process of binding the reverberating activity of WM that inhibits the GKs connecting SAs creates a sudden burst of activity leading to a pronounced spike as SAs become part of a self excitatory closed loop, also elevating the activity of Gs and GKs between them.
-This burst of activity quickly drops back to a steady state that leaves the inner circuit in a higher level of activity with respect to its original resting state, facilitating communication between MAs.
-A similar behavior during sentence parsing was observed in previous simulations of the NBA\cite{Frank_2014}.
-
-Although the general qualitative behavior of the compartment circuit architecture is similar for LIF and AdEx populations, there are three important quantitative differences present but not easy to appreciate in Figure 9.
-The first is that LIF population dynamics take longer to transmit rates of activity since its transient oscillations are more modest in proportion to the input rate.
-In these simulations, with the same timing of events, WM became active 86 ms after all input and control events take place in the LIF simulation, while in the AdEx simulation this only took 42ms.
-The second is that the new enhanced activity regime produced by WM activation is very sensitive to the adaptation effect present in the AdEx model.
-Not only the parameters of the neural model itself but also synaptic efficacy could completely eliminate the higher sustained activity while keeping a high spike of activity on the moment that binding takes place.
-The third is that the AdEx simulation is sensitive also to small variations in the timing of events due to the increasing influence of adaptation as populations reach the steady state, while LIF model dynamics are only affected by the input rate of the events.
 
 \begin{figure}[h!]
   \begin{center}
-    \includegraphics[width=0.70\columnwidth]{figures/compartment_circuit_dynamics}
+    \includegraphics[width=1.0\columnwidth]{figures/compartment_circuit_dynamics}
     \caption{Profiles of neural activity.
       \textbf{A.} Neural activation driven only by baseline input. \textbf{B.} Neural activation of the circuit when only one MA is activated by a word event or WM at 500ms.
-      Portrays the neural activity related to an erroneous control signal at 800ms.
+      Shows the neural activity related to an erroneous control signal at 800ms.
       It is possible to see that the steady state of neural activity is resilient to a slip of control, going to the appropriate levels of neural activity once the control activity is over.
       \textbf{C.} Neural activity of the Compartment Circuit for a successful binding.
       The second MA gets activated at 800ms alongside the controls.
       Since both MAs are active, the SAs manage to activate WM to instantiate the binding of the MAs.
-      Two interesting dynamics arise from the binding.
-      The first is that a spike of activity in SAs, GKs and Gs takes place due to the sudden inhibitory activity of WM on the GKs.
-      The second is that the memory circuit internally raises its baseline activity.%
+      Two interesting dynamics arise from the binding:
+      The first is that a spike of activity in SAs, GKs and Gs takes place due to the sudden inhibitory activity of WM on the GKs;
+      The second is that the memory circuit internally raises its baseline activity due to the excitatory loop formed.
     }
 
-      \label{activity_profiles}
+      \label{fig:activity_profiles}
   \end{center}
 \end{figure}
 
-Once we have the neural dynamic of the compartment circuit, we can extract key segments of transient activity and approximate the NBA binding activity of complete phrases.
-For this approximation we can consider parallely the necessary compartment circuits to build an assumed underlying tree data structure given by a grammar theory.
-We would also need a specification of the timing of parsing operations and the desired duration of WM activity.
-The order of the parsing operations can be taken from a bottom-up or more generalized left-corner parsing scheme.
-Then the more precise timing of the parsing operations can be assumed to depend on word presentation times for word bindings and minimal operational constraints.
-Furthermore, we can think of the WM of word bindings as the MAs of phrasal nodes and so on, which would then give us the time at which a superior phrasal nodes input is available.
 
-One can see in the example of Figure 10 how the hypothesized tree structure of a sentence and the timing of the activation of tree nodes is transformed into the neural activity of a blackboard.
-First we substract the baseline activity profile from the binding activity profile of the segments of neural dynamics used for the simulation.
-This is motivated by our interest in making comparisons with neuroimaging data.
-Then we simply add up the aligned time series of the different compartment circuits by neural population category or some other desired criteria.
-In the example, summaries of the activity of different neural populations are shown as well as total activity of the blackboard circuit assuming equal contribution from the different populations.
-Certainly the way we should aggregate time series to compare them quantitatively with neuroimaging data would depend on the spatial and temporal resolution available and the assumptions made about the spatial distribution of the blackboard architecture in the cortex.
-in the case of WM activation it is reasonable to assume a duration at least long enough to allow all bindings in the tree to take place at the rate that words are presented to the blackboard.
-In this example words are presented every 600 ms, so for illustrative purposes we assume WM is active 2300ms to be able to bind the first word to an awaited phrase node activated after presentation of the fourth word.
-If WM was active for say less than 1900ms then activation of the first word MA would cease before the accompanying phrasal node MA comes into play.
+First, we show the baseline dynamics of the circuit, when no event takes place, in part A of figure \ref{fig:activity_profiles}.
+In this case all neural populations are only receiving an input baseline rate of 1 Hz.
+So the different populations reflect with their firing rate the architecture of the circuit.
+Gs show a low rate of activation due to GKs inhibition, while GKs show the highest rate driven by MA and baseline activity.
+MAs show an activation close to the approximated 1Hz baseline as well as SAs that have been isolated in the circuit thanks to GKs inhibition.
+
+Second, we show the activity of the circuit for an incomplete binding, in part B of Figure \ref{fig:activity_profiles}.
+This means that only one MA is driven by an input event, after which a Control (Ctl) event allows activity flow from both MAs to SAs, even though there is no binding to be done.
+Due to stimulation of the MA, the GK firing rate raises to stop activity to flow to the SA until the control event takes place to inhibit the GK.
+As only one SA is driven by input, the total rate contribution to the WM population do not achieve the WM kickoff threshold rate necessary to perform a binding.
+Both neural models display a transient spike of neural activity in the SA, G and memory sub-circuit GKs during the time window the control permits activity to flow to the SA.
+The AdEx model also shows a high transient firing rate in the GK after the control stops, due to the lost adaptation of control inhibition.
+
+Third, we show the circuit dynamics of a successful binding in part C of Figure \ref{fig:activity_profiles}.
+When both MAs are driven by an input event and a control event takes place.
+In this case the added activity of the SAs reaches the WM kickoff threshold and kickstarts the Delay activity of WM.
+Then activity in the SAs and Gs of the memory sub-circuit raise to a new baseline due to the excitatory loop created by WM inhibition of GKs, which also generates an initial transient spike of activity in SAs.
+A similar behavior to this one, simulating sentence parsing, was also reported by previous work with the NBA\cite{Frank_2014}.
+Finally, after the WM Delay activity stops, the LIF model activity goes back to baseline, but the AdEx model exhibits a final transient rise of firing rate in the GKs of the memory sub-circuit, similar to that of the GKs affected by control inhibition release.
+
+
+\subsection{Simulation of complete phrase processing}
+{\label{44kfmvjkc32}}
+
+
+With the neural dynamics of several Compartment Circuits, we approximated the binding of complete phrases.
+The right branching hierarchical structure that corresponds to an example phrase of 4 words, determined by a phrase grammar, is shown in Part A of Figure \ref{fig:tree-example}.
+In this example only three Compartment Circuits are necessary to realize all the bindings that would correspond to the phrase processing, and the exact onsets were taken from the LIF simulation.
+The onset of input events of Main Assemblies representing word grammatical categories were matched to word presentation onsets spaced 600 ms apart from each other.
+In the case of phrasal nodes, we assumed that they correspond to the previous realization of a binding, such that their input events were determined by the moment at which their respective Working Memory population was activated.
+In this way, phrasal nodes can be represented by activity in the Main-Assemblies of a Compartment Circuit and be binded to other word grammatical categories or phrasal nodes.
+
 
 \begin{figure}[h!]
   \begin{center}
@@ -954,134 +968,152 @@ If WM was active for say less than 1900ms then activation of the first word MA w
       It is shown how compartment circuits correspond to sections of the tree structure and how the nodes corresponding to grammatical categories of words processed or phrase nodes are instantiated in time under a bottom-up parsing approach.
       B. Blackboard time series that correspond to the simulated processing of the considered tree structure and time of activation of the nodes.
       The separate activity of the LIF populations of each compartment circuit are shown separately, followed by their summary and total activity.
-      C. Same as~B but for AdEx populations. {\label{679921}}%
+      C. Same as~B but for AdEx populations. {\label{fig:tree-example}}%
     }
   \end{center}
 \end{figure}
 
 
-\subsection{Qualitative reproduction of neuroimaging patterns}
+We needed to prolong the Main-Assemblies and Working Memory activity long enough to instantiate the all necessary bindings, so in this example we assumed WM and input events to last 2300ms for all simulations.
+If input events were active for less than 1972ms then activation of the first word MA would cease before the accompanying phrasal node MA comes into play to realize the last binding.
+In the Comparment Circuit simulation presented in Figure \ref{fig:activity_profiles}, there was a difference in timing of WM activation between the LIF and the AdEx neural models, not easy to see in the plots.
+The Working Memory population became active 86 ms after all input and control events take place in the LIF simulation, while in the AdEx simulation this only took 42ms.
+Now by contrasting the LIF and AdEx complete phrase simulations in Figure \ref{fig:tree-example} we can better appreciate how this difference adds up to accelerate phrase processing in the AdEx model.
 
-{\label{444332747980}}
+To later compare the phrase processing simulation with neuroimaging patterns, we first substracted baseline activity from the time series of each neural population in each Compartment Circuit.
+Then we summed the aligned time series of the same neural population category belonging to different Compartment Circuits.
+Finally, to obtain total neural activity of phrase processing, we summed all the non phenomenological neural populations directly, such that they would all be equally weighted under the absence of a more detailed hypothesis about the population sizes and spatial distribution of these populations in the cortex.
 
-We can apply the complete phrase neural time series approximation to a variety of stimuli from experimental designs behind neuroimaging results in the literature. \emph{for discussion, not done, only two experiments}
 
-First we considered the simple case of increasing size right branching trees that relate to the a recent analysis of intracortical (ECoG) recordings of a phrase reading task\cite{Nelson_2017}.
+\subsection{Qualitative reproduction of ECoG patterns}
+{\label{sec:ecog-patterns}}
 
-In this experimental design subjects had to keep a phrase in memory to later compare it with a shorter probe phrase.
 
-We make a qualitative comparison, given that high gamma power has been shown to be weakly correlated to the firing rate time series of spiking neurons from in-vivo recordings\cite{Ray_2011}. \emph{should go to discussion, now i am just describing the simulation time series}
+As presented in the Introductory section \ref{intro:imaging}, the ECoG analysis of Nelson et al.\cite{Nelson_2017} is the first to characterize the specific temporal patterns of phrase-structure formation from intracranial neurophysiological data, possibly revealing the first neural signatures of binding operations.
+Nelson et al. demonstrate two patterns that are of particular interest to our simulations; The average temporal dynamics of processing increasing size right branching phrases; And the average neural dynamics for hypothesized number of pending binding operations, during phrase processing, under a bottom-up parsing approach.
+In Figure \ref{fig:ecog-1} we show the aggregated neural activity predicted by our LIF and AdEx simulations, alongside the temporal dynamics of phrase processing presented by Nelson et al. from the mean high gamma power of the ECoG recordings.
 
-We show the time courses of the simulation 
-
-.~In our simulation, shown in Figure 12.A, we can see four main temporal segments of neural activity.
-An initial increase of activity dependent on word presentation that reflects MA populations, a transient activation peak during WM activation, 
-
-\emph{explain in more detail}
-
-a decrease of activity paced by the duration of input activity driving MA populations and a final drop of activity when WM delay activity stops and the inner closed loop of populations in the memory sub-circuit go back to its initial baseline state.
-We also show, in Figure 11.B and 11.C., the results from Nelson et al., reflecting the mean high gamma power time series of the ECoG recordings. \emph{truly explain what is being shown}
-
-As can be seen in Figure 11.B, there is an increase in baseline activity when comparing the beginning and end of phrase processing that can be interpreted as WM related activity based on the task.
-This memory effect is reproduced in the NBA simulation by the enhanced activity of the closed loop in the memory sub-circuit.
-It is represented by the difference between the start of the simulation and the end of the MA inactivation temporal segment, denoted in Figure 11 by black bars.
-It could further be tuned to fit quantitatively the data by manipulating the number of excitatory connections, such that their decrease would reduce the baseline difference.
-The irregularities of the magnitude of the baseline effect with respect to phrase length in the high gamma power is difficult to interpret, since it could suggest that the accumulation of activity with more recruiting nodes is subtler than what we can reproduce with the NBA circuit, in which there is a clear correspondence with the number of hypothesized compartment circuits of the parsed tree structure.
-Moreover, when comparing simulations, we appreciate that the AdEx model could better reflect a more modest proportional increase of baseline thanks to adaptation.~
-
-Another observation of the experiment is a proportionally important ~increase in activity during word processing.
-The peak magnitude and onset of this increase seems to reflect the length of the phrase.
-This effect can be captured by the simulation with a simple interpretation of the accumulation of MA activity waiting to participate in bindings, assuming a bottom-up parsing scheme.
-Nonetheless what was unexpected is the spike of activity followed by a pronounced drop suggested naturally by the NBA simulation, which is also emphasized by Nelson et al. in Figure 11.C.
-This seems to be the case for both intermediate and final bindings, with a drop magnitude dependent on the number of open nodes in the assumed phrase grammar tree structure of the phrases.
-The number of open nodes reflect accumulation of pending bindings under a bottom-up parsing scheme in right branching sub-trees.
-The increasing drop magnitude is captured in the simulation by the quick succession of pending bindings in a tree structure.
-In the case of the LIF simulation, there is flexibility to extend the activity peak with the duration of control events and to increase the total drop magnitude by manipulating the input rates and excitatory connections.
-On the other hand the AdEx model loses this flexibility due to adaptation but better emphasizes the contrast between the activity peak and sudden drop because of the pronounced initial activity burst of its population dynamics.
-
-There~is an issue with the interpretation of activity drops due to binding operations.
-As can be seen in Figure 11.B, for the assumed right branching phrase ``ten sad students of Bill Gates'', there is a sentence middle drop that do not correspond to the prediction of a completely bottom up parsing scheme.
-To accommodate this behavior into the NBA, without changing our grammar and parsing assumptions, we would need to incorporate a limited capacity to sustain MA activity that has to be renovated or a greedy binding mechanism that leads to premature binding mistakes.
-In the case of the sentence end, the final activity drop has a steeper slope than the activity raise during sentence processing, suggesting to incorporate a mechanism that releases MA activity after binding takes place, which is unaccounted for in the simulation.
-Finally in the analysis of Nelson et al. there is no depiction of WM inactivation, likely due to the experimental design.
-Interestingly, the AdEx simulation distinguishes itself from the LIF simulation, during WM inactivation, by predicting a final burst of activity due to the inhibition release of the GKs in the memory circuit.
-Nonetheless this would be a difficult to appreciate marker in the oscillatory signal of intracortical recordings.
 
 \begin{figure}[h!]
   \begin{center}
-    \includegraphics[width=1.00\columnwidth]{figures/ecog_comparison2}
+    \includegraphics[width=0.70\columnwidth]{figures/ecog_comparison_1.png}
     \caption{{Simulation comparison with intracortical (EcoG)
-        recordings {\label{286166}}%
+        recordings.
+        In the top plots we show phrase processing for the LIF and AdEx simulations.
+        We denote with arrows the four segments of neural dynamics identified in the simulations; The Main Assemblies (MAs) activity increase the segment; The accumulated binding operations segment; The Main Assemblies (MAs) activity release segment; And the Working Memory (WM) release segment.
+        We denote with red bars the magnitude of Working Memory activity in the circuit that depends on phrase length and remains at the end of phrase processing.
+        In the bottom plots we identify, in Figures modified from Nelson et al., the segments of intracortical recordings that resemble the simulation and denote with red bars the possible Working Memory related activity that remains at the end of phrase processing.
+        {\label{fig:ecog-1}}%
       }}
   \end{center}
 \end{figure}
 
-We also considered the case of a more complex experimental design employed to show constituency effects with Bold-fMRI\cite{Pallier_2011}, also based on right branching trees.
-In this experiment each stimuli
-us presented to a subject in a trial consisted of a list of phrases with the same number of words (constituents), such that in total 12 words would be presented.
-The conditions were one list of 12 unconnected words (c01), 6 phrases of 2 words (c02), 4 phrases of 3 words (c03), 3 phrases of 4 words (c04), 2 phrases of 6 words (c06) and 1 phrase of 12 words (c12).
-These stimuli were simulated by repeating and adding the time series of~each of the right branching trees in a condition.
-In figure 12 we contrast the NBA neural activity time series predicted by the LIF and AdEx simulations for each condition with the simple Boxcar event model used in experiments to estimate the amplitude of the hemodynamic responses.
-We applied with a convolution operation, to each time series, the Hemodynamic Response Function (HRF) proposed by Glover\cite{Glover_1999}, taken from the python open source package Nistats (\textbf{MISSING REFERENCE)}.
-We take this as a proxy for BOLD activity.
 
-\emph{GO TO DISCUSSION. This is a very naive approximation taken for illustrative purposes, that has to be interpreted with caution since the relationship between neural activity, cerebral blood flow and blood oxygenation is not linear\cite{Friston_2000,Buxton_2004} and better represented by the balloon model than the gamma function considered here\cite{Waldorp_2009}.}
+As can be seen in the top plots, our simulations suggest the existence of four qualitative different segments of neural dynamics;
+First, as words are presented to the circuit, input events drive activity in Main-Assemblies (MAs) corresponding to the grammatical categories of the words.
+The activity of all the MAs accumulate but still do not change the activity of other neural populations on the Compartment Circuits, since for parsing a right branching tree under a bottom up parsing scheme, control events that allow bindings do not occur until the last word is presented;
+The second segment correspond to the succession of bindings that take place after the last word of the phrase is processed.
+The neural activity allowed by the control events creates a transient rise in activity that stabilizes with the accumulated Delay activity of the Working Memory populations and the still ongoing input activity;
+The third segment is characterized by the gradual drop of input related activity;
+And the fourth segment corresponds to the final drop of Working Memory activity, such that all the neural populations return to their baseline steady state rate.
 
-In Figure 12 we mark the HRF peak and its onset with black lines on the HRF convolved time series.
+We see in the bottom plots of Figure \ref{fig:ecog-1}, modified from the Figures in Nelson et al., that we can identify qualitatively the three initial segments predicted by the simulation in the high gamma power time series.
+We observe an initial increase in neural activity, for which a later onset and higher magnitude of the peak appear to depend on phrase length, as would be explained by the first segment of the simulation based on an increase of activity in Main Assemblies (MAs).
+The following transient fluctuations of the ECoG time series could be identified with the binding related segment and the final activity drop with the release of MA activity.
+Contrary to the paced drop of MA activity of the simulation, the ECoG time series suggest a more abrupt drop after bindings have taken place, which makes it difficult to separate the neural fluctuations from the binding operations from the MA activity release.
+In the longer 6 words phrase "Ten sad students of Bill Gates" there is a middle sentence high transient fluctuation that is not expected from a bottom up parsing scheme.
 
-The max of the HRF response is delayed
+We indicate with red bars, that the activity drop of the ECoG time series stops at a higher level than the initial baseline, which is compatible with the hypothesized ongoing Working Memory (WM) activity of the simulation.
+The AdEx model distinguishes itself from the LIF model, during WM inactivation, by predicting a final burst of activity due to the inhibition release of the Gate Keepers in the memory circuit.
+Nonetheless, due to the task of the ECoG experiment, that requires retaining in memory the phrase for later comparison with another phrase, we can not observe the final drop of WM activity predicted by the simulation.
 
-It can be seen that the neural time series would predict in all cases a peak onset displaced many seconds with respect to the traditional boxcar event that only represents the duration of the stimuli.
-Looking at the time series this would be expected, since the HRF peak onset depends on the center of mass of the accumulated response that continues several seconds after stimuli presentation.
-Nonetheless a precise onset estimation depends on the MA and WM inactivation periods that have been arbitrarily set in the simulation to a constant, which leads to a superlinear increase of onset based on number of constituents.
-This is unlikely from our previous observations in ECoG recordings, that suggest a much faster decrease of activity after stimuli presentation.
-Still this prediction gives a cautionary tale on the extent to which lack of neural modelling can lead to a non trivial misspecification of the events introduced in the GLM model to analyze Bold-fMRI experiments.
-Thinking the other way around, the peak onset link to the MA and WM inactivation periods suggest that we could also use Bold-fMRI to fit the parameters of an inactivation mechanism in the NBA.
-To realize this, such mechanism would need to be proposed and a more realistic mapping from neural activity to blood oxygenation would need to be implemented.
-As a last remark related to HRF peak onset, one can appreciate that the LIF neural model introduces an additional onset delay with respect to the AdEx neural model, due to its slower activation of bindings.
+In Figure \ref{fig:ecog-2} we show, in the top plots, the simulation time series aligned on the last word onset, to better demonstrate the neural activity fluctuations linked to the number of accumulated and executed binding operations, which Nelson et al. refer to as the number of nodes closing.
+In the bottom plots we show modified Figures from Nelson et al. in which the effect is demonstrated in the case of middle sentence operations and sentence end operations.
+
 
 \begin{figure}[h!]
   \begin{center}
-    \includegraphics[width=1.00\columnwidth]{figures/pnas_comparison01}
-    \caption{{Simulation hemodynamics interpretation {\label{473368}}%
+    \includegraphics[width=0.70\columnwidth]{figures/ecog_comparison_2.png}
+    \caption{{Effect of number of executed binding operations.
+        In the top plots we show the phrase processing time series of the LIF and AdEx simulations, aligned on the onset of the last word.
+        We denote with arrows the segment of transient rise and drop of neural activity hypothesized to be linked to the number of executed pending binding operations, which we refer to as number of nodes closing in the plots, following terminology from Nelson et al.
+        In the bottom plots we show, in Figures modified from Nelson et al., the intracortical recordings effect of executed pending binding operations at the middle and end of phrases.
+     {\label{fig:ecog-2}}%
       }}
   \end{center}
 \end{figure}
 
-On the other hand, both AdEx and LIF simulations predict a similar pattern on the increase of the amplitude of the HRF peak for conditions with increasing constituent size.
-Since the peak depends mostly on the number of nodes of the assumed tree structures, it is more interesting to compare it qualitatively with the experiment.
-Our simulations reproduce the sub-linear response that surprised initially the authors, who were testing a linear hypothesis.
-In addition to normal phrases, Pallier et al. designed a jabberwocky stimuli in which function words are preserved and other words are replaced by morphological similar but undefined words.
-While there are constituent responses in the language areas TP, aSTS, pSTS, TPJ, IForb and IFtri, only the regions pSTS, IFGorb and IFGtri portray a similar response pattern even when minimizing the semantic content of phrases with jabberwocky.
-Since our simulation puts aside semantic considerations, this type of experimental manipulation is a better reflection of the activity linked to the compartment circuit of the NBA, in contrast to the aSTS time series previously analyzed on the ECoG dataset.
 
-We portray in Figure 13 the simulations predicted pattern alongside the ones revealed in pSTS, IFGorb and IFGtri language regions for the jabberwocky stimuli.~The LIF and ADEX predictions are very similar, except for the word list condition.
-Notice that the contrast of the amplitude of word lists with the other conditions can give insights into the relative proportion between MA and WM activity.
-As we saw in the ECoG time series, MA seems to have a more important participation in the total neural activity than we initially modeled.
-This could explain the~flatter slope of the experimental results.
-To reproduce it with our simulations, keeping their qualitative behavior intact, we could select a parameter regime with less excitatory connections and higher input rate.
-Note that in the case of the AdEx model, due to the shape of the adaptive response, it would be possible to reproduce the sublinear peak amplitude effect while minimizing a peak onset difference.
-To achieve this we could make all responses approximate the same center of mass by mixing the high initial increase of firing rate, that depend mostly on the input rate, with a very low steady state rate.
-Nonetheless, to make a quantitative fit to the hemodynamic amplitudes we should use a more realistic hemodynamic model and be cautious about the possible model misspecifications introduced by the simultaneous consideration of the HRF peak onsets.
+\subsection{Qualitative reproduction of Bold-fMRI patterns}
+{\label{sec:pnas-patterns}}
+
+As explained in the Introductory section \ref{intro:imaging}, we also reproduced patterns from an experimental design employed to show constituency effects with Bold-fMRI\cite{Pallier_2011}. 
+Stimuli, presented to a subject in a trial, consisted of a list of phrases with the same number of words (constituents), such that in total 12 words would be presented.
+All phrases correspond to right branching trees according to the phrase grammar considered by the authors.
+The conditions were one list of 12 unconnected words (c01), 6 phrases of 2 words (c02), 4 phrases of 3 words (c03), 3 phrases of 4 words (c04), 2 phrases of 6 words (c06) and 1 phrase of 12 words (c12).
+
+Besides normal words, the design also included pseudoword conditions that maintained morphological markers and closed-class (function) words.
+We will compare our simulation with the pseudoword effects of Pallier et al, since they provide syntactic specific patterns that can be interpreted closer to the abstract binding operations of our simulation.
+Moreover we continue to assume the same phrase grammar and bottom-up parsing scheme employed for comparison with the intracortical recordings of Nelson et al.
+To simulate the Pallier et al. stimuli, we added the repeated time series of each of the right branching trees in a condition.
+So, for example, to simulate the 4 phrases of 3 words condition (c03), we aligned and summed, based on word onsets, the neural activity of 4 simulations of a 3 words phrase.
+
+In the analysis of Bold-fMRI time series, normally events are modelled as a constant stepwise function that reflects the duration of the stimuli, called a boxcar model, as was the case in the Pallier et al. study.
+The boxcar model events are then convolved by an Hemodynamic Response Function (HRF), for which we considered the HRF proposed by Glover\cite{Glover_1999}, available in the python open source package Nistats \footnote{https://github.com/nistats/nistats}.
+The convolved events are then used in a general linear model (GLM) to obtain a peak estimate of hemodynamic responses for the different conditions.
+
+
+\begin{figure}[h!]
+  \begin{center}
+    \includegraphics[width=1.00\columnwidth]{figures/pnas_comparison-01}
+    \caption{{Hemodynamic interpretation of the simulation.
+    At the top and middle plots we show the rescaled time series of the LIF and AdEx simulations respectively, alongside the HRF convolved time series.
+    At the bottom we show a boxcar event of 3600 ms and its convolution, as was employed by Pallier et al. to estimate the amplitude of responses for the different conditions from the Bold-fMRI timeseries.
+    we considered the HRF proposed by Glover, available in the open source python package Nistats.
+     {\label{fig:pnas-1}}%
+      }}
+  \end{center}
+\end{figure}
+
+
+We generated a prediction of hemodynamic responses from our simulations by rescaling the conditions' time series by the maximum firing rate of all conditions and then convolving them with the HRF.
+We present the predicted hemodynamic responses in the top and middle plots of Figure \ref{fig:pnas-1}.
+Since in the Pallier et al. study, 12 words are presented every 300 ms, we considered the last word onset of 3600 ms as the duration of the stimuli for a traditional boxcar event model, shown in the bottom plots, to compare it with our models.
+We mark the HRF peak and its onset with black lines on all the HRF convolved time series.
+
+We observe that the neural time series would predict in all cases a peak onset displaced many seconds with respect to the traditional boxcar event that only represents the duration of the stimuli.
+Looking at the time series, this would be expected, since the HRF peak onset depends on the center of mass of the accumulated neural activity, which continues several seconds after the last word onset in our simulations.
+The peak onset in the LIF and AdEx models follow a super-linear increase with respect to the number of constituents, at odds with with sub-linear patterns reported by Pallier et al.
+Also the LIF neural model introduces an slightly longer onset delay with respect to the AdEx neural model, due to its slower activation of Working Memory populations.
+
 
 \begin{figure}[h!]
   \begin{center}
     \includegraphics[width=1.00\columnwidth]{figures/pnas_comparison-02}
-    \caption{{Simulation comparison with Bold-fMRI experiment
-        {\label{395077}}%
+    \caption{{Hemodynamic peak magnitudes comparison with Bold-fMRI experiment.
+    The top plots show the number of bindings executed for each condition alongside the rescaled Hemodynamic Response Function (HRF) amplitudes of each of the Compartment Circuit neural populations.
+    We demonstrate that the hemodynamic pattern of the neural populations in the simulation follow closely the number of bindings executed.
+    In the bottom plots we contrast the pattern of the total neural activity in the simulation alongside the sub-linear patterns reported by Pallier et al. in the pSTS, IFGorb and IFGtri brain regions.
+        {\label{fig:pnas-2}}%
       }}
   \end{center}
 \end{figure}
 
+
+In the case of the HRF peak amplitudes, we show in Figure \ref{fig:pnas-2} that both LIF and AdEx models predict a sub-linear pattern of peak amplitudes as a function of the number of constituents.
+We demonstrate in the top plots that the HRF magnitudes of added neural activity in all neural populations of the Compartment Circuit closely follow the shape given by the number of executed bindings.
+It is unlikely then, that the sub-linear pattern appreciated in the HRF amplitudes strongly depend on other parameters of the circuit like the duration of the input to Main-Assemblies and Working Memory.
+
+Pallier et al. reported constituent sub-linear responses in the language areas TP, aSTS, pSTS, TPJ, IFGorb and IFGtri, but only the regions pSTS, IFGorb and IFGtri showed a similar response pattern when minimizing the semantic content of phrases with pseudowords.
+Since our simulation puts aside semantic considerations, we consider this type of experimental manipulation to be a better reflection of the binding activity modelled in the Compartment Circuit.
+In the bottom plots of Figure \ref{fig:pnas-2}, we show the similarity between the HRF magnitude pattern of the total neural activity in the simulation models with what is reported by Pallier et al. in the pSTS, IFGorb and IFGtri brain regions.
+
+
 \section{Discussion}
+{\label{sec:discussion}}
 
-{\label{160055}}
 
-An important insight from this work is the sensitivity of the neural activity interpretation to the underlying neural model selected.
-Even in the case of hemodynamic responses that average out circuit details, we find trade-offs between the LIF and AdEx models.
-For example that an AdEx model would offer more flexibility in our circuit to manipulate HRF peak amplitudes while minimizing their onsets.
-To our knowledge this is the first work to explore more complex models like AdEx alongside LIF for variable binding and language function related circuits.
-There were also many predictions of the NBA independent of the model selected, like the fact that we need a high number of inhibitory connections and so of inhibitory activity to avoid uncontrolled regimes of self excitatory activity dependent on the connectivity of the circuit.
+\subsection{Circuit assumptions and parameters}
 
 A more subtle exploration that was considered out of the scope of the work would be to appropriately consider the cell parameters in the models based on electrophysiological recordings from specific brain regions, in contrast to the Omurtag~\cite{omurtag2000simulation}~Brette et al. parameters~\cite{Brette_2005}.
 There are indeed different adaptation constants along the cortex and we have compared the simulation constantly with specific language related brain regions like aSTS, pSTS, IFGtri and IFGorb.
@@ -1097,43 +1129,17 @@ A final missing consideration that has been partially tackled in previous work\c
 We obviously do not expect the hardwired architecture modeled here to represent the biological reality but to facilitate an approximation to its behavior.
 Demonstrating how mechanisms approximated by the architecture can actually be learned with biological realistic Hebbian or STDP rules alongside random connectivity constraints, during development, is an important avenue of future research.
 
-The simulation results show how both the steady state and transient dynamics of the circuit affect our interpretation of the neuroimaging evidence for language processing.
-In contrast to previous simulations\cite{van_der_Velde_2011,van_der_Velde_2010,Frank_2014,van_Dijk_2015}, employing population density techniques implemented in the MIIND software\cite{de_Kamps_2008} allowed us to approximate well transient temporal dynamics.
-Thanks to this, we could show an important difference in the shape of the AdEx and LIF responses, how before arriving to a steady state AdEx responds differently to additional input due to adaptation and how the coordination of input and control events is importantly influenced by the model and its parameters.
-This last point is crucial for language processing, since ideally~we would want input and control events to be as independent as possible to diminish operational complexity and to be able to operate under a wide range of parameters allowing for random variation.
-Reflecting on the coordinating complications introduced by adaptation we would expect lower adaptation in language related brain regions that seem to be involved in binding operations like pSTS, IFGTri and IFGorb, an increase in the operational complexity of the circuits and/or a reduction in the operational parameter ranges alongside additional sensitivity to noise.
-A final remark related to event coordination problems in AdEx would be its sensitivity to the synaptic efficacy parameter of the circuit that was not explored in detail.
-Contrary to the LIF model, AdEx requires clear limitations in the populations connectivity to implement arbitrary or complex timing operations.
 
-An important aspect of this work, that could be overlooked, is the flexibility of the simulation to represent the neural activity of many grammar theories and parsing schemes.
-We can without circuit modification implement any concept represented as a binary tree.
-This corresponds well for example to the phrase grammar of the minimalist program of Chomsky\cite{Chomsky_2014}~and to grammatical relations in dependency grammars\cite{nivre2005dependency}.
-Nonetheless in the case of dependency grammars we would not need to extend the memory of MA less than in a phrase grammar that requires to wait for the instantiation of phrase nodes in deep hierarchical trees.
-Also the AdEx model would favor shallower tree representations, because it is sensitive to complex event coordination.
+\subsection{Linguistic assumptions}
 
-Also so far we have implicitly considered activation of phrase nodes only as a result of word binding, which would be representative of a bottom-up parsing approach.
-This allowed us to simply take the binding WM activity of one compartment circuit as the MA of another compartment circuit.
-Nonetheless we did not introduce additional delays in control, since we did not model the portion of the NBA responsible for control.
-Naturally there are many additional parsing mechanisms that we could assume, represented by the order of input and control events, that would introduce predictive control activity.
-This would be the case if we extend our analysis to the~generalized left corner parsing proposed by Hale\cite{hale2014automaton}.
-We could interpret this additional predictive control signals as control anticipation or as direct activation of memory circuits that have to be deactivated later by an error signal.
-Exploring the neural activity implications of both these mechanisms alongside the target tree structures given by alternative grammar theories is an important target of future research.
-This could be done for example by using the simulation as an experiment design tool that provides the set of phrases that maximize the spatio-temporal differences in neural responses across conditions defined under the different grammar theories and parsing schemes.
-
-Finally, even though there are still many limitations in these simulations, we would like to emphasize the quick progress in the development of biologically plausible models of cognition.
-With an additional effort it would be possible to fit parameters of the circuit and phrase processing directly to neuroimaging measurements.
-Also diverse new computational methods like population density techniques have made it feasible to approximate at a circuit scale point neural models as complex as the adaptive exponential.
-There are as well successful recent efforts in modeling, with cytoarchitectonic details, complex signals like Local Field Potentials~\cite{Mazzoni_2015,Hagen_2015} and hemodynamics with the balloon model~\cite{Buxton_2004}.
-These could be already adapted to our circuit simulations to better incorporate neuroimaging evidence simultaneously from multiple techniques and experimental designs.
-Moreover the circuit itself can become a tool for hypothesis exploration and experimental design on the different neuroimaging techniques.
-In conclusion we hope~to have shown that we are close to producing biologically realistic mechanistic neural models of cognitive function, that could provide new ways of testing cognitive hypothesis on varied neuroimaging techniques, to further~inspire more work in this direction.
-
-\newpage
-///////////////////// POSSIBLE ADDITIONS TO DISCUSSION (IGNORE)
-\\
-ADD TO DISCUSSION BUT MAYBE ALSO TO NEUROIMAGING RESULTS A REFLECTION ON THE NUMBER OF CIRCUITS RECRUITED FOR BINDING AS AN EXPLANATION FOR THE SUB LINEAR EFFECT, SO OUR MODEL WOULD PROPOSE A NEW PREDICTION WITH DIFFERENT COMBINATIONS OF PHRASES COMPLETELY BASED ON THE NUMBER OF COMPARMENT CIRCUITS IMPLIED BY THE GRAMMAR. THEN I CAN DISCUSS THE PROBLEM IF WE CHANGE THE GRAMMAR, WHAT WOULD A DEPEDENCY GRAMMAR PREDICT AS NUMBER OF COMPARTMENT CIRCUITS?\\~\\
 
 Comment on the possible extension of the model to other linguistic hypothesis like dependency grammars that consider the words directly as nodes? instead of having phrasal nodes?\\~\\
+
+
+Maybe clarify that top-down considerations of parsing could be reflected in MAs activated by a prediction mechanism, in Ctl anticipating activation of certain MAs in the blackboard or by parallel instantiation where WMs are later inhibited by error signals.
+That we have the flexibility to test arbitrary computational linguistic mechanisms with the NBA but that interpretation requires further considerations that we leave out of the scope of this work.
+where bottom up is employed.\\~\\
+
 
 The compartment circuit abstraction is enough to achieve our current simulation goals\noteCP{Would be nice to list them early in the paper.}, since the same mechanism is used in different connection matrices and they might only differ in their memory capacity.
 So we can consider the same compartment circuit simulation for all different pairs of grammatical categories, where the circuits would have similar dynamics and only vary in activation time of their neural populations.
@@ -1141,9 +1147,11 @@ Nonetheless we are only able to ignore the activity of complete connection matri
 Otherwise important deviations in background neural activity due to depletion of available compartments in the connection matrices and intense inhibitory activity would become a crucial factor in the simulation.
 This could be an interesting exploration in future work to try to reproduce the temporal bottleneck effects on neural activity shown by Vagharchakian et al. under conditions of compressed speech and reading\cite{Vagharchakian_2012}.\noteCP{Maybe this should be part of the final discussion rather than here where it may divert attention.}\\~\\
 
-Maybe clarify that top-down considerations of parsing could be reflected in MAs activated by a prediction mechanism, in Ctl anticipating activation of certain MAs in the blackboard or by parallel instantiation where WMs are later inhibited by error signals.
-That we have the flexibility to test arbitrary computational linguistic mechanisms with the NBA but that interpretation requires further considerations that we leave out of the scope of this work.
-where bottom up is employed.\\~\\
+
+Remember that we can use arbitrary parsing schemes.
+The order of the parsing operations can be taken from a bottom-up or more generalized left-corner parsing scheme.
+Then the more precise timing of the parsing operations can be assumed to depend on word presentation times for word bindings and minimal operational constraints.
+
 
 Here we implement only the necessary parts of the NBA to model the neural activity related to variable binding, which itself is enough to instantiate the representation of an arbitrary sentence syntactic structure
 \noteCP{What you mean here, is it is enough to have a CONS-like operation --- in LISP parlance --- to build any tree, right?}
@@ -1164,33 +1172,184 @@ This means that we are only testing the temporal patterns of neural activity lin
 While in the case of complete sentences we are testing predictions based on the average neural activity time series of a collection of compartment circuits instantiated as demanded by the given grammar theory and parsing scheme.
 These time series should allow us to differentiate neural activity from different syntactic tree morphologies and sizes.\\~\\
 
-\noteMdK{Is the below relevant?} 
-\notenewMP{Now that I read it I agree presented like this is incomplete. I think it would be a very important future extension of the blackboard. Replacing a neural population by its cytoarchitectonic equivalent to be able to generate LFP predictions and also to predict spatial extent of the Blackboard. Right now for example is still ambiguous for me if the circuit can be implemented in more or less than 1 cm of cortex, and that have important implications to also interpret Bold-fMRI activations. Since PDTs approximate distributions of very large populations, also I am not sure how the populations would behave under cytoarchitectonic constraints. Maybe what I just wrote here would be a nice addition to the discussion with the paragraph below instead of being here?} 
-It could also be important to consider parallely multiple neuron typologies and modelling their corresponding microcircuitry of cortical columns, as attempted already with LIF models, to simulate local field potentials for a very small patch of cortex\cite{Mazzoni_2015,Hagen_2015}.\\~\\
 
 
-\newpage
-///////////////////////////////// Result additions?\\~\\
+\subsection{Compartment circuit operation}
 
-\noteMdK{You suddely start disuccing results of simulations here, of experiments that you will be performing later. Highly confusing. Consider moving to the next section.}
+
 
 This allowed us to verify if the tradeoff between efficacy and number of connections was a trivial one, simply requiring more connections when assuming a lower efficacy to attain similar ouput firing rates for the same input rates, which, as will be show in the results section, was not the case for AdEx populations.
 Nonetheless the difference in the qualitative nature of the temporal dynamics was confirmed to not be crucial for the circuit setup, so for the remaining simulations we employed the more conservative 10\% synaptic efficacy regime.\\~\\
 
-///////other anticipatory result paragraph that might not be in included in methods\\~\\
+EXPLAIN THAT IN CASE THE PHYSICAL REALITY WAS CLOSER TO A HIGH SYNAPTIC EFFICACY VALUE WE WOULD THEN BE RESTRICTED OPERATE THE CIRCUIT UNDER THE CASE OF COORDINATED INPUT EVENTS... OR SOMETHING LIKE THAT... THAT WE WOULD JUST NEED TO RESTRAIN OURSELVES TO A SUBSET OF THE POSSIBLE BEHAVIORS/OPERATIONS OF THE CIRCUIT. 
 
-We showed that the sublinear function given by the number of constituents, governing the amplitude of HRF responses for the different stimuli categories, is naturally approximated by the binding events assumed by the NBA, alongside an increasing pattern in HRF peak onsets.
+
+We still have flexibility in the architectural decisions. not constrained enough by linguistice theories, more experimental results are necessary too.
+
+
+LOOKS LIKE DISCUSSION! TAKEN FROM EXPERIMENT 3
+Characterizing the activation threshold regions is important to understand the reliability of the circuit when exposed to noisy input rates, arbitrary coordination of events, control mistakes or anticipatory control signals.
+With precise control of input rates and the timing of events corresponding to bottom up parsing, one could simply select an activation threshold just above the minimum rate dynamics to secure activation from the activity of two SAs.
+Nonetheless there are other scenarios that we should be able to test with parsing schemes diverging from pure bottom-up parsing, if we interpret prediction as anticipated control activation.
+In that case, if prediction fails we would be confronted with a control mistake for which we would not want the circuit to perform a binding.
+This would be illustrated by an input that drives activity in the first MA of a compartment circuit followed by a control event that allows activity to flow from all MAs, while the second MA never receives the input corresponding to the activation of its concept.
+In such a case one would need the threshold to be higher than the minimum of the impossible activation region for a given input rate and number of excitatory connections, such that the input of one SA alone could not trigger WM.
+This additional constraint can itself push the activation threshold beyond twice the maximum of the flexible activation region, forcing coordination of at least one input and control event, as can be appreciated for AdEx populations in Figure 7.
+
+
+ABOUT THE CONSIDERATION OF THE EXCITATORY LOOP IN EXPERIMENT 3, IN THE CIRCUIT ARCHITECTURE. Discussion. we do not really know how the brain works, we can black this loop with control signals that we have anyway leading to a more complex circuit, or we accept the loop but show that it can be stable. We show that both options are possible. Sell the possibility as agnostic. So dynalical range or more complex circuit. we dont know if non visual circuits use the same mechanism.
+
+
+Add to discussion possible substitution of gating mechanism at the intraneural level. multiplicative incoming activyt that act as gates in visual system with information coming from retina filtered by attention processes.
+
+
+COMMENT ON THE ADEX GK TRANSIENT ACTIVITY AFTER INHIBITION RELEASE, COULD THIS BE USED AS A MARKER TO COMPARE THE ADEX AND LIF MODELS?
+
+The second is that the new enhanced activity regime produced by WM activation is very sensitive to the adaptation effect present in the AdEx model.
+Not only the parameters of the neural model itself but also synaptic efficacy could completely eliminate the higher sustained activity while keeping a high spike of activity on the moment that binding takes place.
+The third is that the AdEx simulation is sensitive also to small variations in the timing of events due to the increasing influence of adaptation as populations reach the steady state, while LIF model dynamics are only affected by the input rate of the events.
+
+
+
+An important insight from this work is the sensitivity of the neural activity interpretation to the underlying neural model selected.
+Even in the case of hemodynamic responses that average out circuit details, we find trade-offs between the LIF and AdEx models.
+For example that an AdEx model would offer more flexibility in our circuit to manipulate HRF peak amplitudes while minimizing their onsets.
+To our knowledge this is the first work to explore more complex models like AdEx alongside LIF for variable binding and language function related circuits.
+There were also many predictions of the NBA independent of the model selected, like the fact that we need a high number of inhibitory connections and so of inhibitory activity to avoid uncontrolled regimes of self excitatory activity dependent on the connectivity of the circuit.
+
+
+
+
+
+
+\subsection{Qualitative reproduction of neuroimaging evidence}
+
+
+Certainly the way we should aggregate time series to compare them quantitatively with neuroimaging data would depend on the spatial and temporal resolution available and the assumptions made about the spatial distribution of the blackboard architecture in the cortex.
+
+
+\emph{GO TO DISCUSSION. This is a very naive approximation taken for illustrative purposes, that has to be interpreted with caution since the relationship between neural activity, cerebral blood flow and blood oxygenation is not linear\cite{Friston_2000,Buxton_2004} and better represented by the balloon model than the gamma function considered here\cite{Waldorp_2009}.}
+
+
+We make a qualitative comparison, given that high gamma power has been shown to be weakly correlated to the firing rate time series of spiking neurons from in-vivo recordings\cite{Ray_2011}. \emph{should go to discussion, now i am just describing the simulation time series}
+
+
+The simulation results show how both the steady state and transient dynamics of the circuit affect our interpretation of the neuroimaging evidence for language processing.
+In contrast to previous simulations\cite{van_der_Velde_2011,van_der_Velde_2010,Frank_2014,van_Dijk_2015}, employing population density techniques implemented in the MIIND software\cite{de_Kamps_2008} allowed us to approximate well transient temporal dynamics.
+Thanks to this, we could show an important difference in the shape of the AdEx and LIF responses, how before arriving to a steady state AdEx responds differently to additional input due to adaptation and how the coordination of input and control events is importantly influenced by the model and its parameters.
+This last point is crucial for language processing, since ideally~we would want input and control events to be as independent as possible to diminish operational complexity and to be able to operate under a wide range of parameters allowing for random variation.
+Reflecting on the coordinating complications introduced by adaptation we would expect lower adaptation in language related brain regions that seem to be involved in binding operations like pSTS, IFGTri and IFGorb, an increase in the operational complexity of the circuits and/or a reduction in the operational parameter ranges alongside additional sensitivity to noise.
+A final remark related to event coordination problems in AdEx would be its sensitivity to the synaptic efficacy parameter of the circuit that was not explored in detail.
+Contrary to the LIF model, AdEx requires clear limitations in the populations connectivity to implement arbitrary or complex timing operations.
 
 
 Maybe comment on how averaging neural activity washes out some details about the neural model, even though they themselves were clearly different at the level of one binding.
 
 
-We still have flexibility in the architectural decisions. not constrained enough by linguistice theories, more experimental results are necessary too.
+
+WE COULD ADAPT THE SIMULATION PARAMETERS TO BETTER REFLECT THE ECOG TIME SERIES
+It could further be tuned to fit quantitatively the data by manipulating the number of excitatory connections, such that their decrease would reduce the baseline difference.
+The irregularities of the magnitude of the baseline effect with respect to phrase length in the high gamma power is difficult to interpret, since it could suggest that the accumulation of activity with more recruiting nodes is subtler than what we can reproduce with the NBA circuit, in which there is a clear correspondence with the number of hypothesized compartment circuits of the parsed tree structure.
+Moreover, when comparing simulations, we appreciate that the AdEx model could better reflect a more modest proportional increase of baseline thanks to adaptation.~
+
+
+
+
+DISCUSSION ON WHY WE HAVE PROBLEMS WITH BINDING DROP AND MA DROP. MA activity is a lot lower or immediatly release with binding. Two possible interpretations of the sudden activity drop...
+
+DISCUSSION ABOUT MIDDLE SENTENCE FLUCTUATION? This middle fluctuation could be understood as counter evidence to bottom up parsing or an early release of MA activity, that has to be later compensated with reactivation to bind the remaining phrase "of Bill Gates".
+
+DISCUSSION ON LONG ECOG MIDDLE SENTENCE ACTIVITY RELEASE. To accommodate this behavior into the NBA, without changing our grammar and parsing assumptions, we would need to incorporate a limited capacity to sustain MA activity that has to be renovated or a greedy binding mechanism that leads to premature binding mistakes....
+
+DISCUSSION ON HOW TO TUNE LIF AND ADEX TO ECOG DATA
+In the case of the LIF simulation, there is flexibility to extend the activity peak with the duration of control events and to increase the total drop magnitude by manipulating the input rates and excitatory connections.
+On the other hand the AdEx model loses this flexibility due to adaptation but better emphasizes the contrast between the activity peak and sudden drop because of the pronounced initial activity burst of its population dynamics.
+
+
+DISCUSSION ABOUT THE PEAK ONSET OF THE SIMULATION, TAKING INTO ACCOUNT ECOG DATA. This is unlikely from our previous observations in ECoG recordings, that suggest a much faster decrease of activity after stimuli presentation.
+Still this prediction gives a cautionary tale on the extent to which lack of neural modelling can lead to a non trivial misspecification of the events introduced in the GLM model to analyze Bold-fMRI experiments.
+Thinking the other way around, the peak onset link to the MA and WM inactivation periods suggest that we could also use Bold-fMRI to fit the parameters of an inactivation mechanism in the NBA.
+To realize this, such mechanism would need to be proposed and a more realistic mapping from neural activity to blood oxygenation would need to be implemented.
+
+DISCUSSION. which already seem to be too long with respect to observations made on the intracortical data, as commented in the previous results section \ref{sec:ecog-patterns}.
+
+
+DISCUSSION. Explore the hypothesis space of mechanisms to stop MA activity after binding. What would signal this? The NBA do not provide a particular proposal in this direction.
+
+DISCUSSION. Notice that the contrast of the amplitude of word lists with the other conditions can give insights into the relative proportion between MA and WM activity.
+As we saw in the ECoG time series, MA seems to have a more important participation in the total neural activity than we initially modeled.
+This could explain the~flatter slope of the experimental results.
+To reproduce it with our simulations, keeping their qualitative behavior intact, we could select a parameter regime with less excitatory connections and higher input rate.
+Note that in the case of the AdEx model, due to the shape of the adaptive response, it would be possible to reproduce the sublinear peak amplitude effect while minimizing a peak onset difference.
+To achieve this we could make all responses approximate the same center of mass by mixing the high initial increase of firing rate, that depend mostly on the input rate, with a very low steady state rate.
+Nonetheless, to make a quantitative fit to the hemodynamic amplitudes we should use a more realistic hemodynamic model and be cautious about the possible model misspecifications introduced by the simultaneous consideration of the HRF peak onsets.
+
+
+DISCUSSION. The super-linear increase of peak onset is not coherent with sub-linear patterns reported by Pallier et al.
+Nonetheless the peak onset of our simulation depends on the input events and Working Memory durations, that were arbitrarily set to a constant duration.
+The Neural Blackboard Architecture does not provide a particular hypothesis on the timing of the deactivation of Main-Assemblies and Working Memory, which is why durations were simply set to a pragmatic constant that secured binding of the last phrasal node with the first word of the longest phrase.
+Comparison of our simulation with intracortical recordings in results section \ref{sec:ecog-patterns} suggested a quicker drop of the Main-Assemblies activity after binding operations were executed, instead of the current choice of persistent activity for a constant amount of time after binding.
+Modifying the simulation mechanisms in this direction would permit emulating sub-linear patterns of peak onset as necessary to fit the hemodynamic measurements.
+
+
+DISCUSSION. Pallier et al. initially hypothesized a linear pattern instead of the sub-linear one, which would be explained by a simple "accumulation" model where each new word presented would add a constant amount of neural activity until a binding was not possible, leading to a sudden drop of activity back to baseline.
+After their finding, the authors revised their hypothesis to propose instead a model that assigns a logarithmic increase of activity to each new word presented.
+Nonetheless our simulation suggest another explanation for the sub-linear pattern as a direct reflection of the number of binding operations executed while processing phrases.
+It turns out that the type of stimuli employed by the authors consisted exclusively of right branching trees and that their concatenation lead to a sub-linear increase of number of binding operations, which is why our simulation is at a first sight coherent with the logarithmic word activity addition model.
+Our simulation suggest then, that assigning a logarithmic increase of activity to the next word presented in a phrase is an artifact of the experimental design to be challenged by another design including other syntactic tree shapes, for which our model would predict the responses as a function of the number of bindings.
+
+
+
+
+\subsection{Setting up a framework for mechanistic testing of computational linguistics hypothesis}
+
+
+
+We can apply the complete phrase neural time series approximation to a variety of stimuli from experimental designs behind neuroimaging results in the literature. \emph{for discussion, not done, only two experiments}
+
+An important aspect of this work, that could be overlooked, is the flexibility of the simulation to represent the neural activity of many grammar theories and parsing schemes.
+We can without circuit modification implement any concept represented as a binary tree.
+This corresponds well for example to the phrase grammar of the minimalist program of Chomsky\cite{Chomsky_2014}~and to grammatical relations in dependency grammars\cite{nivre2005dependency}.
+Nonetheless in the case of dependency grammars we would not need to extend the memory of MA less than in a phrase grammar that requires to wait for the instantiation of phrase nodes in deep hierarchical trees.
+Also the AdEx model would favor shallower tree representations, because it is sensitive to complex event coordination.
+
+Also so far we have implicitly considered activation of phrase nodes only as a result of word binding, which would be representative of a bottom-up parsing approach.
+This allowed us to simply take the binding WM activity of one compartment circuit as the MA of another compartment circuit.
+Nonetheless we did not introduce additional delays in control, since we did not model the portion of the NBA responsible for control.
+Naturally there are many additional parsing mechanisms that we could assume, represented by the order of input and control events, that would introduce predictive control activity.
+This would be the case if we extend our analysis to the~generalized left corner parsing proposed by Hale\cite{hale2014automaton}.
+We could interpret this additional predictive control signals as control anticipation or as direct activation of memory circuits that have to be deactivated later by an error signal.
+Exploring the neural activity implications of both these mechanisms alongside the target tree structures given by alternative grammar theories is an important target of future research.
+This could be done for example by using the simulation as an experiment design tool that provides the set of phrases that maximize the spatio-temporal differences in neural responses across conditions defined under the different grammar theories and parsing schemes.
+
 
 Propose what to do next. from cytoarchitecture to better physical models to iteration between ecog hypothesis experimental design and simulation effects. becomes a tool for the linguist.
 
-EXPLAIN THAT IN CASE THE PHYSICAL REALITY WAS CLOSER TO A HIGH SYNAPTIC EFFICACY VALUE WE WOULD THEN BE RESTRICTED OPERATE THE CIRCUIT UNDER THE CASE OF COORDINATED INPUT EVENTS... OR SOMETHING LIKE THAT... THAT WE WOULD JUST NEED TO RESTRAIN OURSELVES TO A SUBSET OF THE POSSIBLE BEHAVIORS/OPERATIONS OF THE CIRCUIT. 
 
+\subsection{Future perspective}
+
+
+
+
+
+
+Finally, even though there are still many limitations in these simulations, we would like to emphasize the quick progress in the development of biologically plausible models of cognition.
+With an additional effort it would be possible to fit parameters of the circuit and phrase processing directly to neuroimaging measurements.
+Also diverse new computational methods like population density techniques have made it feasible to approximate at a circuit scale point neural models as complex as the adaptive exponential.
+There are as well successful recent efforts in modeling, with cytoarchitectonic details, complex signals like Local Field Potentials~\cite{Mazzoni_2015,Hagen_2015} and hemodynamics with the balloon model~\cite{Buxton_2004}.
+These could be already adapted to our circuit simulations to better incorporate neuroimaging evidence simultaneously from multiple techniques and experimental designs.
+Moreover the circuit itself can become a tool for hypothesis exploration and experimental design on the different neuroimaging techniques.
+
+
+\noteMdK{Is the below relevant?} 
+\notenewMP{Now that I read it I agree presented like this is incomplete. I think it would be a very important future extension of the blackboard. Replacing a neural population by its cytoarchitectonic equivalent to be able to generate LFP predictions and also to predict spatial extent of the Blackboard. Right now for example is still ambiguous for me if the circuit can be implemented in more or less than 1 cm of cortex, and that have important implications to also interpret Bold-fMRI activations. Since PDTs approximate distributions of very large populations, also I am not sure how the populations would behave under cytoarchitectonic constraints. Maybe what I just wrote here would be a nice addition to the discussion with the paragraph below instead of being here?} 
+It could also be important to consider parallely multiple neuron typologies and modelling their corresponding microcircuitry of cortical columns, as attempted already with LIF models, to simulate local field potentials for a very small patch of cortex\cite{Mazzoni_2015,Hagen_2015}.\\~\\
+
+
+Add to final discussion how the model can be turned into a strong inference testing tool with some additional modifications. Cytoarchitecture - LFP - ECoG.
+
+
+In conclusion we hope~to have shown that we are close to producing biologically realistic mechanistic neural models of cognitive function, that could provide new ways of testing cognitive hypothesis on varied neuroimaging techniques, to further~inspire more work in this direction.
 
 
 \selectlanguage{english}
