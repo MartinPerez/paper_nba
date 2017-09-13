@@ -641,13 +641,12 @@ A diagram of each sub-circuit is shown in Figure \ref{sub_circuits}.
   \begin{center}
     \includegraphics[width=0.9\columnwidth]{figures/sub_circuits}
     \caption{Sub-circuit simulation topologies.
-      Each number corresponds to its respective experiment.
-      For better visualization all baseline nodes are excluded from the topologies.
+      For better visualization baseline activity nodes are excluded from the topologies.
       A. Single neural population driven by baseline activity.
       This topology~ reminds of the fact that all MA, SA, G and GK populations are driven initially in the same way by a persistent baseline fixed rate.
       B. Chain of populations where activity is temporally interrupted by a control node.
-      C. Closed loop formed by MA, SA and Gs.
-      D. Closed loop broken by the addition of GKs. {\label{sub_circuits}}%
+      C. Excitatory loop between SAs when Working Memory is activated.
+      D. Excitatory loop broken thanks to GKs inhibition. {\label{sub_circuits}}%
     }
   \end{center}
 \end{figure}
@@ -1113,125 +1112,90 @@ In the bottom plots of Figure \ref{fig:pnas-2}, we show the similarity between t
 {\label{sec:discussion}}
 
 
-\subsection{Circuit assumptions and parameters}
+\subsection{The neural models and circuit architecture}
 
-A more subtle exploration that was considered out of the scope of the work would be to appropriately consider the cell parameters in the models based on electrophysiological recordings from specific brain regions, in contrast to the Omurtag~\cite{omurtag2000simulation}~Brette et al. parameters~\cite{Brette_2005}.
-There are indeed different adaptation constants along the cortex and we have compared the simulation constantly with specific language related brain regions like aSTS, pSTS, IFGtri and IFGorb.
+Regarding the neural model parameters, we left for future work consideration of values based on electrophysiological recordings from specific brain regions, in contrast to the Omurtag\cite{omurtag2000simulation} and Brette et al. parameters \cite{Brette_2005} taken for a first approximation of the neural dynamics.
+For example, there are different adaptation constants along the cortex, that could change the AdEx model dynamics.
+Since we have compared the simulation with neural activity in specific brain regions like aSTS, pSTS, IFGtri and IFGorb, it would be reasonable to fit the simulations to their biological reality.
 
-In the case of the complete circuit assumptions, some of them were still overly simplistic.
-We approximate baseline dynamics with a simple low constant input rate instead of also considering the natural oscillatory activity of the cortex, more appropriate homeostatic mechanisms in cortical circuits\cite{turrigiano2011too} and balanced networks\cite{Wolf_2014}.
-Setting up the synaptic distribution of the network have important implications in terms of energy consumption, while allowing random connectivity could importantly constrain control of closed loop connections.
-This last consideration is interesting in itself as a research question and could have an impact in the study of the temporal bottlenecks observed in language processing\cite{Vagharchakian_2012}.
-Introducing modular cytoarchitectonic considerations on the populations that conform the circuit would allow a better spatial interpretation of the circuit activity in a cortex patch and might be anyway necessary to accurately translate firing rates into Local Field Potentials\cite{Mazzoni_2015,Hagen_2015}, hemodynamics~\cite{Buxton_2004} and other promising measurement techniques.
+In the case of the Compartment Circuit assumptions, we made many simplifications that should be revised in future work.
+We approximated baseline dynamics with a low constant input rate instead of considering the natural oscillatory activity of the cortex, homeostatic mechanisms in cortical circuits\cite{turrigiano2011too} and balanced networks\cite{Wolf_2014}.
+Also we adopted homogeneous synaptic connections instead of testing different synaptic distributions that could have an impact in the neural dynamics.
+If we allowed random connectivity to shape the Compartment Circuit architecture our capacity to control its dynamics with the number of connections would be restrained.
 
-Moreover the nature of WM delay activity was left out of the current work due to its flexible and still debated implementation\cite{de_Kamps_2005}, but studying it could reveal important neurobiological limitations on the way we asses the proportion of MA and WM activity and the spatio-temporal memory limitations of the circuit.
-A final missing consideration that has been partially tackled in previous work\cite{van_der_Velde_2011} is how such a circuit architecture can be formed during learning and brain development.
-We obviously do not expect the hardwired architecture modeled here to represent the biological reality but to facilitate an approximation to its behavior.
-Demonstrating how mechanisms approximated by the architecture can actually be learned with biological realistic Hebbian or STDP rules alongside random connectivity constraints, during development, is an important avenue of future research.
+We would also suggest to extend the current neural population models with modular cytoarchitectonic considerations to allow a better spatial interpretation of the circuit activity in a cortex patch.
+It might even be necessary to accurately translate firing rates into Local Field Potentials\cite{Mazzoni_2015,Hagen_2015}, hemodynamics\cite{Buxton_2004} and other neuroimaging measurements.
 
+The explicit simulation of Delay Activity in Working Memory was left out of the current work due to its flexible and still debated implementation\cite{de_Kamps_2005}.
+Studying it could reveal important neurobiological limitations on the way we asses the relative proportion of neural activity between Main-Assemblies and Working Memory.
+Also it could provide a more limited set of hypothesis about the spatio-temporal memory limitations of the Neural Blackboard Architecture, to be compared with neuroimaging evidence.
 
-\subsection{Linguistic assumptions}
+A questionable decision on our circuit implementation was allowing for the existence of excitatory loops, due to the possibility of unstable runaway neural activity.
+Neural activity related to these excitatory loops was regulated in the Working Memory sub-circuit by careful tuning of excitatory connections and in all the Compartment Circuit by additional tuning of inhibitory connections that would close the loops.
+Instead of regulating the excitatory loop with the number of excitatory connections, we could provide additional control mechanisms to condition activity flow after the Working Memory population has been activated, in the same way its done for Main-Assemblies to Sub-Assemblies communication.
+Nonetheless the second approach implies additional complexity in the number of nodes, connections and events we have to consider for the circuit operation.
+Since we do not really know what is closer to the biological reality of the cortex, we decided to show that the less complex architecture including the excitatory loop could be made stable, but consideration of a more complex architecture would also be possible.
 
+\noteMP{\emph{Should add paragraph here about: Also the reason we have this excitatory loops is because of the bidirectional gating circuit mechanism proposed. Add to discussion possible substitution of gating mechanism at the intraneural level. multiplicative incoming activity that act as gates in visual system with information coming from retina filtered by attention processes. we dont know if non visual circuits use the same mechanism. I am lacking to read a proper reference to develop this}}. 
 
-Comment on the possible extension of the model to other linguistic hypothesis like dependency grammars that consider the words directly as nodes? instead of having phrasal nodes?\\~\\
+To our knowledge, this is also the first time complex neural models like AdEx are simulated alongside LIF for variable binding and language function related circuits.
+Thanks to this, we found that the circuit implementation and neural dynamics interpretation can depend on the underlying neural model in non trivial ways.
+For example we observed that in a LIF model there was a non-consequential trade-off between synaptic efficacy and number of excitatory connections to control the steady state rates of the circuit.
+On the other hand the AdEx model was very sensitive to changes in synaptic efficacy due to adaptation effects, to the point of making us unable to control the magnitude of the steady state rate of the circuit for high synaptic efficacy values.
+If the physical reality of the cortex was closer to an AdEx model with high synaptic efficacies we would then need to restrict our hypothesis about the circuit operation with input and control events to a subset of the possibilities explored in our simulation.
 
+Another important distinction observed between the AdEx and LIF model was how dynamics after inhibition are qualitatively different under the influence of adaptation.
+While in the LIF circuit, neural activity on a population would smoothly recover back to its steady state after inhibition stops, that of an AdEx circuit would show a renovated burst of activity due to adaptation decreasing during the inhibition period.
+The effect might be strong enough to suggest it as a predictive marker for certain events in the circuit, like the release of Working Memory activity.
 
-Maybe clarify that top-down considerations of parsing could be reflected in MAs activated by a prediction mechanism, in Ctl anticipating activation of certain MAs in the blackboard or by parallel instantiation where WMs are later inhibited by error signals.
-That we have the flexibility to test arbitrary computational linguistic mechanisms with the NBA but that interpretation requires further considerations that we leave out of the scope of this work.
-where bottom up is employed.\\~\\
+Moreover, characterizing the Working Memory activation parameter regions was important to understand the reliability of the circuit when exposed to noisy input rates, arbitrary timing coordination of events, control mistakes or anticipatory control signals.
+Although for a bottom-up parsing approach, we can safely assume control events to take place after input events, this might not be the case for other parsing strategies like top-down, that could be implemented with anticipatory control events.
+Since some parameter regions restrict the timing of input and control events, we might get insights into the possible set of parsing mechanisms directly from the anatomical structure of the cortex that constrain the parameter boundaries.
 
+Finally, the question of how a Compartment Circuit and the Neural Blackboard Architecture could be formed during brain development and modified by learning is still work in progress, partially tackled in a previous study\cite{van_der_Velde_2011}.
+We do not expect the hard-wired architecture modelled here to represent the biological reality but to facilitate an approximation to its behavior.
+Demonstrating how neural mechanisms approximated by the architecture can be implemented with biological realistic Hebbian or STDP rules alongside random connectivity constraints, during development and learning, would be an important avenue of future research.
 
-The compartment circuit abstraction is enough to achieve our current simulation goals\noteCP{Would be nice to list them early in the paper.}, since the same mechanism is used in different connection matrices and they might only differ in their memory capacity.
-So we can consider the same compartment circuit simulation for all different pairs of grammatical categories, where the circuits would have similar dynamics and only vary in activation time of their neural populations.
-Nonetheless we are only able to ignore the activity of complete connection matrices because we are not planning to explore the effect of memory limits under time compressed sentence processing scenarios or memory tasks.
-Otherwise important deviations in background neural activity due to depletion of available compartments in the connection matrices and intense inhibitory activity would become a crucial factor in the simulation.
-This could be an interesting exploration in future work to try to reproduce the temporal bottleneck effects on neural activity shown by Vagharchakian et al. under conditions of compressed speech and reading\cite{Vagharchakian_2012}.\noteCP{Maybe this should be part of the final discussion rather than here where it may divert attention.}\\~\\
+\subsection{Circuit implications of the linguistic assumptions and hypothesis}
 
+A strength of the current simulation is its flexibility to predict the neural activity of diverse grammar theories and parsing schemes, which we only explore partially in this work.
+We could in principle, without circuit modification, predict the binding activity for any structure that can be represented by a binary tree.
+This is the case of the phrase grammar of the minimalist program of Chomsky\cite{Chomsky_2014}, that represent phrases as binary trees, and also the case of other theories like dependency grammars\cite{nivre2005dependency} that represent grammatical relations between cords.
+Nonetheless in the case of dependency grammars, as they do not require a hierarchical representation, we would not need to assume that the Working Memory of an executed binding drives the Main-Assembly of another Compartment Circuit.
 
-Remember that we can use arbitrary parsing schemes.
-The order of the parsing operations can be taken from a bottom-up or more generalized left-corner parsing scheme.
-Then the more precise timing of the parsing operations can be assumed to depend on word presentation times for word bindings and minimal operational constraints.
+Because we only modelled a bottom-up parsing scheme, we have considered activation of the Main-Assemblies corresponding to phrase nodes only as a result of a previous justifying binding.
+For example for the phrase "the black cat" we would create an input event for the phrase node of "black cat" after "black" and "cat" have been binded.
+If we consider instead a pure top-down parsing scheme, that implies prediction of future bindings, or the generalized left corner parsing scheme proposed by Hale\cite{hale2014automaton}, there would be three additional mechanistic options to consider:
+First, we could start input events for Main-Assemblies representing the phrase nodes before their motivating bindings and only start the control event after the bindings have been confirmed;
+Second, we could start the control events beforehand, which is an option explored in the simulation, and still make input events follow the motivating bindings;
+Third, we could go ahead and perform bindings ahead of time, that would need to be deactivated by an error signal provided by the parsing mechanism. This last option would allow to simulate the possibility of multiple parallel phrase representations, from which only one survives at the end.
 
+A simplification was made regarding the Compartment Circuit selection mechanism in the Neural Blackboard Architecture.
+We did not model the dynamic inhibition of competing Compartment Circuits belonging to the same Connection Matrix.
+To do it we would require an hypothesis about the size of the Neural Blackboard, governed by memory limitations and the total number of possible grammatical category combinations given by a grammar.
+Forming such an hypothesis was out of the scope of this work, so we opted to assume the simplest selection mechanism possible based on uniform random selection, which is how we justify simply recruiting Comparment Circuits as needed.
 
-Here we implement only the necessary parts of the NBA to model the neural activity related to variable binding, which itself is enough to instantiate the representation of an arbitrary sentence syntactic structure
-\noteCP{What you mean here, is it is enough to have a CONS-like operation --- in LISP parlance --- to build any tree, right?}
-if we take the grammar theory and parsing scheme as given.
-\noteCP{Think about the reader who does not know the distinction between grammar theory and parsing The previous paragraph, with more details, could explain it.
-Or get reif of it.
-This may actually not be an important distinction for the purpose of this paper}.
-This means that we simplify two important aspects of the circuit.
-The first is that we will provide the signals of control directly to the compartment circuits.
-Previous attempts to train the control mechanism\cite{van_der_Velde_2010} were tailored only to specific grammatical cases and creating a general control mechanism to test the neural activity patterns would require a more varied dataset in grammatical categories
-\noteCP{???}
-and would comprise computational linguistic efforts out of the scope of this work.
-The second is that we do not model the dynamic inhibition of competing blackboard compartment circuits, since this would require an hypothesis about the size of the blackboard, which would be related to memory limitations and the total number of possible grammatical categories to link in binary trees, which again would require out of scope computational linguistic efforts.
-\noteCP{More of a psycholinguitics issue than a computational linguistics one, no?}.
-Moreover the simplest selection mechanism behind competing blackboard compartment circuits can be hypothesized to be uniformly random on available compartments.
-This means that we are only testing the temporal patterns of neural activity linked to a variable binding event in the case of two words association.
-\noteCP{But but but, you are also modeling the binding of a word and a phrase, no?}
-While in the case of complete sentences we are testing predictions based on the average neural activity time series of a collection of compartment circuits instantiated as demanded by the given grammar theory and parsing scheme.
-These time series should allow us to differentiate neural activity from different syntactic tree morphologies and sizes.\\~\\
+Nonetheless we are only able to ignore the inhibitory activity of competing Compartment Circuits in complete Connection Matrices because we are not planning to explore the effects of memory limits under time compressed sentence processing scenarios or memory tasks.
+Otherwise important deviations in background neural activity due to depletion of available Compartment Circuits and additional inhibitory activity would become a crucial factor for the simulation.
+We plan to explore this in future work, to try to reproduce temporal bottleneck effects shown by Vagharchakian et al. on hemodynamic responses, based on a Bold-fMRI experiment with an experimental design containing compressed speech and reading conditions\cite{Vagharchakian_2012}.
 
+With respect to the parsing mechanism, we only model its interface with the Comparment Circuit that implements binding, through the assumed control signals.
+We considered that understanding how a parsing algorithm is learned and implemented by the cortex, such that it can provide the respective control signals, was a separate research question.
+Previous work has shown the feasibility to implement a parsing mechanism with neural networks in connection to the Neural Blackboard Architecture\cite{van_der_Velde_2010}, for a limited set of possible syntactic structures.
 
-
-\subsection{Compartment circuit operation}
-
-
-
-This allowed us to verify if the tradeoff between efficacy and number of connections was a trivial one, simply requiring more connections when assuming a lower efficacy to attain similar ouput firing rates for the same input rates, which, as will be show in the results section, was not the case for AdEx populations.
-Nonetheless the difference in the qualitative nature of the temporal dynamics was confirmed to not be crucial for the circuit setup, so for the remaining simulations we employed the more conservative 10\% synaptic efficacy regime.\\~\\
-
-EXPLAIN THAT IN CASE THE PHYSICAL REALITY WAS CLOSER TO A HIGH SYNAPTIC EFFICACY VALUE WE WOULD THEN BE RESTRICTED OPERATE THE CIRCUIT UNDER THE CASE OF COORDINATED INPUT EVENTS... OR SOMETHING LIKE THAT... THAT WE WOULD JUST NEED TO RESTRAIN OURSELVES TO A SUBSET OF THE POSSIBLE BEHAVIORS/OPERATIONS OF THE CIRCUIT. 
-
-
-We still have flexibility in the architectural decisions. not constrained enough by linguistice theories, more experimental results are necessary too.
-
-
-LOOKS LIKE DISCUSSION! TAKEN FROM EXPERIMENT 3
-Characterizing the activation threshold regions is important to understand the reliability of the circuit when exposed to noisy input rates, arbitrary coordination of events, control mistakes or anticipatory control signals.
-With precise control of input rates and the timing of events corresponding to bottom up parsing, one could simply select an activation threshold just above the minimum rate dynamics to secure activation from the activity of two SAs.
-Nonetheless there are other scenarios that we should be able to test with parsing schemes diverging from pure bottom-up parsing, if we interpret prediction as anticipated control activation.
-In that case, if prediction fails we would be confronted with a control mistake for which we would not want the circuit to perform a binding.
-This would be illustrated by an input that drives activity in the first MA of a compartment circuit followed by a control event that allows activity to flow from all MAs, while the second MA never receives the input corresponding to the activation of its concept.
-In such a case one would need the threshold to be higher than the minimum of the impossible activation region for a given input rate and number of excitatory connections, such that the input of one SA alone could not trigger WM.
-This additional constraint can itself push the activation threshold beyond twice the maximum of the flexible activation region, forcing coordination of at least one input and control event, as can be appreciated for AdEx populations in Figure 7.
-
-
-ABOUT THE CONSIDERATION OF THE EXCITATORY LOOP IN EXPERIMENT 3, IN THE CIRCUIT ARCHITECTURE. Discussion. we do not really know how the brain works, we can black this loop with control signals that we have anyway leading to a more complex circuit, or we accept the loop but show that it can be stable. We show that both options are possible. Sell the possibility as agnostic. So dynalical range or more complex circuit. we dont know if non visual circuits use the same mechanism.
-
-
-Add to discussion possible substitution of gating mechanism at the intraneural level. multiplicative incoming activyt that act as gates in visual system with information coming from retina filtered by attention processes.
-
-
-COMMENT ON THE ADEX GK TRANSIENT ACTIVITY AFTER INHIBITION RELEASE, COULD THIS BE USED AS A MARKER TO COMPARE THE ADEX AND LIF MODELS?
-
-The second is that the new enhanced activity regime produced by WM activation is very sensitive to the adaptation effect present in the AdEx model.
-Not only the parameters of the neural model itself but also synaptic efficacy could completely eliminate the higher sustained activity while keeping a high spike of activity on the moment that binding takes place.
-The third is that the AdEx simulation is sensitive also to small variations in the timing of events due to the increasing influence of adaptation as populations reach the steady state, while LIF model dynamics are only affected by the input rate of the events.
-
-
-
-An important insight from this work is the sensitivity of the neural activity interpretation to the underlying neural model selected.
-Even in the case of hemodynamic responses that average out circuit details, we find trade-offs between the LIF and AdEx models.
-For example that an AdEx model would offer more flexibility in our circuit to manipulate HRF peak amplitudes while minimizing their onsets.
-To our knowledge this is the first work to explore more complex models like AdEx alongside LIF for variable binding and language function related circuits.
-There were also many predictions of the NBA independent of the model selected, like the fact that we need a high number of inhibitory connections and so of inhibitory activity to avoid uncontrolled regimes of self excitatory activity dependent on the connectivity of the circuit.
-
-
-
-
+As can be inferred from this discussion, there is already great potential for exploration of linguistic hypothesis with the current simulation developed, but there are also many open questions left for future development.
+We believe that taking into account more experimental evidence from psycholinguistics and neuroimaging studies is necessary to guide future refinements of the circuit architecture and simulation.
 
 
 \subsection{Qualitative reproduction of neuroimaging evidence}
 
 
+
 Certainly the way we should aggregate time series to compare them quantitatively with neuroimaging data would depend on the spatial and temporal resolution available and the assumptions made about the spatial distribution of the blackboard architecture in the cortex.
 
 
-\emph{GO TO DISCUSSION. This is a very naive approximation taken for illustrative purposes, that has to be interpreted with caution since the relationship between neural activity, cerebral blood flow and blood oxygenation is not linear\cite{Friston_2000,Buxton_2004} and better represented by the balloon model than the gamma function considered here\cite{Waldorp_2009}.}
 
 
-We make a qualitative comparison, given that high gamma power has been shown to be weakly correlated to the firing rate time series of spiking neurons from in-vivo recordings\cite{Ray_2011}. \emph{should go to discussion, now i am just describing the simulation time series}
 
 
 The simulation results show how both the steady state and transient dynamics of the circuit affect our interpretation of the neuroimaging evidence for language processing.
@@ -1247,12 +1211,9 @@ Maybe comment on how averaging neural activity washes out some details about the
 
 
 
-WE COULD ADAPT THE SIMULATION PARAMETERS TO BETTER REFLECT THE ECOG TIME SERIES
-It could further be tuned to fit quantitatively the data by manipulating the number of excitatory connections, such that their decrease would reduce the baseline difference.
-The irregularities of the magnitude of the baseline effect with respect to phrase length in the high gamma power is difficult to interpret, since it could suggest that the accumulation of activity with more recruiting nodes is subtler than what we can reproduce with the NBA circuit, in which there is a clear correspondence with the number of hypothesized compartment circuits of the parsed tree structure.
-Moreover, when comparing simulations, we appreciate that the AdEx model could better reflect a more modest proportional increase of baseline thanks to adaptation.~
+ECOG
 
-
+We make a qualitative comparison, given that high gamma power has been shown to be weakly correlated to the firing rate time series of spiking neurons from in-vivo recordings\cite{Ray_2011}. \emph{should go to discussion, now i am just describing the simulation time series}
 
 
 DISCUSSION ON WHY WE HAVE PROBLEMS WITH BINDING DROP AND MA DROP. MA activity is a lot lower or immediatly release with binding. Two possible interpretations of the sudden activity drop...
@@ -1266,6 +1227,11 @@ In the case of the LIF simulation, there is flexibility to extend the activity p
 On the other hand the AdEx model loses this flexibility due to adaptation but better emphasizes the contrast between the activity peak and sudden drop because of the pronounced initial activity burst of its population dynamics.
 
 
+
+HEMODYNAMICS
+
+\emph{GO TO DISCUSSION. This is a very naive approximation taken for illustrative purposes, that has to be interpreted with caution since the relationship between neural activity, cerebral blood flow and blood oxygenation is not linear\cite{Friston_2000,Buxton_2004} and better represented by the balloon model than the gamma function considered here\cite{Waldorp_2009}.}
+
 DISCUSSION ABOUT THE PEAK ONSET OF THE SIMULATION, TAKING INTO ACCOUNT ECOG DATA. This is unlikely from our previous observations in ECoG recordings, that suggest a much faster decrease of activity after stimuli presentation.
 Still this prediction gives a cautionary tale on the extent to which lack of neural modelling can lead to a non trivial misspecification of the events introduced in the GLM model to analyze Bold-fMRI experiments.
 Thinking the other way around, the peak onset link to the MA and WM inactivation periods suggest that we could also use Bold-fMRI to fit the parameters of an inactivation mechanism in the NBA.
@@ -1273,8 +1239,13 @@ To realize this, such mechanism would need to be proposed and a more realistic m
 
 DISCUSSION. which already seem to be too long with respect to observations made on the intracortical data, as commented in the previous results section \ref{sec:ecog-patterns}.
 
-
 DISCUSSION. Explore the hypothesis space of mechanisms to stop MA activity after binding. What would signal this? The NBA do not provide a particular proposal in this direction.
+
+DISCUSSION. DISTINGUISH ADEX from LIF
+For example that an AdEx model would offer more flexibility in our circuit to manipulate HRF peak amplitudes while minimizing their onsets.
+
+
+
 
 DISCUSSION. Notice that the contrast of the amplitude of word lists with the other conditions can give insights into the relative proportion between MA and WM activity.
 As we saw in the ECoG time series, MA seems to have a more important participation in the total neural activity than we initially modeled.
@@ -1301,36 +1272,21 @@ Our simulation suggest then, that assigning a logarithmic increase of activity t
 
 
 
-\subsection{Setting up a framework for mechanistic testing of computational linguistics hypothesis}
+\subsection{Future perspective}
 
 
 
 We can apply the complete phrase neural time series approximation to a variety of stimuli from experimental designs behind neuroimaging results in the literature. \emph{for discussion, not done, only two experiments}
 
-An important aspect of this work, that could be overlooked, is the flexibility of the simulation to represent the neural activity of many grammar theories and parsing schemes.
-We can without circuit modification implement any concept represented as a binary tree.
-This corresponds well for example to the phrase grammar of the minimalist program of Chomsky\cite{Chomsky_2014}~and to grammatical relations in dependency grammars\cite{nivre2005dependency}.
-Nonetheless in the case of dependency grammars we would not need to extend the memory of MA less than in a phrase grammar that requires to wait for the instantiation of phrase nodes in deep hierarchical trees.
-Also the AdEx model would favor shallower tree representations, because it is sensitive to complex event coordination.
-
-Also so far we have implicitly considered activation of phrase nodes only as a result of word binding, which would be representative of a bottom-up parsing approach.
-This allowed us to simply take the binding WM activity of one compartment circuit as the MA of another compartment circuit.
-Nonetheless we did not introduce additional delays in control, since we did not model the portion of the NBA responsible for control.
-Naturally there are many additional parsing mechanisms that we could assume, represented by the order of input and control events, that would introduce predictive control activity.
-This would be the case if we extend our analysis to the~generalized left corner parsing proposed by Hale\cite{hale2014automaton}.
-We could interpret this additional predictive control signals as control anticipation or as direct activation of memory circuits that have to be deactivated later by an error signal.
-Exploring the neural activity implications of both these mechanisms alongside the target tree structures given by alternative grammar theories is an important target of future research.
 This could be done for example by using the simulation as an experiment design tool that provides the set of phrases that maximize the spatio-temporal differences in neural responses across conditions defined under the different grammar theories and parsing schemes.
-
 
 Propose what to do next. from cytoarchitecture to better physical models to iteration between ecog hypothesis experimental design and simulation effects. becomes a tool for the linguist.
 
 
-\subsection{Future perspective}
-
-
-
-
+WE COULD ADAPT THE SIMULATION PARAMETERS TO BETTER REFLECT THE ECOG TIME SERIES
+It could further be tuned to fit quantitatively the data by manipulating the number of excitatory connections, such that their decrease would reduce the baseline difference.
+The irregularities of the magnitude of the baseline effect with respect to phrase length in the high gamma power is difficult to interpret, since it could suggest that the accumulation of activity with more recruiting nodes is subtler than what we can reproduce with the NBA circuit, in which there is a clear correspondence with the number of hypothesized compartment circuits of the parsed tree structure.
+Moreover, when comparing simulations, we appreciate that the AdEx model could better reflect a more modest proportional increase of baseline thanks to adaptation.~
 
 
 Finally, even though there are still many limitations in these simulations, we would like to emphasize the quick progress in the development of biologically plausible models of cognition.
