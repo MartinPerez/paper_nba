@@ -159,7 +159,7 @@ Rather than simulating thousands of spiking neurons, we use population density t
 for PDTs the correspondence to population-averaged quantities of spiking neurons can be shown rigorously.
 In particular transient dynamics are captured more accurately than by rate based models.
 
-These results, alongside the flexibility of the NBA to represent arbitrary binary tree structures and parsing schemes, \notenewMdK{This is a strong statement that needs justification later in the paper.} \notenewMP{I hope this should be clear after reading the methods}
+These results, alongside the flexibility of the NBA to represent arbitrary binary tree structures and parsing schemes, \noteMdK{This is a strong statement that needs justification later in the paper.} \noteMP{I hope this should be clear after reading the methods}
 makes it a promising tool for linguistic hypothesis exploration and future refined quantitative accounts of multi-scale neuroimaging measurements.
 
 
@@ -185,7 +185,7 @@ These instantiated word types would point to each other to form a graph data str
 Then solving ~\emph{Variable binding} in language, requires a biologically feasible implementation of a pointer mechanism that can link instantiated grammatical categories and their corresponding words, which we will demonstrate with the Neural Blackboard Architecture.
 
 
-\subsection{Some neuroimaging studies of binding of language}
+\subsection{Some language neuroimaging studies of binding}
 {\label{intro:imaging}}
 
 Most linguistic theories assume a constituency property that allows to combine and replace smaller phrases in larger phrases.
@@ -1139,10 +1139,13 @@ Since we do not really know what is closer to the biological reality of the cort
 \noteMP{\emph{Should add paragraph here about: Also the reason we have this excitatory loops is because of the bidirectional gating circuit mechanism proposed. Add to discussion possible substitution of gating mechanism at the intraneural level. multiplicative incoming activity that act as gates in visual system with information coming from retina filtered by attention processes. we dont know if non visual circuits use the same mechanism. I am lacking to read a proper reference to develop this}}. 
 
 To our knowledge, this is also the first time complex neural models like AdEx are simulated alongside LIF for variable binding and language function related circuits.
+In contrast to previous simulations \cite{van_der_Velde_2011, van_der_Velde_2010, Frank_2014,van_Dijk_2015}, we employed population density techniques implemented in the MIIND software\cite{de_Kamps_2008}, that allowed us to approximate the transient fluctuations of the different binding related events.
 Thanks to this, we found that the circuit implementation and neural dynamics interpretation can depend on the underlying neural model in non trivial ways.
 For example we observed that in a LIF model there was a non-consequential trade-off between synaptic efficacy and number of excitatory connections to control the steady state rates of the circuit.
 On the other hand the AdEx model was very sensitive to changes in synaptic efficacy due to adaptation effects, to the point of making us unable to control the magnitude of the steady state rate of the circuit for high synaptic efficacy values.
 If the physical reality of the cortex was closer to an AdEx model with high synaptic efficacies we would then need to restrict our hypothesis about the circuit operation with input and control events to a subset of the possibilities explored in our simulation.
+Adaptation in the AdEx model also had an important effect in the case of lower synaptic efficacies, making coordination of input and control events more restricted in a larger portion of the circuit parameter space.
+Since we have to take into account the possibility of random variation of those parameters in the cortex, this effect can be crucial to understand limits and constraints of language processing in different brain regions.
 
 Another important distinction observed between the AdEx and LIF model was how dynamics after inhibition are qualitatively different under the influence of adaptation.
 While in the LIF circuit, neural activity on a population would smoothly recover back to its steady state after inhibition stops, that of an AdEx circuit would show a renovated burst of activity due to adaptation decreasing during the inhibition period.
@@ -1189,104 +1192,87 @@ We believe that taking into account more experimental evidence from psycholingui
 
 \subsection{Qualitative reproduction of neuroimaging evidence}
 
+Comparison of our simulation with neuroimaging measurements revealed striking qualitative similarities, even though the circuit was only tuned for its correct and most flexible operation with respect to events timing.
+We aggregated the time series of the simulation in the simplest way possible, uniformly, under the lack of more precise hypothesis about the spatial distribution of the Neural Blackboard Architecture in the cortex.
+Although we interpreted reports of the high gamma power of Local Field Potentials and hemodynamic responses separately, there is the potential to integrate all this different measurements quantitatively as coherent evidence thanks to recent efforts on modelling their relationship\cite{hermes2017neuronal}.
 
+High gamma power has been shown to be weakly correlated to the firing rate time series of spiking neurons from in-vivo recordings\cite{Ray_2011}.
+So we decided to make a direct qualitative comparison between the firing rate of the simulation and the high gamma power time series.
+Nonetheless a future quantitative comparison would require a more precise mapping from the simulation firing rates to local field potentials, as has been done recently\cite{Mazzoni_2015,Hagen_2015}.
 
-Certainly the way we should aggregate time series to compare them quantitatively with neuroimaging data would depend on the spatial and temporal resolution available and the assumptions made about the spatial distribution of the blackboard architecture in the cortex.
+An important discrepancy between the simulation and the high gamma power time series, was that the simulation segments of neural activity identified with binding and Main-Assemblies transient activity drop were not as clearly separable in the intracortical recordings.
+Moreover the data seem to suggest an immediate Main-Assemblies transient drop after a binding event takes place, instead of the paced inactivation assumed during the simulation.
+This would suggest the addition to the Comparment Circuit of a feedback mechanism from the Working Memory populations to the Main-Assemblies to knock out their unnecessary activity once a binding has been performed.
+It would be an efficient strategy from an energy consumption point of view at the cost of extra complexity in the circuit architecture.
 
+We also observed a middle phrase activity drop in the longest phrase intracortical time series,  which was not coherent with a bottom-up parsing hypothesis. In the phrase "Ten sad students of Bill Gates" the activity drop took place after "Ten sad students", to be compensated immediately after to bind the remaining phrase "of Bill Gates".
+Two possibilities arise from such observation:
+The obvious first one is to consider an alternative combining bottom-up and top-down parsing mechanisms, a generalized left corner parsing scheme, to explain the fluctuation;
+The second one is difficulties of the Compartment Circuit to sustain local activity in Main-Assemblies for prolonged periods of time, such that they need to be reactivated if a binding has still not taken place.
+If this was the case, we could also explain the previously explained apparent immediate Main-assemblies activity drop after binding as a side effect of an imminent deactivation that was going to take place independently of binding.
 
+To approximate hemodynamic responses, we resorted to a naive approximation that has to be interpreted with caution since the relationship between neural activity, cerebral blood flow and blood oxygenation is not linear\cite{Friston_2000,Buxton_2004} and better represented by the balloon model than the gamma function considered in this work\cite{Waldorp_2009}.
+A more precise translation from firing rates to an hemodynamic response would allow a quantitative fit of simulation parameters and to test linguistic hypothesis.
+At the moment we show that the simulation could be adapted to hemodynamic peak onset patterns and naturally reproduces magnitude patterns, but we do not attempt to find regions of the linguistic hypothesis space or circuit parameter space that reproduce exactly the relative differences between conditions.
 
+Regarding the hemodynamic peak onsets, our first observation was that persistent neural activity in Main-Assemblies and Working Memory can importantly delay the onset of the hemodynamic response, with respect to that given by a traditional boxcar model event specification.
+Such prediction gives a cautionary tale on the extent to which lack of neural modelling could lead to a non trivial misspecification of hemodynamic events.
+It has been reported that parametric estimation of gamma based models, used for General Linear Model estimation to analyze Bold-fMRI experiments, quickly deteriorates as model misspecification increases \cite{lindquist2009modeling}.
+To realize a future quantitative comparison between the generated simulation time series and hemodynamic measurements, we would need to fit a new linear model for each simulation hypothesis to the available Bold time series, looking for the best fit.
 
-
-
-The simulation results show how both the steady state and transient dynamics of the circuit affect our interpretation of the neuroimaging evidence for language processing.
-In contrast to previous simulations\cite{van_der_Velde_2011,van_der_Velde_2010,Frank_2014,van_Dijk_2015}, employing population density techniques implemented in the MIIND software\cite{de_Kamps_2008} allowed us to approximate well transient temporal dynamics.
-Thanks to this, we could show an important difference in the shape of the AdEx and LIF responses, how before arriving to a steady state AdEx responds differently to additional input due to adaptation and how the coordination of input and control events is importantly influenced by the model and its parameters.
-This last point is crucial for language processing, since ideally~we would want input and control events to be as independent as possible to diminish operational complexity and to be able to operate under a wide range of parameters allowing for random variation.
-Reflecting on the coordinating complications introduced by adaptation we would expect lower adaptation in language related brain regions that seem to be involved in binding operations like pSTS, IFGTri and IFGorb, an increase in the operational complexity of the circuits and/or a reduction in the operational parameter ranges alongside additional sensitivity to noise.
-A final remark related to event coordination problems in AdEx would be its sensitivity to the synaptic efficacy parameter of the circuit that was not explored in detail.
-Contrary to the LIF model, AdEx requires clear limitations in the populations connectivity to implement arbitrary or complex timing operations.
-
-
-Maybe comment on how averaging neural activity washes out some details about the neural model, even though they themselves were clearly different at the level of one binding.
-
-
-
-ECOG
-
-We make a qualitative comparison, given that high gamma power has been shown to be weakly correlated to the firing rate time series of spiking neurons from in-vivo recordings\cite{Ray_2011}. \emph{should go to discussion, now i am just describing the simulation time series}
-
-
-DISCUSSION ON WHY WE HAVE PROBLEMS WITH BINDING DROP AND MA DROP. MA activity is a lot lower or immediatly release with binding. Two possible interpretations of the sudden activity drop...
-
-DISCUSSION ABOUT MIDDLE SENTENCE FLUCTUATION? This middle fluctuation could be understood as counter evidence to bottom up parsing or an early release of MA activity, that has to be later compensated with reactivation to bind the remaining phrase "of Bill Gates".
-
-DISCUSSION ON LONG ECOG MIDDLE SENTENCE ACTIVITY RELEASE. To accommodate this behavior into the NBA, without changing our grammar and parsing assumptions, we would need to incorporate a limited capacity to sustain MA activity that has to be renovated or a greedy binding mechanism that leads to premature binding mistakes....
-
-DISCUSSION ON HOW TO TUNE LIF AND ADEX TO ECOG DATA
-In the case of the LIF simulation, there is flexibility to extend the activity peak with the duration of control events and to increase the total drop magnitude by manipulating the input rates and excitatory connections.
-On the other hand the AdEx model loses this flexibility due to adaptation but better emphasizes the contrast between the activity peak and sudden drop because of the pronounced initial activity burst of its population dynamics.
-
-
-
-HEMODYNAMICS
-
-\emph{GO TO DISCUSSION. This is a very naive approximation taken for illustrative purposes, that has to be interpreted with caution since the relationship between neural activity, cerebral blood flow and blood oxygenation is not linear\cite{Friston_2000,Buxton_2004} and better represented by the balloon model than the gamma function considered here\cite{Waldorp_2009}.}
-
-DISCUSSION ABOUT THE PEAK ONSET OF THE SIMULATION, TAKING INTO ACCOUNT ECOG DATA. This is unlikely from our previous observations in ECoG recordings, that suggest a much faster decrease of activity after stimuli presentation.
-Still this prediction gives a cautionary tale on the extent to which lack of neural modelling can lead to a non trivial misspecification of the events introduced in the GLM model to analyze Bold-fMRI experiments.
-Thinking the other way around, the peak onset link to the MA and WM inactivation periods suggest that we could also use Bold-fMRI to fit the parameters of an inactivation mechanism in the NBA.
-To realize this, such mechanism would need to be proposed and a more realistic mapping from neural activity to blood oxygenation would need to be implemented.
-
-DISCUSSION. which already seem to be too long with respect to observations made on the intracortical data, as commented in the previous results section \ref{sec:ecog-patterns}.
-
-DISCUSSION. Explore the hypothesis space of mechanisms to stop MA activity after binding. What would signal this? The NBA do not provide a particular proposal in this direction.
-
-DISCUSSION. DISTINGUISH ADEX from LIF
-For example that an AdEx model would offer more flexibility in our circuit to manipulate HRF peak amplitudes while minimizing their onsets.
-
-
-
-
-DISCUSSION. Notice that the contrast of the amplitude of word lists with the other conditions can give insights into the relative proportion between MA and WM activity.
-As we saw in the ECoG time series, MA seems to have a more important participation in the total neural activity than we initially modeled.
-This could explain the~flatter slope of the experimental results.
-To reproduce it with our simulations, keeping their qualitative behavior intact, we could select a parameter regime with less excitatory connections and higher input rate.
-Note that in the case of the AdEx model, due to the shape of the adaptive response, it would be possible to reproduce the sublinear peak amplitude effect while minimizing a peak onset difference.
-To achieve this we could make all responses approximate the same center of mass by mixing the high initial increase of firing rate, that depend mostly on the input rate, with a very low steady state rate.
-Nonetheless, to make a quantitative fit to the hemodynamic amplitudes we should use a more realistic hemodynamic model and be cautious about the possible model misspecifications introduced by the simultaneous consideration of the HRF peak onsets.
-
-
-DISCUSSION. The super-linear increase of peak onset is not coherent with sub-linear patterns reported by Pallier et al.
+The super-linear increase pattern of peak onset we observed was not coherent with sub-linear patterns reported by Pallier et al.
 Nonetheless the peak onset of our simulation depends on the input events and Working Memory durations, that were arbitrarily set to a constant duration.
 The Neural Blackboard Architecture does not provide a particular hypothesis on the timing of the deactivation of Main-Assemblies and Working Memory, which is why durations were simply set to a pragmatic constant that secured binding of the last phrasal node with the first word of the longest phrase.
 Comparison of our simulation with intracortical recordings in results section \ref{sec:ecog-patterns} suggested a quicker drop of the Main-Assemblies activity after binding operations were executed, instead of the current choice of persistent activity for a constant amount of time after binding.
-Modifying the simulation mechanisms in this direction would permit emulating sub-linear patterns of peak onset as necessary to fit the hemodynamic measurements.
+Modifying the simulation mechanisms in this direction would permit emulating sub-linear patterns of peak onset as necessary to reproduce the hemodynamic measurements.
 
+Regarding the hemodynamic peak amplitudes, future quantitative comparison of the levels of neural activity between the word list condition (c01) and the word pairs binding condition, the two constituents condition (c02), could give insights into the relative proportion of Main-Assemblies activity and the rest of populations in the circuit.
+At the moment, the simulation's initial slope of hemodynamic peak amplitude increase was lower than that reported by Pallier et al, which can be interpreted as an underestimation of the binding related populations contribution to the total neural activity.
 
-DISCUSSION. Pallier et al. initially hypothesized a linear pattern instead of the sub-linear one, which would be explained by a simple "accumulation" model where each new word presented would add a constant amount of neural activity until a binding was not possible, leading to a sudden drop of activity back to baseline.
-After their finding, the authors revised their hypothesis to propose instead a model that assigns a logarithmic increase of activity to each new word presented.
+Pallier et al. initially hypothesized a linear pattern of peak amplitudes instead of the sub-linear one observed, which would be explained by a simple "accumulation" model where each new word presented would add a constant amount of neural activity until a binding was not possible, leading to a sudden drop of activity back to baseline.
+After their findings, the authors revised their hypothesis to propose instead a model that assigns a logarithmic increase of activity to each new word presented.
 Nonetheless our simulation suggest another explanation for the sub-linear pattern as a direct reflection of the number of binding operations executed while processing phrases.
 It turns out that the type of stimuli employed by the authors consisted exclusively of right branching trees and that their concatenation lead to a sub-linear increase of number of binding operations, which is why our simulation is at a first sight coherent with the logarithmic word activity addition model.
-Our simulation suggest then, that assigning a logarithmic increase of activity to the next word presented in a phrase is an artifact of the experimental design to be challenged by another design including other syntactic tree shapes, for which our model would predict the responses as a function of the number of bindings.
-
-
+Then, Our simulation suggest that assigning a logarithmic increase of activity to the next word presented in a phrase is an artifact of the experimental design, due to missing consideration of other syntactic tree structures for phrases containing the same number of words.
 
 
 \subsection{Future perspective}
 
+real cortical column considerations to interpret spatial distribution of the blackboard in the cortex.
 
+Physical translation of firing rates to LFP and BOLD responses, which also have to follow some relationship with each other according to the literature.
 
+grammatical category groups and grammar theories expansion of the connection matrices, test the grammar theories and parsing scheme combinations simultaneously, no other way around for the moment.
+
+integrate evidence of different neuroimaging measurements together, multi spatio temporal evidence scales.
+
+Create benchmark database of experimental measurements to evaluate directly against them the different hypothesis.
 We can apply the complete phrase neural time series approximation to a variety of stimuli from experimental designs behind neuroimaging results in the literature. \emph{for discussion, not done, only two experiments}
 
+
+Explore the hypothesis space through the simulation to identify conditions that maximize our exploration of linguistic theory against neuroimaging measurements.
 This could be done for example by using the simulation as an experiment design tool that provides the set of phrases that maximize the spatio-temporal differences in neural responses across conditions defined under the different grammar theories and parsing schemes.
 
-Propose what to do next. from cytoarchitecture to better physical models to iteration between ecog hypothesis experimental design and simulation effects. becomes a tool for the linguist.
+
+Proposal of experiments in ecog patients. language FMRI localizers and adapted 3d printed frames of ecog electrodes alongside the necessary manual test of epilepsy could greatly accelerate testing hypothesis and joining evidence. Case of Amuntz language localizer variability and the importance of subject specific characterization of the language network.
 
 
-WE COULD ADAPT THE SIMULATION PARAMETERS TO BETTER REFLECT THE ECOG TIME SERIES
-It could further be tuned to fit quantitatively the data by manipulating the number of excitatory connections, such that their decrease would reduce the baseline difference.
-The irregularities of the magnitude of the baseline effect with respect to phrase length in the high gamma power is difficult to interpret, since it could suggest that the accumulation of activity with more recruiting nodes is subtler than what we can reproduce with the NBA circuit, in which there is a clear correspondence with the number of hypothesized compartment circuits of the parsed tree structure.
-Moreover, when comparing simulations, we appreciate that the AdEx model could better reflect a more modest proportional increase of baseline thanks to adaptation.~
+
+
+
+
+
+
+
+
+
+DISCUSS ADEX LIF ECOG
+In the case of the LIF simulation, there is flexibility to extend the activity peak with the duration of control events and to increase the total drop magnitude by manipulating the input rates and excitatory connections.
+On the other hand the AdEx model loses this flexibility due to adaptation but better emphasizes the contrast between the activity peak and sudden drop because of the pronounced initial activity burst of its population dynamics.
+
+DISCUSSION. DISTINGUISH ADEX from LIF
+For example that an AdEx model would offer more flexibility in our circuit to manipulate HRF peak amplitudes while minimizing their onsets.
+
 
 
 Finally, even though there are still many limitations in these simulations, we would like to emphasize the quick progress in the development of biologically plausible models of cognition.
@@ -1295,15 +1281,6 @@ Also diverse new computational methods like population density techniques have m
 There are as well successful recent efforts in modeling, with cytoarchitectonic details, complex signals like Local Field Potentials~\cite{Mazzoni_2015,Hagen_2015} and hemodynamics with the balloon model~\cite{Buxton_2004}.
 These could be already adapted to our circuit simulations to better incorporate neuroimaging evidence simultaneously from multiple techniques and experimental designs.
 Moreover the circuit itself can become a tool for hypothesis exploration and experimental design on the different neuroimaging techniques.
-
-
-\noteMdK{Is the below relevant?} 
-\notenewMP{Now that I read it I agree presented like this is incomplete. I think it would be a very important future extension of the blackboard. Replacing a neural population by its cytoarchitectonic equivalent to be able to generate LFP predictions and also to predict spatial extent of the Blackboard. Right now for example is still ambiguous for me if the circuit can be implemented in more or less than 1 cm of cortex, and that have important implications to also interpret Bold-fMRI activations. Since PDTs approximate distributions of very large populations, also I am not sure how the populations would behave under cytoarchitectonic constraints. Maybe what I just wrote here would be a nice addition to the discussion with the paragraph below instead of being here?} 
-It could also be important to consider parallely multiple neuron typologies and modelling their corresponding microcircuitry of cortical columns, as attempted already with LIF models, to simulate local field potentials for a very small patch of cortex\cite{Mazzoni_2015,Hagen_2015}.\\~\\
-
-
-Add to final discussion how the model can be turned into a strong inference testing tool with some additional modifications. Cytoarchitecture - LFP - ECoG.
-
 
 In conclusion we hope~to have shown that we are close to producing biologically realistic mechanistic neural models of cognitive function, that could provide new ways of testing cognitive hypothesis on varied neuroimaging techniques, to further~inspire more work in this direction.
 
