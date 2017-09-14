@@ -1160,6 +1160,7 @@ We do not expect the hard-wired architecture modelled here to represent the biol
 Demonstrating how neural mechanisms approximated by the architecture can be implemented with biological realistic Hebbian or STDP rules alongside random connectivity constraints, during development and learning, would be an important avenue of future research.
 
 \subsection{Circuit implications of the linguistic assumptions and hypothesis}
+\label{discussion-linguistics}
 
 A strength of the current simulation is its flexibility to predict the neural activity of diverse grammar theories and parsing schemes, which we only explore partially in this work.
 We could in principle, without circuit modification, predict the binding activity for any structure that can be represented by a binary tree.
@@ -1238,51 +1239,32 @@ Then, Our simulation suggest that assigning a logarithmic increase of activity t
 
 \subsection{Future perspective}
 
-real cortical column considerations to interpret spatial distribution of the blackboard in the cortex.
+Even though the current simulation can still be improved in many ways, we would like to emphasize with this work the quick progress in the development of biologically plausible models of cognition.
+New computational methods like population density techniques have made it tractable to approximate, at a circuit scale, point neural models as complex as the adaptive exponential.
+With an additional modelling effort at the level of the neural populations, we could close the gap that has delayed physical mechanistic testing of computational linguistic hypothesis with direct neuroimaging measurements.
+Taking into account cytoarchitectonic details tailored to different brain regions, would allow to study the spatial distribution in the cortex of the Neural Blackboard Architecture and other circuit alternatives.
+Modelling such details would also allow fine physical reproduction of temporally and spatially detailed signals, like has been done for Local Field Potentials (LFP)\cite{Mazzoni_2015,Hagen_2015} and hemodynamics (BOLD)\cite{Buxton_2004}.
+Moreover, it would also be possible to coherently integrate the evidence from multiple spatio-temporal scales, as the relationship between the different signals have also been characterized in the literature, taking as example recent work linking LFP and BOLD signals\cite{hermes2017neuronal}.
 
-Physical translation of firing rates to LFP and BOLD responses, which also have to follow some relationship with each other according to the literature.
+We selected two experiments that we considered best characterized key neuroimaging evidence of binding in phrase processing.
+Moreover we think these experiments, coming from different spatio-temporal scales and experimental designs, demonstrate the potential of our simulations to integrate varied experimental linguistic evidence.
+Many other experiments could inform different parameters and circuit assumptions from the ones explored in this work.
+For example we could look at processing speed and memory constraints of the Neural Blackboard architecture with the Bold-fMRI manipulation of Vagharchakian et al.\cite{Vagharchakian_2012} based on compressed speech and reading conditions.
+Creating a database of such neuroimaging experiments alongside psycholinguistic behavioral evidence would create the opportunity to incrementally and systematically test linguistic computational hypothesis and their brain implementation.
 
-grammatical category groups and grammar theories expansion of the connection matrices, test the grammar theories and parsing scheme combinations simultaneously, no other way around for the moment.
+As we commented in discussion section \ref{discussion-linguistics}, the current implementation of the Compartment Circuit allow us to test any grammar theory providing binary tree representations combined with any parsing scheme that determines the timing of input and control events in the circuit.
+This means that as we refine the boundary of the circuit parameters and operating assumptions, we can obtain for a corpus the neural activity of all its phrases for all the different linguistic hypothesis available.
+From such artificial dataset we could motivate experimental designs and tests that would be optimal to explore the linguistic hypothesis space.
+For example controlling for diverse variables like phrase length and number of syllables, we could estimate the likelihood of a phrase grammar versus a dependency grammar theory by comparing a set of phrases that maximize neural activity differences between the theories with respect to a set of control phrases.
 
-integrate evidence of different neuroimaging measurements together, multi spatio temporal evidence scales.
+We think that the proposed framework could lead to quick progress in our understanding of language function if accompanied by the most recent neuroimaging techniques.
+We would imagine a setting in which intracortical recordings can be systematically positioned with information coming from quick and reliable fMRI language localizer paradigms\cite{mahowald2016reliable}.
+From a language localizer and anatomical scans, it would be possible to take advantage of 3d printing techniques, already tested in non-human primates\cite{chen20173d}, to make frames perfectly adapted to the skull of patients, with electrodes positioned in peaks of hemodynamic activity.
+Moreover recent advances in laminar fMRI\cite{lawrence2017laminar} are an exciting possible addition for the tuning of models approximating cortical columns and cytoarchitectonic constraints, as we propose to extend our simulations.
 
-Create benchmark database of experimental measurements to evaluate directly against them the different hypothesis.
-We can apply the complete phrase neural time series approximation to a variety of stimuli from experimental designs behind neuroimaging results in the literature. \emph{for discussion, not done, only two experiments}
-
-
-Explore the hypothesis space through the simulation to identify conditions that maximize our exploration of linguistic theory against neuroimaging measurements.
-This could be done for example by using the simulation as an experiment design tool that provides the set of phrases that maximize the spatio-temporal differences in neural responses across conditions defined under the different grammar theories and parsing schemes.
-
-
-Proposal of experiments in ecog patients. language FMRI localizers and adapted 3d printed frames of ecog electrodes alongside the necessary manual test of epilepsy could greatly accelerate testing hypothesis and joining evidence. Case of Amuntz language localizer variability and the importance of subject specific characterization of the language network.
-
-
-
-
-
-
-
-
-
-
-
-DISCUSS ADEX LIF ECOG
-In the case of the LIF simulation, there is flexibility to extend the activity peak with the duration of control events and to increase the total drop magnitude by manipulating the input rates and excitatory connections.
-On the other hand the AdEx model loses this flexibility due to adaptation but better emphasizes the contrast between the activity peak and sudden drop because of the pronounced initial activity burst of its population dynamics.
-
-DISCUSSION. DISTINGUISH ADEX from LIF
-For example that an AdEx model would offer more flexibility in our circuit to manipulate HRF peak amplitudes while minimizing their onsets.
-
-
-
-Finally, even though there are still many limitations in these simulations, we would like to emphasize the quick progress in the development of biologically plausible models of cognition.
-With an additional effort it would be possible to fit parameters of the circuit and phrase processing directly to neuroimaging measurements.
-Also diverse new computational methods like population density techniques have made it feasible to approximate at a circuit scale point neural models as complex as the adaptive exponential.
-There are as well successful recent efforts in modeling, with cytoarchitectonic details, complex signals like Local Field Potentials~\cite{Mazzoni_2015,Hagen_2015} and hemodynamics with the balloon model~\cite{Buxton_2004}.
-These could be already adapted to our circuit simulations to better incorporate neuroimaging evidence simultaneously from multiple techniques and experimental designs.
-Moreover the circuit itself can become a tool for hypothesis exploration and experimental design on the different neuroimaging techniques.
-
-In conclusion we hope~to have shown that we are close to producing biologically realistic mechanistic neural models of cognitive function, that could provide new ways of testing cognitive hypothesis on varied neuroimaging techniques, to further~inspire more work in this direction.
+In conclusion we hope to have demonstrated that we are close to producing biologically realistic mechanistic neural models of cognitive function.
+In particular to provide new ways of testing linguistic hypothesis integrating evidence from varied neuroimaging techniques with different spatio-temporal scales.
+With this work we expect to inspire further efforts in this direction.
 
 
 \selectlanguage{english}
