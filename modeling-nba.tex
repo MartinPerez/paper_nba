@@ -1114,27 +1114,24 @@ In the bottom plots of Figure \ref{fig:pnas-2}, we show the similarity between t
 
 \subsection{The neural models and circuit architecture}
 
-Regarding the neural model parameters, we left for future work consideration of values based on electrophysiological recordings from specific brain regions, in contrast to the Omurtag\cite{omurtag2000simulation} and Brette et al. parameters \cite{Brette_2005} taken for a first approximation of the neural dynamics.
+Regarding the neural model parameter values, we considered those from Omurtag\cite{omurtag2000simulation} and Brette et al. \cite{Brette_2005} for a first approximation of the neural dynamics. We left for future work consideration of values based on electrophysiological recordings from specific brain regions.
 For example, there are different adaptation constants along the cortex, that could change the AdEx model dynamics.
-Since we have compared the simulation with neural activity in specific brain regions like aSTS, pSTS, IFGtri and IFGorb, it would be reasonable to fit the simulations to their biological reality.
+Since we have compared the simulation with neural activity in specific brain regions like aSTS, pSTS, IFGtri and IFGorb, it would be reasonable to fit the simulations to their specific biological reality.
 
 In the case of the Compartment Circuit assumptions, we made many simplifications that should be revised in future work.
 We approximated baseline dynamics with a low constant input rate instead of considering the natural oscillatory activity of the cortex, homeostatic mechanisms in cortical circuits\cite{turrigiano2011too} and balanced networks\cite{Wolf_2014}.
 Also we adopted homogeneous synaptic connections instead of testing different synaptic distributions that could have an impact in the neural dynamics.
-If we allowed random connectivity to shape the Compartment Circuit architecture our capacity to control its dynamics with the number of connections would be restrained.
-
-We would also suggest to extend the current neural population models with modular cytoarchitectonic considerations to allow a better spatial interpretation of the circuit activity in a cortex patch.
-It might even be necessary to accurately translate firing rates into Local Field Potentials\cite{Mazzoni_2015,Hagen_2015}, hemodynamics\cite{Buxton_2004} and other neuroimaging measurements.
+Moreover, if we allowed random connectivity to shape the Compartment Circuit architecture our capacity to control its dynamics with the number of connections would be restrained.
 
 The explicit simulation of Delay Activity in Working Memory was left out of the current work due to its flexible and still debated implementation\cite{de_Kamps_2005}.
 Studying it could reveal important neurobiological limitations on the way we asses the relative proportion of neural activity between Main-Assemblies and Working Memory.
-Also it could provide a more limited set of hypothesis about the spatio-temporal memory limitations of the Neural Blackboard Architecture, to be compared with neuroimaging evidence.
+Also it could provide a more limited set of hypothesis about the spatio-temporal memory limitations of the Neural Blackboard Architecture, to be contrasted with neuroimaging and psycholinguistic evidence.
 
-A questionable decision on our circuit implementation was allowing for the existence of excitatory loops, due to the possibility of unstable runaway neural activity.
+A questionable decision of our circuit implementation was allowing for the existence of excitatory loops, due to the possibility of unstable runaway neural activity.
 Neural activity related to these excitatory loops was regulated in the Working Memory sub-circuit by careful tuning of excitatory connections and in all the Compartment Circuit by additional tuning of inhibitory connections that would close the loops.
-Instead of regulating the excitatory loop with the number of excitatory connections, we could provide additional control mechanisms to condition activity flow after the Working Memory population has been activated, in the same way its done for Main-Assemblies to Sub-Assemblies communication.
-Nonetheless the second approach implies additional complexity in the number of nodes, connections and events we have to consider for the circuit operation.
-Since we do not really know what is closer to the biological reality of the cortex, we decided to show that the less complex architecture including the excitatory loop could be made stable, but consideration of a more complex architecture would also be possible.
+Instead of regulating the excitatory loop with the number of excitatory connections, we could provide additional control mechanisms to regulate activity flow after the Working Memory population has been activated, in the same way its done for Main-Assemblies to Sub-Assemblies communication.
+Nonetheless the second approach implies additional complexity in the number of nodes, connections and events that we have to consider for the circuit operation.
+Since we do not really know what is closer to the biological reality of the cortex, we decided to show how the less complex architecture that includes excitatory loops could be made stable, but consideration of a more complex architecture would also be possible.
 
 \noteMP{\emph{Should add paragraph here about: Also the reason we have this excitatory loops is because of the bidirectional gating circuit mechanism proposed. Add to discussion possible substitution of gating mechanism at the intraneural level. multiplicative incoming activity that act as gates in visual system with information coming from retina filtered by attention processes. we dont know if non visual circuits use the same mechanism. I am lacking to read a proper reference to develop this}}. 
 
@@ -1151,12 +1148,12 @@ Another important distinction observed between the AdEx and LIF model was how dy
 While in the LIF circuit, neural activity on a population would smoothly recover back to its steady state after inhibition stops, that of an AdEx circuit would show a renovated burst of activity due to adaptation decreasing during the inhibition period.
 The effect might be strong enough to suggest it as a predictive marker for certain events in the circuit, like the release of Working Memory activity.
 
-Moreover, characterizing the Working Memory activation parameter regions was important to understand the reliability of the circuit when exposed to noisy input rates, arbitrary timing coordination of events, control mistakes or anticipatory control signals.
+Moreover, characterizing the Working Memory activation parameter regions was important to understand the reliability of the circuit if exposed to noisy input rates, arbitrary timing coordination of events, control mistakes or anticipatory control signals.
 Although for a bottom-up parsing approach, we can safely assume control events to take place after input events, this might not be the case for other parsing strategies like top-down, that could be implemented with anticipatory control events.
 Since some parameter regions restrict the timing of input and control events, we might get insights into the possible set of parsing mechanisms directly from the anatomical structure of the cortex that constrain the parameter boundaries.
 
 Finally, the question of how a Compartment Circuit and the Neural Blackboard Architecture could be formed during brain development and modified by learning is still work in progress, partially tackled in a previous study\cite{van_der_Velde_2011}.
-We do not expect the hard-wired architecture modelled here to represent the biological reality but to facilitate an approximation to its behavior.
+We do not claim the hard-wired architecture modelled here reflects the biological reality but it facilitates an approximation to average neural dynamics.
 Demonstrating how neural mechanisms approximated by the architecture can be implemented with biological realistic Hebbian or STDP rules alongside random connectivity constraints, during development and learning, would be an important avenue of future research.
 
 \subsection{Circuit implications of the linguistic hypothesis}
@@ -1164,21 +1161,21 @@ Demonstrating how neural mechanisms approximated by the architecture can be impl
 
 A strength of the current simulation is its flexibility to predict the neural activity of diverse grammar theories and parsing schemes, which we only explore partially in this work.
 We could in principle, without circuit modification, predict the binding activity for any structure that can be represented by a binary tree.
-This is the case of the phrase grammar of the minimalist program of Chomsky\cite{Chomsky_2014}, that represent phrases as binary trees, and also the case of other theories like dependency grammars\cite{nivre2005dependency} that represent grammatical relations between cords.
+This is the case of the phrase grammar of the minimalist program of Chomsky\cite{Chomsky_2014}, that represent phrases as binary trees, and also the case of other theories like dependency grammars\cite{nivre2005dependency} that represent grammatical relations between words.
 Nonetheless in the case of dependency grammars, as they do not require a hierarchical representation, we would not need to assume that the Working Memory of an executed binding drives the Main-Assembly of another Compartment Circuit.
 
 Because we only modelled a bottom-up parsing scheme, we have considered activation of the Main-Assemblies corresponding to phrase nodes only as a result of a previous justifying binding.
-For example for the phrase "the black cat" we would create an input event for the phrase node of "black cat" after "black" and "cat" have been binded.
+For example, for the phrase "the black cat" we would create an input event for the phrase node of "black cat" after "black" and "cat" have been binded.
 If we consider instead a pure top-down parsing scheme, that implies prediction of future bindings, or the generalized left corner parsing scheme proposed by Hale\cite{hale2014automaton}, there would be three additional mechanistic options to consider:
-First, we could start input events for Main-Assemblies representing the phrase nodes before their motivating bindings and only start the control event after the bindings have been confirmed;
-Second, we could start the control events beforehand, which is an option explored in the simulation, and still make input events follow the motivating bindings;
-Third, we could go ahead and perform bindings ahead of time, that would need to be deactivated by an error signal provided by the parsing mechanism. This last option would allow to simulate the possibility of multiple parallel phrase representations, from which only one survives at the end.
+First, we could start input events for Main-Assemblies representing the phrase nodes before their corresponding bindings and only start the control event after the bindings have been confirmed;
+Second, we could start the control events beforehand, which is an option explored in the simulation, and still make input events follow the corresponding bindings;
+Third, we could go ahead and perform bindings ahead of time, that would need to be deactivated by an error signal provided by the parsing mechanism.
+This last option would allow to simulate the possibility of multiple parallel phrase representations, from which only one survives at the end.
 
 A simplification was made regarding the Compartment Circuit selection mechanism in the Neural Blackboard Architecture.
 We did not model the dynamic inhibition of competing Compartment Circuits belonging to the same Connection Matrix.
 To do it we would require an hypothesis about the size of the Neural Blackboard, governed by memory limitations and the total number of possible grammatical category combinations given by a grammar.
 Forming such an hypothesis was out of the scope of this work, so we opted to assume the simplest selection mechanism possible based on uniform random selection, which is how we justify simply recruiting Comparment Circuits as needed.
-
 Nonetheless we are only able to ignore the inhibitory activity of competing Compartment Circuits in complete Connection Matrices because we are not planning to explore the effects of memory limits under time compressed sentence processing scenarios or memory tasks.
 Otherwise important deviations in background neural activity due to depletion of available Compartment Circuits and additional inhibitory activity would become a crucial factor for the simulation.
 We plan to explore this in future work, to try to reproduce temporal bottleneck effects shown by Vagharchakian et al. on hemodynamic responses, based on a Bold-fMRI experiment with an experimental design containing compressed speech and reading conditions\cite{Vagharchakian_2012}.
@@ -1193,31 +1190,31 @@ We believe that taking into account more experimental evidence from psycholingui
 
 \subsection{Qualitative reproduction of neuroimaging evidence}
 
-Comparison of our simulation with neuroimaging measurements revealed striking qualitative similarities, even though the circuit was only tuned for its correct and most flexible operation with respect to events timing.
+Comparison of our simulation with neuroimaging measurements revealed striking qualitative similarities, even though the circuit was only tuned for its correct operation, with respect to binding execution.
 We aggregated the time series of the simulation in the simplest way possible, uniformly, under the lack of more precise hypothesis about the spatial distribution of the Neural Blackboard Architecture in the cortex.
-Although we interpreted reports of the high gamma power of Local Field Potentials and hemodynamic responses separately, there is the potential to integrate all this different measurements quantitatively as coherent evidence thanks to recent efforts on modelling their relationship\cite{hermes2017neuronal}.
+Although we interpreted reports of the high gamma power of Local Field Potentials and hemodynamic responses separately, there is the potential to integrate all these different measurements as coherent quantitative evidence thanks to recent efforts on modelling their relationship\cite{hermes2017neuronal}.
 
 High gamma power has been shown to be weakly correlated to the firing rate time series of spiking neurons from in-vivo recordings\cite{Ray_2011}.
-So we decided to make a direct qualitative comparison between the firing rate of the simulation and the high gamma power time series.
+So we decided to make a direct qualitative comparison between the firing rate of the simulation and high gamma power time series.
 Nonetheless a future quantitative comparison would require a more precise mapping from the simulation firing rates to local field potentials, as has been done recently\cite{Mazzoni_2015,Hagen_2015}.
 
 An important discrepancy between the simulation and the high gamma power time series, was that the simulation segments of neural activity identified with binding and Main-Assemblies transient activity drop were not as clearly separable in the intracortical recordings.
 Moreover the data seem to suggest an immediate Main-Assemblies transient drop after a binding event takes place, instead of the paced inactivation assumed during the simulation.
-This would suggest the addition to the Comparment Circuit of a feedback mechanism from the Working Memory populations to the Main-Assemblies to knock out their unnecessary activity once a binding has been performed.
-It would be an efficient strategy from an energy consumption point of view at the cost of extra complexity in the circuit architecture.
+This would suggest the addition to the Comparment Circuit of a feedback mechanism from the Working Memory populations to the Main-Assemblies to knock out their unnecessary activity once binding has been performed.
+It would be an efficient strategy from an energetic point of view at the cost of extra complexity in the circuit architecture.
 
-We also observed a middle phrase activity drop in the longest phrase intracortical time series,  which was not coherent with a bottom-up parsing hypothesis. In the phrase "Ten sad students of Bill Gates" the activity drop took place after "Ten sad students", to be compensated immediately after to bind the remaining phrase "of Bill Gates".
-Two possibilities arise from such observation:
-The obvious first one is to consider an alternative combining bottom-up and top-down parsing mechanisms, a generalized left corner parsing scheme, to explain the fluctuation;
+We also observed a middle phrase activity drop in the intracortical time series of the longest phrase, which was not coherent with a bottom-up parsing hypothesis. In the phrase "Ten sad students of Bill Gates" the activity drop took place after "Ten sad students", and was compensated immediately after to bind the remaining phrase "of Bill Gates".
+Two possibilities arise from this observation:
+The obvious first one is to consider an alternative parsing mechanism combining a bottom-up and top-down approach, a generalized left corner parsing scheme, to explain the fluctuation;
 The second one is difficulties of the Compartment Circuit to sustain local activity in Main-Assemblies for prolonged periods of time, such that they need to be reactivated if a binding has still not taken place.
 If this was the case, we could also explain the previously explained apparent immediate Main-assemblies activity drop after binding as a side effect of an imminent deactivation that was going to take place independently of binding.
 
 To approximate hemodynamic responses, we resorted to a naive approximation that has to be interpreted with caution since the relationship between neural activity, cerebral blood flow and blood oxygenation is not linear\cite{Friston_2000,Buxton_2004} and better represented by the balloon model than the gamma function considered in this work\cite{Waldorp_2009}.
 A more precise translation from firing rates to an hemodynamic response would allow a quantitative fit of simulation parameters and to test linguistic hypothesis.
-At the moment we show that the simulation could be adapted to hemodynamic peak onset patterns and naturally reproduces magnitude patterns, but we do not attempt to find regions of the linguistic hypothesis space or circuit parameter space that reproduce exactly the relative differences between conditions.
+At the moment we show that the simulation could be adapted to other hemodynamic peak onset patterns and that it naturally reproduces magnitude patterns, although we do not attempt to tune the simulation to reproduce the relative differences between conditions.
 
 Regarding the hemodynamic peak onsets, our first observation was that persistent neural activity in Main-Assemblies and Working Memory can importantly delay the onset of the hemodynamic response, with respect to that given by a traditional boxcar model event specification.
-Such prediction gives a cautionary tale on the extent to which lack of neural modelling could lead to a non trivial misspecification of hemodynamic events.
+Such important delay demonstrates the extent to which lack of neural modelling could lead to a non trivial misspecification of hemodynamic events.
 It has been reported that parametric estimation of gamma based models, used for General Linear Model estimation to analyze Bold-fMRI experiments, quickly deteriorates as model misspecification increases \cite{lindquist2009modeling}.
 To realize a future quantitative comparison between the generated simulation time series and hemodynamic measurements, we would need to fit a new linear model for each simulation hypothesis to the available Bold time series, looking for the best fit.
 
@@ -1225,16 +1222,16 @@ The super-linear increase pattern of peak onset we observed was not coherent wit
 Nonetheless the peak onset of our simulation depends on the input events and Working Memory durations, that were arbitrarily set to a constant duration.
 The Neural Blackboard Architecture does not provide a particular hypothesis on the timing of the deactivation of Main-Assemblies and Working Memory, which is why durations were simply set to a pragmatic constant that secured binding of the last phrasal node with the first word of the longest phrase.
 Comparison of our simulation with intracortical recordings in results section \ref{sec:ecog-patterns} suggested a quicker drop of the Main-Assemblies activity after binding operations were executed, instead of the current choice of persistent activity for a constant amount of time after binding.
-Modifying the simulation mechanisms in this direction would permit emulating sub-linear patterns of peak onset as necessary to reproduce the hemodynamic measurements.
+Modifying the simulation to drop activity in Main-Assemblies after binding, would permit emulating sub-linear patterns of peak onset as necessary to reproduce the hemodynamic measurements.
 
-Regarding the hemodynamic peak amplitudes, future quantitative comparison of the levels of neural activity between the word list condition (c01) and the word pairs binding condition, the two constituents condition (c02), could give insights into the relative proportion of Main-Assemblies activity and the rest of populations in the circuit.
+Regarding the hemodynamic peak amplitudes, future quantitative comparison of the levels of neural activity between the word list condition (c01) and rest of the conditions in which binding takes place, could give insights into the relative proportion of Main-Assemblies activity and the rest of populations in the circuit.
 At the moment, the simulation's initial slope of hemodynamic peak amplitude increase was lower than that reported by Pallier et al, which can be interpreted as an underestimation of the binding related populations contribution to the total neural activity.
-
-Pallier et al. initially hypothesized a linear pattern of peak amplitudes instead of the sub-linear one observed, which would be explained by a simple "accumulation" model where each new word presented would add a constant amount of neural activity until a binding was not possible, leading to a sudden drop of activity back to baseline.
+Pallier et al. initially hypothesized a linear pattern of peak amplitudes instead of the sub-linear one observed.
+Their initial hypothesis was based on a simple "accumulation" model where each new word presented would add a constant amount of neural activity until a binding was not possible, leading to a sudden drop of activity back to baseline.
 After their findings, the authors revised their hypothesis to propose instead a model that assigns a logarithmic increase of activity to each new word presented.
-Nonetheless our simulation suggest another explanation for the sub-linear pattern as a direct reflection of the number of binding operations executed while processing phrases.
+Nonetheless our simulation suggest another explanation for the sub-linear pattern as a direct reflection of the number of binding operations executed during phrase processing.
 It turns out that the type of stimuli employed by the authors consisted exclusively of right branching trees and that their concatenation lead to a sub-linear increase of number of binding operations, which is why our simulation is at a first sight coherent with the logarithmic word activity addition model.
-Then, Our simulation suggest that assigning a logarithmic increase of activity to the next word presented in a phrase is an artifact of the experimental design, due to missing consideration of other syntactic tree structures for phrases containing the same number of words.
+Then our simulation suggest that assigning a logarithmic increase of activity to the next word presented in a phrase is an artifact of the experimental design, due to missing consideration of other syntactic tree structures for phrases containing the same number of words.
 
 
 \subsection{Future perspective}
@@ -1242,9 +1239,9 @@ Then, Our simulation suggest that assigning a logarithmic increase of activity t
 Even though the current simulation can still be improved in many ways, we would like to emphasize with this work the quick progress in the development of biologically plausible models of cognition.
 New computational methods like population density techniques have made it tractable to approximate, at a circuit scale, point neural models as complex as the adaptive exponential.
 With an additional modelling effort at the level of the neural populations, we could close the gap that has delayed physical mechanistic testing of computational linguistic hypothesis with direct neuroimaging measurements.
-Taking into account cytoarchitectonic details tailored to different brain regions, would allow to study the spatial distribution in the cortex of the Neural Blackboard Architecture and other circuit alternatives.
-Modelling such details would also allow fine physical reproduction of temporally and spatially detailed signals, like has been done for Local Field Potentials (LFP)\cite{Mazzoni_2015,Hagen_2015} and hemodynamics (BOLD)\cite{Buxton_2004}.
-Moreover, it would also be possible to coherently integrate the evidence from multiple spatio-temporal scales, as the relationship between the different signals have also been characterized in the literature, taking as example recent work linking LFP and BOLD signals\cite{hermes2017neuronal}.
+Taking into account cytoarchitectonic details, tailored to different brain regions, would allow to study the spatial distribution in the cortex of the Neural Blackboard Architecture and other circuit alternatives.
+Modelling such details would also allow fine physical reproduction of temporally and spatially detailed signals, like Local Field Potentials (LFP)\cite{Mazzoni_2015,Hagen_2015} and hemodynamics (BOLD)\cite{Buxton_2004}.
+Moreover, it would also be possible to coherently integrate the evidence from multiple spatio-temporal scales, as the relationship between different signals have also been characterized in the literature, taking as example recent work linking LFP and BOLD signals\cite{hermes2017neuronal}.
 
 We selected two experiments that we considered best characterized key neuroimaging evidence of binding in phrase processing.
 Moreover we think these experiments, coming from different spatio-temporal scales and experimental designs, demonstrate the potential of our simulations to integrate varied experimental linguistic evidence.
@@ -1252,15 +1249,15 @@ Many other experiments could inform different parameters and circuit assumptions
 For example we could look at processing speed and memory constraints of the Neural Blackboard architecture with the Bold-fMRI manipulation of Vagharchakian et al.\cite{Vagharchakian_2012} based on compressed speech and reading conditions.
 Creating a database of such neuroimaging experiments alongside psycholinguistic behavioral evidence would create the opportunity to incrementally and systematically test linguistic computational hypothesis and their brain implementation.
 
-As we commented in discussion section \ref{discussion-linguistics}, the current implementation of the Compartment Circuit allow us to test any grammar theory providing binary tree representations combined with any parsing scheme that determines the timing of input and control events in the circuit.
-This means that as we refine the boundary of the circuit parameters and operating assumptions, we can obtain for a corpus the neural activity of all its phrases for all the different linguistic hypothesis available.
+As we commented in discussion section \ref{discussion-linguistics}, the current implementation of the Compartment Circuit allow us to test any grammar theory providing binary tree representations, combined with any parsing scheme that determines the timing of input and control events in the circuit.
+This means that as we refine the boundary of the circuit parameters and operating assumptions, we can obtain for any corpus the neural activity of all its phrases for all the different linguistic hypothesis available.
 From such artificial dataset we could motivate experimental designs and tests that would be optimal to explore the linguistic hypothesis space.
-For example controlling for diverse variables like phrase length and number of syllables, we could estimate the likelihood of a phrase grammar versus a dependency grammar theory by comparing a set of phrases that maximize neural activity differences between the theories with respect to a set of control phrases.
+For example controlling for diverse variables like phrase length or number of syllables, we could estimate the likelihood of a phrase grammar versus a dependency grammar theory by comparing a set of phrases that maximize neural activity differences between the theories with respect to a set of control phrases.
 
 We think that the proposed framework could lead to quick progress in our understanding of language function if accompanied by the most recent neuroimaging techniques.
 We would imagine a setting in which intracortical recordings can be systematically positioned with information coming from quick and reliable fMRI language localizer paradigms\cite{mahowald2016reliable}.
-From a language localizer and anatomical scans, it would be possible to take advantage of 3d printing techniques, already tested in non-human primates\cite{chen20173d}, to make frames perfectly adapted to the skull of patients, with electrodes positioned in peaks of hemodynamic activity.
-Moreover recent advances in laminar fMRI\cite{lawrence2017laminar} are an exciting possible addition for the tuning of models approximating cortical columns and cytoarchitectonic constraints, as we propose to extend our simulations.
+From a language localizer and anatomical scans, it would be possible to take advantage of 3d printing techniques, already tested in non-human primates\cite{chen20173d}, to make frames perfectly adapted to the skull of patients, with electrodes precisely positioned at the peaks of hemodynamic effects.
+Moreover recent advances in laminar fMRI\cite{lawrence2017laminar} are an exciting possible addition for the tuning of models approximating cortical columns with cytoarchitectonic constraints, which we propose to extend our simulations.
 
 In conclusion we hope to have demonstrated that we are close to producing biologically realistic mechanistic neural models of cognitive function.
 In particular to provide new ways of testing linguistic hypothesis integrating evidence from varied neuroimaging techniques with different spatio-temporal scales.
